@@ -26,5 +26,5 @@ urlpatterns = [
     # path('mentor/', include('her_mentor.urls')),
     # path('buddies/', include('her_buddies.urls')),
     # path('chat/', include('chat.urls')),
-    # path('affirmation/', include('affirmation.urls')),
+    path('affirmation/', include('affirmation.urls')),
 ]
