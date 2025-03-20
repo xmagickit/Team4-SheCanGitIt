@@ -1,11 +1,9 @@
-
 ---
 name: Bug report
 about: Template to record bug or infelicity in current code
 title: 'BUG: [title]'
 labels: bug
-assignees: JaimeHyland
-
+assignees:
 ---
 
 **Describe the bug**
