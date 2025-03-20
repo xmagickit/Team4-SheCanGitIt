@@ -1,12 +1,73 @@
 {% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/retro-style.css' %}">
 
 {% block content %}
-<div class="container">
-    <div class="flex flex-col items-center space-y-4">
-        <h1 class="text-3xl font-bold">Welcome to SheCanGitIt!</h1>
-        <p class="text-lg">This is the home page.</p>
+  <!-- Main Window -->
+  <div class="max-w-5xl mx-auto mt-10 win-window p-4">
         
-    </div>
-    
+        <!-- Window Header -->
+        <div class="win-header">
+            <span class="font-retro">Women in Tech History</span>
+            <div>
+                <button class="win-button">-</button>
+                <button class="win-button">☐</button>
+                <button class="win-button">X</button>
+            </div>
+        </div>
+
+        <!-- Women in Tech History Section -->
+        <div class="p-6 flex justify-center">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center max-w-screen-lg mx-auto">
+                <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px]">
+                    <img src="static/images/ada-lovelace.webp" 
+                        alt="Ada Lovelace Portrait" 
+                        class="w-full h-48 object-cover rounded-lg flex-grow min-h-[180px] max-h-[200px]">
+                    <h3 class="mt-4 text-lg font-semibold text-retro-purple">Ada Lovelace</h3>
+                    <p class="text-sm text-gray-600">
+                        Ada Lovelace, the first computer programmer, wrote an algorithm for Charles Babbage’s Analytical Engine in the 1840s. Her work laid the foundation for modern computing.
+                    </p>
+                </div>
+                <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px]">
+                    <img src="static/images/grace-hopper.jpg" 
+                        alt="Grace Hopper" 
+                        class="w-full h-48 object-cover rounded-lg flex-grow min-h-[180px] max-h-[200px]">
+                    <h3 class="mt-4 text-lg font-semibold text-retro-purple">Grace Hopper</h3>
+                    <p class="text-sm text-gray-600">
+                        Grace Hopper was a U.S. Navy rear admiral and computer scientist who developed the first compiler for a programming language. She helped create COBOL, one of the earliest high-level languages.
+                    </p>
+                </div>
+                <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px]">
+                    <img src="static/images/margaret_hamilton.jpg" 
+                        alt="Margaret Hamilton" 
+                        class="w-full h-48 object-cover rounded-lg flex-grow min-h-[180px] max-h-[200px]">
+                    <h3 class="mt-4 text-lg font-semibold text-retro-purple">Margaret Hamilton</h3>
+                    <p class="text-sm text-gray-600">
+                        Margaret Hamilton was the lead software engineer for NASA’s Apollo program. She developed the onboard flight software that helped astronauts safely land on the Moon in 1969.
+                    </p>
+                </div>
+                <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px]">
+                    <img src="static/images/katherine.webp" 
+                        alt="Katherine Johnson" 
+                        class="w-full h-48 object-cover rounded-lg flex-grow min-h-[180px] max-h-[200px]">
+                    <h3 class="mt-4 text-lg font-semibold text-retro-purple">Katherine Johnson</h3>
+                    <p class="text-sm text-gray-600">
+                        Katherine Johnson was a trailblazing NASA mathematician whose calculations were critical for early U.S. spaceflights, including John Glenn’s orbital mission and the Apollo 11 Moon landing.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Affirmations Window -->
+        <div class="max-w-3xl mx-auto mt-10 win-window p-4">
+            <div class="win-header">
+                <span class="font-retro">Affirmations</span>
+            </div>
+            <div class="p-6 text-center text-retro-dark">
+                <p class="font-retro">"You belong in tech. Keep learning, keep growing!"</p>
+            </div>
+        </div>
+
 </div>
 {% endblock %}
