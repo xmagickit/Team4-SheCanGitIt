@@ -45,6 +45,20 @@ INSTALLED_APPS = [
     'home',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default auth backend
+    'allauth.account.auth_backends.AuthenticationBackend',  # Django Allauth
+]
+
+# Configure Allauth
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Use email instead of username
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SIGNUP_REDIRECT_URL = '/'  # Redirect after sign-up
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
+LOGIN_REDIRECT_URL = '/'  # Redirect after login
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
 MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -54,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.template.context_processors.request',
 ]
 
 ROOT_URLCONF = 'team_4.urls'
