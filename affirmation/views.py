@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def affirmation(request):
+    return render(request, 'affirmation/affirmation.html')
