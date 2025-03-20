@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'her_buddies',
     'her_mentor',
     'her_story',
+    'home',
 ]
 
 MIDDLEWARE = [
