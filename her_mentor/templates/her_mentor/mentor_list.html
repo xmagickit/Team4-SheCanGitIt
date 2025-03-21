@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Find a Mentor{% endblock %}
+
+{% block content %}
+<h1 class="text-xl font-bold text-retro-dark">Find a Mentor</h1>
+
+<!-- Mentor Search Form -->
+<form method="GET" class="mt-4">
+    {{ form.as_p }}
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Search</button>
+</form>
+
+<ul class="mt-4">
+    {% for mentor in mentors %}
+    <li class="border p-4 my-2 flex justify-between items-center">
+        <div>
+            <p class="font-bold">{{ mentor.user.username }}</p>
+            <p>Skills: {{ mentor.skills }}</p>
+            <p>Experience: {{ mentor.experience_level }}</p>
+        </div>
+        <a href="{% url 'send_request' mentor.id %}" class="bg-green-500 text-white px-4 py-2 rounded">Request Mentorship</a>
+    </li>
+    {% empty %}
+    <p class="text-red-500">No matching mentors found.</p>
+    {% endfor %}
+</ul>
+{% endblock %}
