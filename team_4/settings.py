@@ -7,11 +7,19 @@ import os
 import dj_database_url # type: ignore
 from dotenv import load_dotenv
 
-# Load environment variables from .env
-load_dotenv()
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Explicit path to .env file
+env_path = BASE_DIR / '.env'
+
+# Print to debug
+print(f"Looking for .env file at: {env_path}")
+print(f"File exists: {env_path.exists()}")
+
+# Load the .env file
+load_dotenv(dotenv_path=env_path)
 
 # Security settings
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -50,6 +58,7 @@ INSTALLED_APPS = [
     'her_mentor',
     'her_story',
     'home',
+    'retro_editor',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -92,6 +101,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'retro_editor.context_processors.recent_code_snippets',
             ],
         },
     },
