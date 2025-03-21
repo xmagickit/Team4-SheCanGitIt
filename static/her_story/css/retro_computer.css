@@ -1,0 +1,218 @@
+/* Computer Container & Screen Styles */
+.computer-container {
+  position: relative;
+  width: 100%;
+  /* Use min and max height constraints instead of fixed height */
+  min-height: 300px; 
+  max-height: 80vh;
+  height: 0;
+  /* Responsive padding based on viewport width */
+  padding-bottom: 75%; /* 4:3 aspect ratio */
+  background: url('/static/her_story/images/oldschool.png') no-repeat center center;
+  background-size: contain;
+  margin: 0 auto;
+  /* Maintain proper positioning by limiting width range */
+  min-width: 320px;
+  max-width: 1300px;
+}
+
+/* Screen positioning - using a combination of viewport-width based values */
+.screen {
+  position: absolute;
+  background-color: #000;
+  border: 2px solid #333;
+  overflow: hidden;
+}
+
+/* Adaptive screen positioning for different viewport ranges */
+/* Narrow screens (mobile) */
+@media (min-width: 401px) and (max-width: 580px) {
+  .screen {
+    top: 18%;
+    left: 28%;
+    width: 37%;
+    height: 36%;
+  }
+  
+  #main-content {
+    font-size: 7px;
+  }
+  
+  #main-content h1 {
+    font-size: 10px;
+  }
+  
+  #main-content p {
+    font-size: 7px;
+    line-height: 1.2;
+  }
+}
+
+/* Medium screens (tablets and small laptops) */
+@media (min-width: 581px) and (max-width: 1024px) {
+  .screen {
+    top: 20%;
+    left: 28%;
+    width: 37%;
+    height: 34%;
+  }
+  
+  #main-content {
+    font-size: 8px;
+  }
+  
+  #main-content h1 {
+    font-size: 12px;
+  }
+  
+  #main-content p {
+    font-size: 8px;
+  }
+}
+
+/* Large screens (desktops and laptops) */
+@media (min-width: 1025px) and (max-width: 1400px) {
+  .screen {
+    top: 20%;
+    left: 28%;
+    width: 37%;
+    height: 34%;
+  }
+  
+  #main-content {
+    font-size: 10px;
+  }
+  
+  #main-content h1 {
+    font-size: 14px;
+  }
+}
+
+/* Extra large screens */
+@media (min-width: 1401px) {
+  .computer-container {
+    /* Limit maximum size to prevent stretching too wide */
+    max-width: 1200px;
+  }
+  
+  .screen {
+    top: 20%;
+    left: 32.5%;
+    width: 31%;
+    height: 36%;
+  }
+}
+
+/* Very narrow screens (small mobile) */
+@media (max-width: 400px) {
+  .screen {
+    top: 20%;
+    left: 22%;
+    width: 46.5%;
+    height: 34%;
+  }
+  
+  #main-content {
+    font-size: 6px;
+  }
+  
+  #main-content h1 {
+    font-size: 9px;
+  }
+  
+  #main-content p {
+    font-size: 6px;
+    line-height: 1.2;
+  }
+}
+
+/* Loading Screen Styles */
+#loading-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+#loading-text {
+  color: #0f0;
+  font-size: 12px;
+  white-space: pre-wrap;
+  text-align: center;
+  border-right: 3px solid #0f0;
+  margin-bottom: 20px;
+  width: 80%;
+  max-width: 300px;
+  overflow-wrap: break-word;
+}
+
+/* Progress Bar Styles */
+.progress-bar {
+  width: 80%;
+  height: 20px;
+  border: 2px solid #ccc;
+  background-color: #e6e6e6;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #4a90e2, #357ABD);
+  transition: width 0.2s ease;
+}
+
+/* Main Content Styles */
+#main-content {
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  color: #0f0;
+  padding: 10px;
+  font-family: 'Press Start 2P', monospace;
+}
+
+/* Prevent text overflow with ellipsis for very narrow screens */
+@media (max-width: 400px) {
+  #main-content p {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Custom scrollbar for the retro feel */
+#main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+#main-content::-webkit-scrollbar-track {
+  background: #000;
+}
+
+#main-content::-webkit-scrollbar-thumb {
+  background: #0f0;
+  border: 2px solid #000;
+}
+
+/* Fix for container in window context */
+.win-window {
+  overflow: hidden;
+}
+
+/* Container for screen content to help with positioning */
+.screen-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
