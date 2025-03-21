@@ -7,16 +7,24 @@ import os
 import dj_database_url # type: ignore
 from dotenv import load_dotenv
 
-# Load environment variables from .env
-load_dotenv()
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Explicit path to .env file
+env_path = BASE_DIR / '.env'
+
+# Print to debug
+print(f"Looking for .env file at: {env_path}")
+print(f"File exists: {env_path.exists()}")
+
+# Load the .env file
+load_dotenv(dotenv_path=env_path)
+
 # Security settings
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = os.environ.get("DEBUG", "True") != "False"
+DEBUG = os.environ.get("DEBUG", "True") == "False"
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,.herokuapp.com").split(",")
 
 
