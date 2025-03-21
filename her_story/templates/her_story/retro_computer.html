@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}HerStory - Retro Computer{% endblock %}
+
+{% block window_title %}HerStory: Tech Pioneers{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'her_story/css/retro_computer.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="computer-container">
+  <!-- The "monitor" portion where loading & main content go -->
+  <div class="screen">
+    <!-- LOADING OVERLAY -->
+    <div id="loading-screen">
+      <div id="loading-text"></div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT (hidden until loading finishes) -->
+    <div id="main-content">
+      <h1>Women in Tech OS</h1>
+      <p>Welcome to our retro-themed tribute to the women who have shaped the world of technology.</p>
+      <p>Explore stories of pioneering women whose work laid the foundation for modern computing.</p>
+      <p>Scroll down to learn more and celebrate their groundbreaking contributions!</p>
+      <hr>
+      
+      {% for pioneer in pioneers %}
+      <h1>{{ pioneer.name }}</h1>
+      <p><strong>{{ pioneer.years }}</strong></p>
+      <p>{{ pioneer.interesting }}</p>
+      <p><strong>Contribution:</strong> {{ pioneer.contribution }}</p>
+      <p><strong>Fun Fact:</strong> {{ pioneer.fun_fact }}</p>
+      
+      {% if pioneer.members %}
+      <p><strong>Members:</strong></p>
+      <ul>
+        {% for member in pioneer.members %}
+        <li>{{ member }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <hr>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static 'her_story/js/retro_computer.js' %}"></script>
+{% endblock %}
