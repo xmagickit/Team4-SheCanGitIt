@@ -2,23 +2,128 @@
 .computer-container {
   position: relative;
   width: 100%;
-  /* Instead of fixed height, use padding-bottom with aspect ratio */
-  padding-bottom: 75%; /* 4:3 aspect ratio (3/4 = 0.75 or 75%) */
+  /* Use min and max height constraints instead of fixed height */
+  min-height: 300px; 
+  max-height: 80vh;
+  height: 0;
+  /* Responsive padding based on viewport width */
+  padding-bottom: 75%; /* 4:3 aspect ratio */
   background: url('/static/her_story/images/oldschool.png') no-repeat center center;
   background-size: contain;
   margin: 0 auto;
-  max-width: 1000px; /* Limit max width to prevent stretching on large screens */
+  /* Maintain proper positioning by limiting width range */
+  min-width: 320px;
+  max-width: 1300px;
 }
 
+/* Screen positioning - using a combination of viewport-width based values */
 .screen {
   position: absolute;
-  top: 20%; /* ajust to screen size */
-  left: 28%;
-  width: 37%;
-  height: 35%;
   background-color: #000;
   border: 2px solid #333;
   overflow: hidden;
+}
+
+/* Adaptive screen positioning for different viewport ranges */
+/* Narrow screens (mobile) */
+@media (min-width: 401px) and (max-width: 580px) {
+  .screen {
+    top: 18%;
+    left: 28%;
+    width: 37%;
+    height: 36%;
+  }
+  
+  #main-content {
+    font-size: 7px;
+  }
+  
+  #main-content h1 {
+    font-size: 10px;
+  }
+  
+  #main-content p {
+    font-size: 7px;
+    line-height: 1.2;
+  }
+}
+
+/* Medium screens (tablets and small laptops) */
+@media (min-width: 581px) and (max-width: 1024px) {
+  .screen {
+    top: 20%;
+    left: 28%;
+    width: 37%;
+    height: 34%;
+  }
+  
+  #main-content {
+    font-size: 8px;
+  }
+  
+  #main-content h1 {
+    font-size: 12px;
+  }
+  
+  #main-content p {
+    font-size: 8px;
+  }
+}
+
+/* Large screens (desktops and laptops) */
+@media (min-width: 1025px) and (max-width: 1400px) {
+  .screen {
+    top: 20%;
+    left: 28%;
+    width: 37%;
+    height: 34%;
+  }
+  
+  #main-content {
+    font-size: 10px;
+  }
+  
+  #main-content h1 {
+    font-size: 14px;
+  }
+}
+
+/* Extra large screens */
+@media (min-width: 1401px) {
+  .computer-container {
+    /* Limit maximum size to prevent stretching too wide */
+    max-width: 1200px;
+  }
+  
+  .screen {
+    top: 20%;
+    left: 32.5%;
+    width: 31%;
+    height: 36%;
+  }
+}
+
+/* Very narrow screens (small mobile) */
+@media (max-width: 400px) {
+  .screen {
+    top: 20%;
+    left: 22%;
+    width: 46.5%;
+    height: 34%;
+  }
+  
+  #main-content {
+    font-size: 6px;
+  }
+  
+  #main-content h1 {
+    font-size: 9px;
+  }
+  
+  #main-content p {
+    font-size: 6px;
+    line-height: 1.2;
+  }
 }
 
 /* Loading Screen Styles */
@@ -73,85 +178,20 @@
   color: #0f0;
   padding: 10px;
   font-family: 'Press Start 2P', monospace;
-  font-size: 10px;
 }
 
-#main-content h1 {
-  color: #00ff00;
-  font-size: 14px;
-  margin-top: 0;
-  margin-bottom: 10px;
-}
-
-#main-content p {
-  font-size: 10px;
-  line-height: 1.4;
-  margin-bottom: 10px;
-}
-
-/* Responsive Adjustments - now working with the aspect ratio approach */
-@media (max-width: 992px) {
-  .computer-container {
-    max-width: 800px;
-  }
-  
-  #main-content {
-    font-size: 9px;
-  }
-  
-  #main-content h1 {
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 768px) {
-  .computer-container {
-    max-width: 600px;
-  }
-  
-  #main-content {
-    font-size: 8px;
-  }
-  
-  #main-content h1 {
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 576px) {
-  .screen {
-    top: 19%;
-    left: 30%;
-    width: 36%;
-    height: 32%;
-  }
-  
-  #main-content {
-    font-size: 7px;
-  }
-  
-  #main-content h1 {
-    font-size: 10px;
-  }
-  
+/* Prevent text overflow with ellipsis for very narrow screens */
+@media (max-width: 400px) {
   #main-content p {
-    font-size: 7px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
-/* For very small screens */
-@media (max-width: 375px) {
-  .screen {
-    top: 18%;
-    left: 29%;
-    width: 38%;
-    height: 30%;
-  }
-}
-
-/* Add custom scrollbar for the retro feel */
+/* Custom scrollbar for the retro feel */
 #main-content::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 #main-content::-webkit-scrollbar-track {
@@ -163,7 +203,16 @@
   border: 2px solid #000;
 }
 
-/* Ensure the container maintains its aspect ratio during inspect mode */
+/* Fix for container in window context */
 .win-window {
   overflow: hidden;
+}
+
+/* Container for screen content to help with positioning */
+.screen-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
