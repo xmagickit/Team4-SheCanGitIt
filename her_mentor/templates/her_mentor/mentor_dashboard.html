@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Mentorship Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="text-xl font-bold text-retro-dark">Your Mentorship Requests</h1>
+
+<ul class="mt-4">
+    {% for request in requests %}
+    <li class="border p-4 my-2 flex justify-between items-center">
+        <div>
+            {% if request.mentee == user %}
+                <p>Request to: <strong>{{ request.mentor.user.username }}</strong></p>
+            {% else %}
+                <p>Request from: <strong>{{ request.mentee.username }}</strong></p>
+                <div class="flex gap-2">
+                    <form action="{% url 'accept_request' request.id %}" method="POST">
+                        {% csrf_token %}
+                        <button class="bg-green-500 text-white px-3 py-1 rounded">Accept</button>
+                    </form>
+                    <form action="{% url 'decline_request' request.id %}" method="POST">
+                        {% csrf_token %}
+                        <button class="bg-red-500 text-white px-3 py-1 rounded">Decline</button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+        <p>Status: <span class="font-bold">{{ request.status }}</span></p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
