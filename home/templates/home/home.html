@@ -1,20 +1,26 @@
 {% extends "base.html" %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/retro-style.css' %}">
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/retro-style.css' %}">
 
 {% block content %}
   <!-- Main Window -->
   <div class="max-w-5xl mx-auto mt-10 win-window p-4">
-        
         <!-- Window Header -->
-        <div class="win-header">
+        <div class="win-header flex justify-between items-center bg-retro-purple p-2 text-white">
             <span class="font-retro">Women in Tech History</span>
-            <div>
-                <button class="win-button">-</button>
-                <button class="win-button">☐</button>
-                <button class="win-button">X</button>
+            <div class="flex space-x-1">
+                <button class="text-xs px-2 py-0 bg-gray-300 text-gray-800 border border-gray-600 shadow-md 
+                            hover:bg-purple-500 hover:text-white transition-all active:translate-y-[1px]">
+                    _
+                </button>
+                <button class="text-xs px-2 py-0 bg-gray-300 text-gray-800 border border-gray-600 shadow-md 
+                            hover:bg-purple-500 hover:text-white transition-all active:translate-y-[1px]">
+                    □
+                </button>
+                <button class="text-xs px-2 py-0 bg-gray-300 text-gray-800 border border-gray-600 shadow-md 
+                            hover:bg-red-600 hover:text-white transition-all active:translate-y-[1px]">
+                    ✕
+                </button>
             </div>
         </div>
 
