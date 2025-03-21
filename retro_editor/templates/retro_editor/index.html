@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Retro Code Editor | SheGitsIt{% endblock %}
+
+{% block content %}
+<div class="retro-container">
+    <h1 class="retro-title">RETRO CODE EDITOR</h1>
+    <div class="retro-intro">
+        <p>Welcome to the SheGitsIt Retro Code Editor! Create, edit, and share your code snippets in a nostalgic environment inspired by early computing.</p>
+        <p>Get coding tips from pioneering women in technology as you write!</p>
+    </div>
+
+    <div class="retro-actions">
+        <a href="{% url 'retro_editor:new_editor' %}" class="retro-button">NEW SNIPPET</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'retro_editor:my_snippets' %}" class="retro-button">MY SNIPPETS</a>
+        {% endif %}
+    </div>
+
+    {% if public_snippets %}
+    <div class="retro-section">
+        <h2 class="retro-subtitle">COMMUNITY SNIPPETS</h2>
+        <div class="snippet-grid">
+            {% for snippet in public_snippets %}
+            <div class="snippet-card">
+                <div class="snippet-header">
+                    <h3>{{ snippet.title }}</h3>
+                    <span class="language-badge">{{ snippet.language }}</span>
+                </div>
+                <div class="snippet-author">By: {{ snippet.user.username }}</div>
+                <div class="snippet-date">{{ snippet.created_at|date:"M d, Y" }}</div>
+                <a href="{% url 'retro_editor:editor' snippet.id %}" class="view-button">VIEW</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
