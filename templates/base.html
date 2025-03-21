@@ -18,6 +18,7 @@
   <!-- Retro CSS Styles -->
   <link rel="stylesheet" href="{% static 'css/retro-style.css' %}">
   
+  
   {% block extra_css %}{% endblock %}
 </head>
 <body class="bg-retro-dark min-h-screen flex flex-col">
@@ -42,7 +43,7 @@
           <a href="#" class="win-button text-center w-full flex justify-center items-center px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight min-w-20 md:min-w-24">HerBuddies</a>
           <a href="#" class="win-button text-center w-full flex justify-center items-center px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight min-w-20 md:min-w-24">Chat</a>
           <a href="{% url 'affirmation' %}" class="win-button text-center w-full flex justify-center items-center px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight min-w-20 md:min-w-24">Affirmations</a>
-          {% comment %} <a href="{% url 'retro-editor' %}" class="win-button text-center w-full flex justify-center items-center px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight min-w-20 md:min-w-24">Retro Editor</a> {% endcomment %}
+          <a href="{% url 'retro_editor:editor_home' %}" class="win-button text-center w-full flex justify-center items-center px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight min-w-20 md:min-w-24">Retro Editor</a>
       </nav>
 
       <!-- User Account Icons -->
