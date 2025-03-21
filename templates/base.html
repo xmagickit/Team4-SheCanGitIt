@@ -27,7 +27,7 @@
 
       <!-- Logo -->
       <div class="flex items-center space-x-2 flex-shrink-0">
-          <span class="font-retro text-retro-dark text-xs md:text-sm">&lt;/&gt; SheCanGitIt</span>
+        <a href="{% url 'home' %}"><span class="font-retro text-retro-dark text-xs md:text-sm">&lt;/&gt; SheCanGitIt</span></a>
       </div>
 
       <!-- Mobile Menu Toggle Button -->
@@ -41,7 +41,7 @@
           <a href="#" class="win-button text-center w-full flex justify-center items-center px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight min-w-20 md:min-w-24">HerMentor</a>
           <a href="#" class="win-button text-center w-full flex justify-center items-center px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight min-w-20 md:min-w-24">HerBuddies</a>
           <a href="#" class="win-button text-center w-full flex justify-center items-center px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight min-w-20 md:min-w-24">Chat</a>
-          <a href="#" class="win-button text-center w-full flex justify-center items-center px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight min-w-20 md:min-w-24">Affirmations</a>
+          <a href="{% url 'affirmation' %}" class="win-button text-center w-full flex justify-center items-center px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight min-w-20 md:min-w-24">Affirmations</a>
       </nav>
 
       <!-- User Account Icons -->
