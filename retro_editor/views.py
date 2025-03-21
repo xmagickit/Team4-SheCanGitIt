@@ -50,3 +50,19 @@ def my_snippets(request):
     """View for listing user's saved snippets"""
     snippets = CodeSnippet.objects.filter(user=request.user).order_by('-last_modified')
     return render(request, 'retro_editor/my_snippets.html', {'snippets': snippets})
+  
+def get_random_tip(request):
+    """API endpoint for retrieving random tips"""
+    language = request.GET.get('language', '')
+    if language:
+        tips = TechPioneerTip.objects.filter(language__in=[language, ''])
+    else:
+        tips = TechPioneerTip.objects.all()
+        
+    if tips.exists():
+        random_tip = random.choice(tips)
+        return JsonResponse({
+            'pioneer': random_tip.pioneer,
+            'content': random_tip.tip_content
+        })
+    return JsonResponse({'error': 'No tips available'}, status=404)
