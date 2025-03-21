@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block window_title %}{% block head_title %}{% endblock %}{% endblock %}
+
+{% block content %}
+  <div class="max-w-md mx-auto">
+    {% block allauth_content %}{% endblock %}
+  </div>
+{% endblock %}
