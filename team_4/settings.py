@@ -29,8 +29,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'channels',  # for async messaging
+    'daphne',  # for async messaging, must be placed before django.contrib.staticfiles
     'django.contrib.staticfiles',
-    
+  
     #allauth
     'allauth',
     'allauth.account',
@@ -51,9 +53,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Configure Allauth
-ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Use email instead of username
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_LOGIN_METHODS = ['email']  # Use email instead of username
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 ACCOUNT_SIGNUP_REDIRECT_URL = '/'  # Redirect after sign-up
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
 LOGIN_REDIRECT_URL = '/'  # Redirect after login
@@ -92,6 +93,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'team_4.wsgi.application'
+ASGI_APPLICATION = 'team_4.asgi.application'
 
 # Database Configuration (Using DATABASE_URL)
 DATABASE_URL = os.environ.get("DATABASE_URL")
