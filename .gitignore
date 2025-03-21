@@ -1,5 +1,49 @@
+# Virtual environment folder
+venv/
+env/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database files (if using SQLite)
+db.sqlite3
+*.sqlite3
+
+# Django secret and environment variables
 .env
-.venv
-    
+*.env
 
+# Migrations (optional – but usually keep these in version control)
+**/migrations/*.py
+!**/migrations/__init__.py  # Keep __init__.py for app detection
 
+# Logs and debug files
+*.log
+logs/
+debug.log
+
+# Compiled files (Cython, JIT, etc.)
+*.so
+*.egg
+*.egg-info
+dist/
+build/
+
+# Static and media files (if they are auto-generated)
+staticfiles/
+media/
+*.bak
+
+# IDE & Editor config files
+.vscode/
+.idea/
+*.sublime-workspace
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db

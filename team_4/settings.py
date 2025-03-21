@@ -23,13 +23,16 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(","
 
 INSTALLED_APPS = [
     # predefined django apps
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'channels',  # for async messaging
+    'daphne',  # for async messaging, must be placed before django.contrib.staticfiles
     'django.contrib.staticfiles',
-    
+  
     #allauth
     'allauth',
     'allauth.account',
@@ -44,6 +47,19 @@ INSTALLED_APPS = [
     'home',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default auth backend
+    'allauth.account.auth_backends.AuthenticationBackend',  # Django Allauth
+]
+
+# Configure Allauth
+ACCOUNT_LOGIN_METHODS = ['email']  # Use email instead of username
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+ACCOUNT_SIGNUP_REDIRECT_URL = '/'  # Redirect after sign-up
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
+LOGIN_REDIRECT_URL = '/'  # Redirect after login
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
 MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.template.context_processors.request',
 ]
 
 ROOT_URLCONF = 'team_4.urls'
@@ -76,6 +93,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'team_4.wsgi.application'
+ASGI_APPLICATION = 'team_4.asgi.application'
 
 # Database Configuration (Using DATABASE_URL)
 DATABASE_URL = os.environ.get("DATABASE_URL")
@@ -102,11 +120,14 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files
-STATIC_URL = 'static/'
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "static",  # Or wherever you store custom static files
 ]
+
+# Static files for collecting in production
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default auto field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
