@@ -22,10 +22,10 @@ print(f"File exists: {env_path.exists()}")
 load_dotenv(dotenv_path=env_path)
 
 # Security settings
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
-DEBUG = os.environ.get("DEBUG", "True") == "False"
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,.herokuapp.com").split(",")
+DEBUG = os.getenv("DEBUG", "True") != "False"
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,.herokuapp.com").split(",")
 
 
 # Application definition
@@ -110,7 +110,7 @@ ASGI_APPLICATION = 'team_4.asgi.application'
 
 
 # Database Configuration (Using DATABASE_URL)
-DATABASE_URL = os.environ.get("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
 DATABASES = {
     'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600) if DATABASE_URL else {
         'ENGINE': 'django.db.backends.sqlite3',
