@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'her_mentor',
     'her_story',
     'home',
+    'retro_editor',
 ]
 
 AUTHENTICATION_BACKENDS = [
