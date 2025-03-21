@@ -24,7 +24,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('home.urls')),  # Added the home view as the root URL
     # Add your app URLs here as the project develops
-    # path('herstory/', include('her_story.urls')),
+    path('herstory/', include('her_story.urls')),
     # path('mentor/', include('her_mentor.urls')),
     # path('buddies/', include('her_buddies.urls')),
     path('chat/', include('chat.urls')),
