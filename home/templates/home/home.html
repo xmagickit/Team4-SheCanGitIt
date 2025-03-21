@@ -3,79 +3,104 @@
 <link rel="stylesheet" href="{% static 'css/retro-style.css' %}">
 
 {% block content %}
-  <!-- Main Window -->
-  <div class="max-w-5xl mx-auto mt-10 win-window p-4">
-        <!-- Window Header -->
-        <div class="win-header flex justify-between items-center bg-retro-purple p-2 text-white">
-            <span class="font-retro">Women in Tech History</span>
-            <div class="flex space-x-1">
-                <button class="text-xs px-2 py-0 bg-gray-300 text-gray-800 border border-gray-600 shadow-md 
-                            hover:bg-purple-500 hover:text-white transition-all active:translate-y-[1px]">
-                    _
-                </button>
-                <button class="text-xs px-2 py-0 bg-gray-300 text-gray-800 border border-gray-600 shadow-md 
-                            hover:bg-purple-500 hover:text-white transition-all active:translate-y-[1px]">
-                    □
-                </button>
-                <button class="text-xs px-2 py-0 bg-gray-300 text-gray-800 border border-gray-600 shadow-md 
-                            hover:bg-red-600 hover:text-white transition-all active:translate-y-[1px]">
-                    ✕
-                </button>
-            </div>
-        </div>
 
-        <!-- Women in Tech History Section -->
-        <div class="p-6 flex justify-center">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center max-w-screen-lg mx-auto">
-                <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px]">
-                    <img src="static/images/ada-lovelace.webp" 
-                        alt="Ada Lovelace Portrait" 
-                        class="w-full h-48 object-cover rounded-lg flex-grow min-h-[180px] max-h-[200px]">
-                    <h3 class="mt-4 text-lg font-semibold text-retro-purple">Ada Lovelace</h3>
-                    <p class="text-sm text-gray-600">
-                        Ada Lovelace, the first computerr programmer, wrote an algorithm for Charles Babbage’s Analytical Engine in the 1840s. Her work laid the foundation for modern computing.
-                    </p>
-                </div>
-                <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px]">
-                    <img src="static/images/grace-hopper.jpg" 
-                        alt="Grace Hopper" 
-                        class="w-full h-48 object-cover rounded-lg flex-grow min-h-[180px] max-h-[200px]">
-                    <h3 class="mt-4 text-lg font-semibold text-retro-purple">Grace Hopper</h3>
-                    <p class="text-sm text-gray-600">
-                        Grace Hopper was a U.S. Navy rear admiral and computer scientist who developed the first compiler for a programming language. She helped create COBOL, one of the earliest high-level languages.
-                    </p>
-                </div>
-                <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px]">
-                    <img src="static/images/margaret_hamilton.jpg" 
-                        alt="Margaret Hamilton" 
-                        class="w-full h-48 object-cover rounded-lg flex-grow min-h-[180px] max-h-[200px]">
-                    <h3 class="mt-4 text-lg font-semibold text-retro-purple">Margaret Hamilton</h3>
-                    <p class="text-sm text-gray-600">
-                        Margaret Hamilton was the lead software engineer for NASA’s Apollo program. She developed the onboard flight software that helped astronauts safely land on the Moon in 1969.
-                    </p>
-                </div>
-                <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px]">
-                    <img src="static/images/katherine.webp" 
-                        alt="Katherine Johnson" 
-                        class="w-full h-48 object-cover rounded-lg flex-grow min-h-[180px] max-h-[200px]">
-                    <h3 class="mt-4 text-lg font-semibold text-retro-purple">Katherine Johnson</h3>
-                    <p class="text-sm text-gray-600">
-                        Katherine Johnson was a trailblazing NASA mathematician whose calculations were critical for early U.S. spaceflights, including John Glenn’s orbital mission and the Apollo 11 Moon landing.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        
-        <!-- Affirmations Window -->
-        <div class="max-w-3xl mx-auto mt-10 win-window p-4">
-            <div class="win-header">
-                <span class="font-retro">Affirmations</span>
-            </div>
-            <div class="p-6 text-center text-retro-dark">
-                <p class="font-retro">"You belong in tech. Keep learning, keep growing!"</p>
-            </div>
-        </div>
-
+<!-- Hero Section -->
+<div class="bg-retro-purple text-white py-20 px-6 text-center">
+    <h1 class="text-4xl md:text-6xl font-retro">SheCanGitIt</h1>
+    <p class="mt-4 text-lg md:text-xl max-w-2xl mx-auto">
+        Empowering women in tech through collaboration, mentorship, and community.
+    </p>
+    <a href="x" class="mt-6 inline-block bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-bold 
+        text-lg hover:bg-yellow-400 transition-all shadow-md active:translate-y-1">
+        Get Started
+    </a>
 </div>
+
+<!-- Women in Tech Section -->
+<div class="max-w-5xl mx-auto mt-10 win-window p-4">
+    <div class="win-header flex justify-between items-center bg-retro-purple p-2 text-white">
+        <span class="font-retro">Women in Tech History</span>
+    </div>
+
+    <div class="p-6 flex justify-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center max-w-screen-lg mx-auto">
+            <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px]">
+                <img src="{% static 'images/ada-lovelace.webp' %}" 
+                    alt="Ada Lovelace Portrait" 
+                    class="w-full h-48 object-cover rounded-lg">
+                <h3 class="mt-4 text-lg font-semibold text-retro-purple">Ada Lovelace</h3>
+                <p class="text-sm text-gray-600">
+                    Ada Lovelace, the first computer programmer, wrote an algorithm for Charles Babbage’s Analytical Engine in the 1840s. Her work laid the foundation for modern computing.
+                </p>
+            </div>
+            <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px]">
+                <img src="{% static 'images/grace-hopper.jpg' %}" 
+                    alt="Grace Hopper" 
+                    class="w-full h-48 object-cover rounded-lg">
+                <h3 class="mt-4 text-lg font-semibold text-retro-purple">Grace Hopper</h3>
+                <p class="text-sm text-gray-600">
+                    Grace Hopper was a U.S. Navy rear admiral and computer scientist who developed the first compiler for a programming language. She helped create COBOL, one of the earliest high-level languages.
+                </p>
+            </div>
+            <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px]">
+                <img src="{% static 'images/margaret_hamilton.jpg' %}" 
+                    alt="Margaret Hamilton" 
+                    class="w-full h-48 object-cover rounded-lg">
+                <h3 class="mt-4 text-lg font-semibold text-retro-purple">Margaret Hamilton</h3>
+                <p class="text-sm text-gray-600">
+                    Margaret Hamilton was the lead software engineer for NASA’s Apollo program. She developed the onboard flight software that helped astronauts safely land on the Moon in 1969.
+                </p>
+            </div>
+            <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px]">
+                <img src="{% static 'images/katherine.webp' %}" 
+                    alt="Katherine Johnson" 
+                    class="w-full h-48 object-cover rounded-lg">
+                <h3 class="mt-4 text-lg font-semibold text-retro-purple">Katherine Johnson</h3>
+                <p class="text-sm text-gray-600">
+                    Katherine Johnson was a trailblazing NASA mathematician whose calculations were critical for early U.S. spaceflights, including John Glenn’s orbital mission and the Apollo 11 Moon landing.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="max-w-5xl mx-auto mt-10 win-window p-4">
+    <div class="win-header flex justify-between items-center bg-retro-purple p-2 text-white">
+        <span class="font-retro">What Our Women Say</span>
+    </div>
+
+    <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Testimonial 1 -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <p class="text-gray-700 italic">"SheCanGitIt gave me the confidence to apply for my dream job in tech! I love the supportive community and resources available."</p>
+                <p class="mt-4 font-semibold text-retro-purple">— Emily, Software Engineer</p>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <p class="text-gray-700 italic">"I've met incredible mentors and peers who inspire me every day. This platform has truly been a game-changer for my tech journey."</p>
+                <p class="mt-4 font-semibold text-retro-purple">— Olivia, Data Scientist</p>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="bg-white p-4 shadow-lg rounded-lg">
+                <p class="text-gray-700 italic">"From learning new skills to networking with amazing women, SheCanGitIt is the place to be if you're a woman in tech!"</p>
+                <p class="mt-4 font-semibold text-retro-purple">— Sarah, UX Designer</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Affirmations Window -->
+<div class="max-w-3xl mx-auto mt-10 win-window p-4">
+    <div class="win-header">
+        <span class="font-retro">Affirmations</span>
+    </div>
+    <div class="p-6 text-center text-retro-dark">
+        <p class="font-retro">"You belong in tech. Keep learning, keep growing!"</p>
+    </div>
+</div>
+
 {% endblock %}
