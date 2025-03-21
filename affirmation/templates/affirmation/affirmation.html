@@ -1,9 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% load static %}
+
+{% block window_title %}
+&lt;/&gt; SheCanGitIt Affirmation Generator
+{% endblock %}
+
+{% block content %}
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Affirmation Generator</title>
+    <title>&lt;/&gt; SheCanGitIt Affirmation Generator</title>
     <style>
         :root {
             --retro-purple: #6B5B95;
@@ -22,7 +26,7 @@
         }
 
         .window {
-            width: 400px;
+            width: 80vw;
             border: 2px solid var(--retro-dark);
             background-color: var(--retro-cream);
             margin: 50px auto;
@@ -73,6 +77,17 @@
             cursor: pointer;
         }
 
+        #generate-btn {
+            width: auto;
+            padding: 5px 10px;
+            border: 1px solid var(--retro-dark);
+            background-color: var(--retro-highlight);
+            color: var(--retro-dark);
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
         button:hover {
             background-color: var(--retro-pink);
         }
@@ -86,14 +101,22 @@
     </style>
 </head>
 <body>
+
     <div class="window">
         <div class="title-bar">
-            <div class="title-bar-text">Tech Affirmation Generator</div>
+            <div class="title-bar-text">&lt;/&gt; SheCanGitIt Affirmation Generator</div>
             <div class="title-bar-controls">
-                <button aria-label="Close"></button>
+                <button class="win-button text-xs px-2 py-0">_</button>
+                <button class="win-button text-xs px-2 py-0">□</button>
+                <button class="win-button text-xs px-2 py-0">✕</button>
             </div>
         </div>
         <div class="content">
+            <div>
+            <p>We understand that being a woman in tech isn't always easy. At times, you might find yourself battling imposter syndrome or doubting your own abilities. But you're not alone—we've got you covered.</p>
+            <p>Whenever you need a little boost, use our generator to lift your spirits, remind yourself of your strength, and embrace your unique journey. You've got this, and we're here to cheer you on every step of the way!</p>
+            <br>
+            </div>
             <div class="form-group">
                 <label for="mood">Select your mood:</label>
                 <select id="mood">
@@ -147,4 +170,4 @@
         });
     </script>
 </body>
-</html></html>
+{% endblock %}
