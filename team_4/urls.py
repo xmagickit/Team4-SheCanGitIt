@@ -29,4 +29,5 @@ urlpatterns = [
     # path('buddies/', include('her_buddies.urls')),
     path('chat/', include('chat.urls')),
     path('affirmation/', include('affirmation.urls')),
+    path('retro-editor/', include('retro_editor.urls', namespace='retro_editor')),
 ]
