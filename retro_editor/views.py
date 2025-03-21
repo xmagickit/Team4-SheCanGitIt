@@ -44,3 +44,9 @@ def editor(request, snippet_id=None):
         'snippet': snippet,
         'random_tip': random_tip
     })
+    
+@login_required
+def my_snippets(request):
+    """View for listing user's saved snippets"""
+    snippets = CodeSnippet.objects.filter(user=request.user).order_by('-last_modified')
+    return render(request, 'retro_editor/my_snippets.html', {'snippets': snippets})
