@@ -17,15 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-import os
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('home.urls')),  # Added the home view as the root URL
     # Add your app URLs here as the project develops
     path('herstory/', include('her_story.urls')),
-    # path('mentor/', include('her_mentor.urls')),
+    path('mentor/', include('her_mentor.urls')),
     # path('buddies/', include('her_buddies.urls')),
     path('chat/', include('chat.urls')),
     path('affirmation/', include('affirmation.urls')),
