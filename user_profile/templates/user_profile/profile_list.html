@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Community Members - SheCanGitIt{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/profile/profile.css' %}">
+{% endblock %}
+
+{% block window_title %}Community Members{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+  <div class="flex flex-wrap gap-2">
+    <a href="{% url 'profile_list' %}" class="win-button text-xs px-2 py-1 {% if not request.GET %}bg-retro-purple text-white{% endif %}">
+      All Members
+    </a>
+    <a href="{% url 'profile_list' %}?mentor=true" class="win-button text-xs px-2 py-1 {% if request.GET.mentor == 'true' %}bg-retro-purple text-white{% endif %}">
+      Mentors
+    </a>
+    <a href="{% url 'profile_list' %}?buddy=true" class="win-button text-xs px-2 py-1 {% if request.GET.buddy == 'true' %}bg-retro-purple text-white{% endif %}">
+      Looking for Buddies
+    </a>
+  </div>
+</div>
+
+{% if profiles %}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for profile in profiles %}
+      <div class="win-window">
+        <div class="win-header font-retro text-xs">
+          <span>{{ profile.user.username }}</span>
+        </div>
+        <div class="p-4 bg-white">
+          <div class="flex items-center gap-4 mb-2">
+            <!-- Profile Image -->
+            <div class="w-16 h-16 flex-shrink-0 win-button overflow-hidden flex items-center justify-center">
+              {% if profile.profile_image %}
+                <img src="{{ profile.profile_image.url }}" alt="{{ profile.user.username }}" class="w-full h-full object-cover">
+              {% else %}
+                <div class="text-2xl">👤</div>
+              {% endif %}
+            </div>
+            
+            <div>
+              <h3 class="font-medium">
+                {% if profile.user.first_name or profile.user.last_name %}
+                  {{ profile.user.first_name }} {{ profile.user.last_name }}
+                {% else %}
+                  {{ profile.user.username }}
+                {% endif %}
+              </h3>
+              
+              <!-- Badges -->
+              <div class="flex flex-wrap gap-1 mt-1">
+                {% if profile.is_mentor %}
+                  <span class="win-button bg-retro-purple text-white text-xs px-1 py-0">Mentor</span>
+                {% endif %}
+                
+                {% if profile.seeking_buddy %}
+                  <span class="win-button bg-retro-pink text-xs px-1 py-0">Looking for Buddy</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          
+          <!-- Skills (truncated) -->
+          {% if profile.skills %}
+            <div class="mb-2">
+              <div class="text-xs font-medium mb-1">Skills:</div>
+              <div class="flex flex-wrap gap-1">
+                {% for skill in profile.get_skill_list|slice:":3" %}
+                  <span class="win-button text-xs px-1 py-0">{{ skill }}</span>
+                {% endfor %}
+                {% if profile.get_skill_list|length > 3 %}
+                  <span class="text-xs">...</span>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+          
+          <!-- View Profile Button -->
+          <div class="mt-2">
+            <a href="{% url 'view_profile' profile.user.username %}" class="win-button text-xs px-2 py-1 w-full block text-center">
+              View Profile
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="win-window">
+    <div class="p-4 bg-white">
+      <p>No profiles found matching your filters.</p>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}
