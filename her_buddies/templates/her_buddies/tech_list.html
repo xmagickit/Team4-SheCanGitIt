@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Find HerBuddies</h1>
+    <p>HerBuddies is a safe place for women in tech to connect, learn and thrive together!</p>
+    {% if not user.is_authenticated %}
+        <p class="mb-4">
+            <a href="{% url 'account_signup' %}" class="text-blue-500 hover:underline">Sign Up</a> or
+            <a href="{% url 'account_login' %}" class="text-blue-500 hover:underline">Log In</a>
+            to connect with your study buddies.
+        </p>
+    {% endif %}
+</div>
+    
+    <!-- Search Bar -->
+    <form method="GET" action="" class="mb-4">
+        <input type="text" name="search" placeholder="Search here: What language or framework do you want to learn today?" class="border p-2 w-full rounded">
+    </form>
+
+        <!-- Modal for Create a tech group -->
+        <button id="add-tech-btn" class="bg-blue-500 text-white px-4 py-2 rounded mt-4"><a href="{% url 'add_tech_stack' %}" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Create New HerBuddies Group</a></button>
+
+        <div id="add-tech-modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white p-6 rounded shadow-lg">
+                <h2 class="text-xl font-bold mb-4">Create HerBuddies Group</h2>
+                <form method="POST" action="{% url 'add_tech_stack' %}">
+                    {% csrf_token %}
+                    <input type="text" name="name" placeholder="Tech Stack Name" class="border p-2 w-full rounded mb-2">
+                    <textarea name="description" placeholder="Description" class="border p-2 w-full rounded mb-2"></textarea>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button id="close-modal" class="text-red-500 mt-2">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tech Stack List -->
+    <ul>
+        {% for tech in tech_stacks %}
+        <li class="border-b py-2">
+            <h2 class="text-lg font-semibold">{{ tech.name }}</h2>
+            <p>{{ tech.description|truncatechars:100 }}</p>
+            {% if tech.studygroup %}
+                <a href="{% url 'tech_discussion' tech.studygroup.id %}" class="text-blue-500 hover:underline">Join these HerBuddies</a>
+            {% else %}
+                <p class="text-red-500">Study Group not available</p>
+            {% endif %}
+        </li>
+        {% empty %}
+        <p>No tech group found.</p>
+        {% endfor %}
+    </ul>
+
+<script>
+    openModal.addEventListener('click', () => modal.classList.remove('hidden'));
+    closeModal.addEventListener('click', () => modal.classList.add('hidden'));
+</script>
+{% endblock %}
