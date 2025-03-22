@@ -26,6 +26,7 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,.herokuapp.
 INSTALLED_APPS = [
     # predefined django apps
     'jazzmin',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,6 +54,8 @@ INSTALLED_APPS = [
     'user_profile',
     'home',
 ]
+
+SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default auth backend
