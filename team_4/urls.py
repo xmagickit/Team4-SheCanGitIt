@@ -28,7 +28,7 @@ urlpatterns = [
     # path('buddies/', include('her_buddies.urls')),
     path('chat/', include('chat.urls')),
     path('affirmation/', include('affirmation.urls')),
-    path('profile/', include('user_profile.urls')),  # Changed from '' to avoid conflict
+    # path('', include('user_profile.urls')),
 ]
 
 if settings.DEBUG:
