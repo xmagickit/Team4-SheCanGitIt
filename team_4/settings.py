@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'daphne',  # for async messaging, must be placed before django.contrib.staticfiles
     'django.contrib.staticfiles',
     'widget_tweaks',  # for form tweaking
-    'whitenoise',
 
     #cloudinary
     'cloudinary',
