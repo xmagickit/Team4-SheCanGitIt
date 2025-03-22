@@ -1,5 +1,5 @@
 """
-ASGI config for dating_app project.
+ASGI config for team_4 project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
