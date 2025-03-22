@@ -1,0 +1,62 @@
+/* Affirmation Page Styles */
+body {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #FFF5E1; /* retro-cream */
+    color: #2D243F; /* retro-dark */
+    margin: 0;
+    padding: 0;
+}
+
+.title-bar-controls button {
+    background-color: #FFB7C5; /* retro-pink */
+    border: none;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.content {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+select, button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #2D243F; /* retro-dark */
+    background-color: #E0B1CB; /* retro-highlight */
+    color: #2D243F; /* retro-dark */
+    cursor: pointer;
+}
+
+.generate-btn {
+    width: auto;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
+.generate-btn:hover {
+    background-color: #FFB7C5; 
+}
+
+.generate-btn:active {
+    background-color: #FFB7C5; 
+}
+
+.affirmation {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #2D243F; /* retro-dark */
+    background-color: #E0B1CB; /* retro-highlight */
+}
