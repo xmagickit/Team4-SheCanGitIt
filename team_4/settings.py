@@ -66,6 +66,10 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
 LOGIN_REDIRECT_URL = '/'  # Redirect after login
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
+# Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@shecangitit.com'
+
 MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'django.middleware.security.SecurityMiddleware',

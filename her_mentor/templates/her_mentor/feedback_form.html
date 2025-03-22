@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Rate Your Mentor{% endblock %}
+
+{% block content %}
+<h1 class="text-xl font-retro text-retro-dark mb-4">Rate Your Mentor</h1>
+
+<form method="POST" class="space-y-6">
+  {% csrf_token %}
+
+  <!-- Rating Field -->
+  <div>
+    <label for="id_rating" class="block font-retro text-sm text-retro-dark mb-1">Rating (1–5):</label>
+    <select name="rating" id="id_rating" class="win-input w-full">
+      {% for value, label in form.rating.field.choices %}
+        <option value="{{ value }}" {% if form.rating.value == value|stringformat:"s" %}selected{% endif %}>
+          {{ label }}
+        </option>
+      {% endfor %}
+    </select>
+    {% if form.rating.errors %}
+      <p class="text-red-500 text-xs">{{ form.rating.errors.0 }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Feedback Field -->
+  <div>
+    <label for="id_feedback" class="block font-retro text-sm text-retro-dark mb-1">Feedback:</label>
+    <textarea name="feedback" id="id_feedback" rows="5" class="win-input w-full">{{ form.feedback.value }}</textarea>
+    {% if form.feedback.errors %}
+      <p class="text-red-500 text-xs">{{ form.feedback.errors.0 }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" class="win-button bg-blue-600 text-white px-4 py-2 mt-4">Submit</button>
+</form>
+{% endblock %}

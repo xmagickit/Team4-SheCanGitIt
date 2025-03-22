@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Mentor, MentorshipRequest
+from django.http import HttpResponseForbidden
+from django.core.mail import send_mail
+from django.contrib import messages
 from .utils import match_mentors
-from .forms import MentorSearchForm
+from .forms import MentorSearchForm, FeedbackForm
 
 @login_required
 def mentor_list(request):
@@ -24,8 +27,22 @@ def send_request(request, mentor_id):
 
     # Ensure mentee does not send duplicate requests
     existing_request = MentorshipRequest.objects.filter(mentee=mentee, mentor=mentor).exists()
-    if not existing_request:
-        MentorshipRequest.objects.create(mentee=mentee, mentor=mentor)
+    #if not existing_request:
+    MentorshipRequest.objects.create(mentee=mentee, mentor=mentor)
+
+    print("Sending email to mentor:", mentor.user.email)
+
+    send_mail(
+        subject="New Mentorship Request",
+        message=(
+            f"Hi {mentor.user.username},\n\n"
+            f"You have a new mentorship request from {mentee.username}.\n"
+            f"Log in to view it: http://127.0.0.1:8000/mentor_dashboard/"
+        ),
+        from_email=None,  # uses DEFAULT_FROM_EMAIL
+        recipient_list=[mentor.user.email],
+        fail_silently=False,
+    )
     
     return redirect("mentorship_dashboard")
 
@@ -41,3 +58,49 @@ def mentorship_dashboard(request):
 
     return render(request, "her_mentor/mentor_dashboard.html", {"requests": requests})
 
+
+@login_required
+def accept_request(request, request_id):
+    mentorship_request = get_object_or_404(MentorshipRequest, id=request_id)
+
+    if mentorship_request.mentor.user != request.user:
+        return HttpResponseForbidden("You're not allowed to do that.")
+
+    mentorship_request.status = "accepted"
+    mentorship_request.save()
+    messages.success(request, "You accepted the mentorship request.")
+    return redirect("mentorship_dashboard")
+
+
+@login_required
+def decline_request(request, request_id):
+    mentorship_request = get_object_or_404(MentorshipRequest, id=request_id)
+
+    if mentorship_request.mentor.user != request.user:
+        return HttpResponseForbidden("You're not allowed to do that.")
+
+    mentorship_request.status = "declined"
+    mentorship_request.save()
+    messages.info(request, "You declined the mentorship request.")
+    return redirect("mentorship_dashboard")
+
+
+@login_required
+def give_feedback(request, request_id):
+    mentorship_request = get_object_or_404(MentorshipRequest, id=request_id)
+
+    if mentorship_request.mentee != request.user or mentorship_request.status != "accepted":
+        return HttpResponseForbidden("You can't leave feedback for this request.")
+
+    if request.method == "POST":
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            mentorship_request.rating = form.cleaned_data["rating"]
+            mentorship_request.feedback = form.cleaned_data["feedback"]
+            mentorship_request.save()
+            messages.success(request, "Feedback submitted!")
+            return redirect("mentorship_dashboard")
+    else:
+        form = FeedbackForm()
+
+    return render(request, "her_mentor/feedback_form.html", {"form": form, "request_obj": mentorship_request})
