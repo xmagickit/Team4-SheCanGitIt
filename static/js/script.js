@@ -1,4 +1,5 @@
-// Affirmation Generator
+// Affirmation generator
+document.addEventListener("DOMContentLoaded", () => {
   const affirmations = {
     discouraged: [
       "You are capable of overcoming any challenge.",
@@ -30,3 +31,5 @@
       randomAffirmation || "Keep pushing forward, you're doing great!";
     affirmationBox.style.display = "block";
   });
+});
+
