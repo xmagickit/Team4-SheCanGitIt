@@ -18,8 +18,17 @@
             <p class="font-bold">{{ mentor.user.username }}</p>
             <p>Skills: {{ mentor.skills }}</p>
             <p>Experience: {{ mentor.experience_level }}</p>
+
+            {% with mentor.average_rating as avg_rating %}
+                {% if avg_rating %}
+                    <p class="text-yellow-600 text-sm mt-1">⭐ {{ avg_rating|floatformat:1 }} / 5</p>
+                {% else %}
+                    <p class="text-gray-500 text-sm mt-1">No ratings yet</p>
+                {% endif %}
+            {% endwith %}
         </div>
-        <a href="{% url 'send_request' mentor.id %}" class="bg-green-500 text-white px-4 py-2 rounded">Request Mentorship</a>
+        <a href="{% url 'send_request' mentor.id %}" class="bg-green-500 text-white px-4 py-2 rounded">Request
+            Mentorship</a>
     </li>
     {% empty %}
     <p class="text-red-500">No matching mentors found.</p>
