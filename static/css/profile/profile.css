@@ -1,0 +1,29 @@
+/* Profile specific styles */
+.win-input {
+    border: 2px inset #ccc;
+    background-color: white;
+  }
+  
+  .win-checkbox {
+    appearance: none;
+    border: 2px inset #ccc;
+    background-color: white;
+    width: 16px;
+    height: 16px;
+    position: relative;
+  }
+  
+  .win-checkbox:checked:after {
+    content: '✓';
+    position: absolute;
+    top: -2px;
+    left: 2px;
+    font-size: 14px;
+    color: var(--retro-purple);
+  }
+  
+  /* Profile card style */
+  .profile-card {
+    border: 2px solid var(--retro-dark);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+  }
