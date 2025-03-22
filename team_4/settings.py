@@ -7,6 +7,7 @@ import os
 import dj_database_url # type: ignore
 from dotenv import load_dotenv
 
+
 # Load environment variables from .env
 load_dotenv()
 
@@ -73,6 +74,7 @@ DEFAULT_FROM_EMAIL = 'noreply@shecangitit.com'
 
 MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -104,7 +106,29 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'team_4.wsgi.application'
+
 ASGI_APPLICATION = 'team_4.asgi.application'
+
+REDIS_URL = os.getenv("REDISCLOUD_URL", "redis://localhost:6379")
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [REDIS_URL],
+        },
+    },
+}
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = os.getenv("SESSION_COOKIE_SECURE", True)
+CSRF_COOKIE_SECURE = os.getenv("CSRF_COOKIE_SECURE", True)
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://sparksync-test-baedaeaf485c.herokuapp.com',
+    'wss://sparksync-test-baedaeaf485c.herokuapp.com',
+    'http://192.168.178.48:8000',
+]
 
 
 # Database Configuration (Using DATABASE_URL)
@@ -124,12 +148,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-CLOUDINARY_STORAGE = {
-    'CLOUDINARY_URL': os.getenv('CLOUDINARY_URL'),
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -140,14 +158,25 @@ USE_TZ = True
 
 # Static files
 STATIC_URL = '/static/'
-
-
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Or wherever you store custom static files
+    BASE_DIR / "static", 
 ]
 
-# Static files for collecting in production
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET')
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = 'https://res.cloudinary.com/{}/'.format(os.getenv('CLOUDINARY_CLOUD_NAME'))
+
 
 # Default auto field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
