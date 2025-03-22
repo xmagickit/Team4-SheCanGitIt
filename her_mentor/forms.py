@@ -1,5 +1,17 @@
 from django import forms
+from .models import Mentor
 
+
+class MentorProfileForm(forms.ModelForm):
+    class Meta:
+        model = Mentor
+        fields = ['skills', 'experience_level', 'bio']
+        widgets = {
+            'skills': forms.Textarea(attrs={'rows': 3}),
+            'bio': forms.Textarea(attrs={'rows': 5}),
+        }
+
+        
 class MentorSearchForm(forms.Form):
     skills = forms.CharField(
         label="Enter skills (comma-separated)", 

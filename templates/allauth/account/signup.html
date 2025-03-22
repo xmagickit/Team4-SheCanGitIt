@@ -1,34 +1,46 @@
-{% extends "account/base_entrance.html" %}
-{% load allauth i18n %}
-{% block head_title %}
-    {% trans "Signup" %}
-{% endblock head_title %}
-{% block content %}
-    {% element h1 %}
-        {% trans "Sign Up" %}
-    {% endelement %}
-    <p>
-        {% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
+{% extends "allauth/layouts/entrance.html" %}
+
+{% block content_entrance %}
+<div class="win-window max-w-md mx-auto mt-6">
+  <div class="win-header font-retro text-xs">
+    <span>Sign Up</span>
+
+    <h1>🔥 MY CUSTOM SIGNUP PAGE 🔥</h1>
+    <h1>🔥 MY CUSTOM SIGNUP PAGE 🔥</h1>
+    
+    <div class="flex space-x-1">
+      <button class="win-button text-xs px-2 py-0 bg-retro-dark text-retro-cream">_</button>
+      <button class="win-button text-xs px-2 py-0 bg-retro-dark text-retro-cream">□</button>
+      <button class="win-button text-xs px-2 py-0 bg-retro-dark text-retro-cream">✕</button>
+    </div>
+  </div>
+  <div class="p-4 bg-white text-retro-dark space-y-4">
+
+    <form method="POST" action="{% url 'account_signup' %}" class="space-y-4">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      {% for field in form %}
+        <div>
+          <label for="{{ field.id_for_label }}" class="block text-xs font-retro mb-1">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}
+            <p class="text-[10px] text-retro-highlight mt-1">{{ field.help_text }}</p>
+          {% endif %}
+          {% for error in field.errors %}
+            <p class="text-red-600 text-xs">{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="win-button bg-retro-highlight text-white text-xs px-3 py-1 mt-2 hover:opacity-90">
+        Sign Up
+      </button>
+    </form>
+
+    <p class="text-xs font-retro">
+      Already have an account? <a href="{% url 'account_login' %}" class="text-retro-highlight underline">Sign inasasas as </a>
     </p>
-    {% url 'account_signup' as action_url %}
-    {% element form form=form method="post" action=action_url tags="entrance,signup" %}
-        {% slot body %}
-            {% csrf_token %}
-            {% element fields form=form unlabeled=True %}
-            {% endelement %}
-            {% if redirect_field_value %}
-                <input type="hidden"
-                       name="{{ redirect_field_name }}"
-                       value="{{ redirect_field_value }}" />
-            {% endif %}
-        {% endslot %}
-        {% slot actions %}
-            {% element button tags="prominent,signup" type="submit" %}
-                {% trans "Sign Up" %}
-            {% endelement %}
-        {% endslot %}
-    {% endelement %}
-    {% if SOCIALACCOUNT_ENABLED %}
-        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-    {% endif %}
-{% endblock content %}
+  </div>
+</div>
+{% endblock %}
