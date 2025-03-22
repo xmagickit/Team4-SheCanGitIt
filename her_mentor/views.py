@@ -5,7 +5,7 @@ from django.http import HttpResponseForbidden
 from django.core.mail import send_mail
 from django.contrib import messages
 from .utils import match_mentors
-from .forms import MentorSearchForm, FeedbackForm
+from .forms import MentorSearchForm, FeedbackForm, MentorProfileForm
 
 @login_required
 def mentor_list(request):
@@ -104,3 +104,33 @@ def give_feedback(request, request_id):
         form = FeedbackForm()
 
     return render(request, "her_mentor/feedback_form.html", {"form": form, "request_obj": mentorship_request})
+
+@login_required
+def edit_profile(request):
+    try:
+        mentor = request.user.mentor
+    except Mentor.DoesNotExist:
+        mentor = None
+
+    if request.method == "POST":
+        form = MentorProfileForm(request.POST, instance=mentor)
+        if form.is_valid():
+            mentor = form.save(commit=False)
+            mentor.user = request.user
+            mentor.save()
+            messages.success(request, "Profile updated!")
+            return redirect("edit_profile")
+    else:
+        form = MentorProfileForm(instance=mentor)
+
+    return render(request, "her_mentor/edit_profile.html", {"form": form, "mentor": mentor})
+
+
+@login_required
+def hermentor_redirect(request):
+    """Redirects users to the correct HerMentor view based on their role."""
+    if hasattr(request.user, "mentor"):
+        return redirect("mentorship_dashboard")
+    else:
+        return redirect("mentor_list")
+

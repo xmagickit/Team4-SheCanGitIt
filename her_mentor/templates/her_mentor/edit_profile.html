@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Your Profile{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-retro text-retro-dark mb-6">Edit Your Mentor Profile</h1>
+
+<div class="bg-white border-2 border-retro-dark rounded-xl shadow-md p-6 max-w-2xl space-y-6 font-retro">
+
+  <form method="POST" class="space-y-4">
+    {% csrf_token %}
+
+    <!-- Skills -->
+    <div>
+      <label for="id_skills" class="block text-sm text-retro-dark mb-1">Skills</label>
+      <textarea name="skills" id="id_skills" rows="3"
+        class="win-input w-full border border-retro-dark rounded px-3 py-2 text-sm">{{ form.skills.value }}</textarea>
+    </div>
+
+    <!-- Experience Level -->
+    <div>
+      <label for="id_experience_level" class="block text-sm text-retro-dark mb-1">Experience Level</label>
+      <input type="text" name="experience_level" id="id_experience_level"
+        value="{{ form.experience_level.value|stringformat:'s' }}"
+        class="win-input w-full border border-retro-dark rounded px-3 py-2 text-sm" placeholder="e.g. Junior, Mid-Level, Senior">
+    </div>
+
+    <!-- Bio -->
+    <div>
+      <label for="id_bio" class="block text-sm text-retro-dark mb-1">Bio</label>
+      <textarea name="bio" id="id_bio" rows="5"
+        class="win-input w-full border border-retro-dark rounded px-3 py-2 text-sm">{{ form.bio.value }}</textarea>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit"
+      class="win-button bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded shadow transition duration-150">
+      Save Changes
+    </button>
+  </form>
+</div>
+{% endblock %}

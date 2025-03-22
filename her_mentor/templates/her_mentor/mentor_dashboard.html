@@ -3,35 +3,58 @@
 {% block title %}Mentorship Dashboard{% endblock %}
 
 {% block content %}
-<h1 class="text-xl font-bold text-retro-dark">Your Mentorship Requests</h1>
+<h1 class="text-2xl font-retro text-retro-dark mb-6">Mentorship Dashboard</h1>
 
-<ul class="mt-4">
+{% if user.mentor %}
+  <a href="{% url 'edit_profile' %}" class="win-button bg-yellow-400 text-retro-dark px-4 py-2 rounded hover:bg-yellow-300 shadow transition duration-150 ease-in-out mb-6 inline-block">
+    Edit Mentor Profile
+  </a>
+{% endif %}
+
+<h2 class="text-xl font-retro text-retro-dark mb-4">Mentorship Requests</h2>
+
+{% if requests %}
+  <ul class="space-y-4">
     {% for request in requests %}
-    <li class="border p-4 my-2 flex justify-between items-center">
-        <div>
-            {% if request.mentee == user %}
-                <p>Request to: <strong>{{ request.mentor.user.username }}</strong></p>
-            {% else %}
-                <p>Request from: <strong>{{ request.mentee.username }}</strong></p>
-                <div class="flex gap-2">
-                    <form action="{% url 'accept_request' request.id %}" method="POST">
-                        {% csrf_token %}
-                        <button class="bg-green-500 text-white px-3 py-1 rounded">Accept</button>
-                    </form>
-                    <form action="{% url 'decline_request' request.id %}" method="POST">
-                        {% csrf_token %}
-                        <button class="bg-red-500 text-white px-3 py-1 rounded">Decline</button>
-                    </form>
-                </div>
-            {% endif %}
-        </div>
-        <p>Status: <span class="font-bold">{{ request.status }}</span></p>
+    <li class="bg-white border-2 border-retro-dark rounded-xl p-4 shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-retro">
+
+      <div>
+        {% if request.mentee == user %}
+          <p class="mb-2">Request to: <strong>{{ request.mentor.user.username }}</strong></p>
+        {% else %}
+          <p class="mb-2">Request from: <strong>{{ request.mentee.username }}</strong></p>
+          <div class="flex gap-2">
+            <form action="{% url 'accept_request' request.id %}" method="POST">
+              {% csrf_token %}
+              <button class="win-button bg-green-600 hover:bg-green-500 text-white px-3 py-1 rounded shadow-sm transition">Accept</button>
+            </form>
+            <form action="{% url 'decline_request' request.id %}" method="POST">
+              {% csrf_token %}
+              <button class="win-button bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded shadow-sm transition">Decline</button>
+            </form>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="text-right w-full md:w-auto">
+        <p>Status: <span class="font-bold capitalize">{{ request.status }}</span></p>
 
         {% if request.status == "accepted" and request.mentee == user and not request.feedback %}
-            <a href="{% url 'give_feedback' request.id %}" class="bg-yellow-500 text-white px-2 py-1 rounded">Leave Feedback</a>
+          <a href="{% url 'give_feedback' request.id %}" class="mt-2 inline-block win-button bg-yellow-500 hover:bg-yellow-400 text-white px-3 py-1 rounded shadow transition">
+            ⭐ Leave Feedback
+          </a>
         {% endif %}
-
+      </div>
     </li>
     {% endfor %}
-</ul>
+  </ul>
+{% else %}
+  <div class="mt-6 text-center text-retro-dark font-retro italic">
+    {% if user.mentor %}
+        You have no new mentorship requests.
+    {% else %}
+        No mentorship requests have been sent yet.
+    {% endif %}
+  </div>
+{% endif %}
 {% endblock %}
