@@ -7,25 +7,17 @@ import os
 import dj_database_url # type: ignore
 from dotenv import load_dotenv
 
+# Load environment variables from .env
+load_dotenv()
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Explicit path to .env file
-env_path = BASE_DIR / '.env'
-
-# Print to debug
-print(f"Looking for .env file at: {env_path}")
-print(f"File exists: {env_path.exists()}")
-
-# Load the .env file
-load_dotenv(dotenv_path=env_path)
-
 # Security settings
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = os.getenv("DEBUG", "False") != "False"
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,.herokuapp.com").split(",")
+DEBUG = os.environ.get("DEBUG", "True") != "False"
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,.herokuapp.com").split(",")
 
 
 # Application definition
@@ -41,7 +33,6 @@ INSTALLED_APPS = [
     'channels',  # for async messaging
     'daphne',  # for async messaging, must be placed before django.contrib.staticfiles
     'django.contrib.staticfiles',
-    'widget_tweaks',  # for form tweaking
 
     #cloudinary
     'cloudinary',
@@ -59,7 +50,6 @@ INSTALLED_APPS = [
     'her_mentor',
     'her_story',
     'home',
-    'retro_editor',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -70,7 +60,6 @@ AUTHENTICATION_BACKENDS = [
 # Configure Allauth
 ACCOUNT_LOGIN_METHODS = ['email']  # Use email instead of username
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
-ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_SIGNUP_REDIRECT_URL = '/'  # Redirect after sign-up
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
 LOGIN_REDIRECT_URL = '/'  # Redirect after login
@@ -79,7 +68,6 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -104,7 +92,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'retro_editor.context_processors.recent_code_snippets',
             ],
         },
     },
@@ -113,37 +100,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'team_4.wsgi.application'
 ASGI_APPLICATION = 'team_4.asgi.application'
 
-REDIS_URL = os.getenv("REDISCLOUD_URL", "redis://localhost:6379")
-
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [REDIS_URL],
-        },
-    },
-}
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SESSION_COOKIE_SECURE = os.getenv("SESSION_COOKIE_SECURE", True)
-CSRF_COOKIE_SECURE = os.getenv("CSRF_COOKIE_SECURE", True)
-
-CSRF_TRUSTED_ORIGINS = [
-    "https://localhost",
-    "https://*.herokuapp.com",
-    'wss://she-gits-it-8555f0353cc7.herokuapp.com',
-    'http://192.168.178.48:8000',
-]
 
 # Database Configuration (Using DATABASE_URL)
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.environ.get("DATABASE_URL")
 DATABASES = {
     'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600) if DATABASE_URL else {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -158,8 +123,6 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-MEDIA_URL = '/media/'
 
 
 # Internationalization

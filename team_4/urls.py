@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+import os
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
@@ -27,5 +29,4 @@ urlpatterns = [
     # path('buddies/', include('her_buddies.urls')),
     path('chat/', include('chat.urls')),
     path('affirmation/', include('affirmation.urls')),
-    path('retro-editor/', include('retro_editor.urls', namespace='retro_editor')),
 ]

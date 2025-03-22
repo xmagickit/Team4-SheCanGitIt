@@ -61,8 +61,6 @@ Al
 ### Wireframes
 Initial layout of website:
 
-
-
 - Mobile view:<br>
   <img src="">
   <img src="">
@@ -86,7 +84,6 @@ In
 ### Imagery
 - Ba<br>
   <img src="">
-- Created an authentic pixel art computer design using Canva that mimics the Windows 98/2000 aesthetic.
 
 [Back to top](#top)
 
@@ -95,7 +92,6 @@ In
   <img src="">
 
 Th
-
 
 [Back to top](#top)
 
@@ -108,11 +104,6 @@ Most
 
 ## Technologies Used
 ### Languages and Technologies
-- Django
-- Python
-- JavaScript
-- HTML/CSS
-- Tailwind CSS
 
 
 ### Libraries
@@ -151,8 +142,7 @@ V
 
 ## Credits
 ### Code References
-- Used CodePen for inspiration on retro loading screen animations
-- Implemented custom responsive design for the retro computer display
+Ma
 
 ### Use of AI
 #### Code Generation

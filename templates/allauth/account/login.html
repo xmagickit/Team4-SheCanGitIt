@@ -1,50 +1,36 @@
 {% extends "account/base_entrance.html" %}
 {% load i18n %}
 {% load allauth account %}
-
 {% block head_title %}
     {% trans "Sign In" %}
 {% endblock head_title %}
-
-{% block allauth_content %}
-    <!-- Windows-style login box -->
-    <div id="allauth-form-container" class="border-3 border-white rounded shadow-md overflow-hidden">
-        <!-- Blue gradient header with SheCanGitIt logo -->
-        <div class="bg-gradient-to-b from-retro-purple to-retro-highlight flex items-center p-4 border-b border-white border-opacity-40">
-            <div class="bg-retro-cream w-10 h-10 flex items-center justify-center border border-white mr-4">
-                <span class="font-retro text-retro-dark text-xs">&lt;/&gt;</span>
-            </div>
-            <div>
-                <h1 class="text-md font-bold text-white">SheCanGitIt Professional</h1>
-                <p class="text-xs text-white">Women in Tech Edition</p>
-            </div>
-        </div>
-        
-        <!-- Form area with cream background -->
-        <div class="bg-retro-cream p-5">
-            <form method="post" action="{% url 'account_login' %}">
-                {% csrf_token %}
-                
-                {% for field in form %}
-                <div class="mb-4">
-                    <label for="{{ field.id_for_label }}" class="block text-xs mb-1">{{ field.label }}:</label>
-                    {{ field }}
-                    {% if field.errors %}
-                        <div class="text-red-500 text-xs mt-1">{{ field.errors }}</div>
-                    {% endif %}
-                </div>
-                {% endfor %}
-                
-                {% if redirect_field_value %}
-                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                {% endif %}
-                
-                <div class="flex justify-end gap-2 mt-5">
-                    <button type="submit" class="win-button text-xs">{% trans "OK" %}</button>
-                    <a href="{% url 'account_reset_password' %}" class="win-button text-xs">{% trans "Help" %}</a>
-                    <a href="{% url 'account_signup' %}" class="win-button text-xs">{% trans "Sign Up" %}</a>
-                </div>
-            </form>
-        </div>
-    </div>
-{% endblock allauth_content %}
+{% block content %}
+    {% element h1 %}
+        {% trans "Sign In" %}
+    {% endelement %}
+    <p>
+        {% blocktrans %}If you have not created an account yet, then please
+    <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+    </p>
+    {% url 'account_login' as login_url %}
+    {% element form form=form method="post" action=login_url tags="entrance,login" %}
+        {% slot body %}
+            {% csrf_token %}
+            {% element fields form=form unlabeled=True %}
+            {% endelement %}
+            {% if redirect_field_value %}
+                <input type="hidden"
+                       name="{{ redirect_field_name }}"
+                       value="{{ redirect_field_value }}" />
+            {% endif %}
+        {% endslot %}
+        {% slot actions %}
+            {% element button type="submit" tags="prominent,login" %}
+                {% trans "Sign In" %}
+            {% endelement %}
+        {% endslot %}
+    {% endelement %}
+    {% if SOCIALACCOUNT_ENABLED %}
+        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+    {% endif %}
+{% endblock content %}
