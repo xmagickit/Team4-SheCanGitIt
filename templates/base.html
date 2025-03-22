@@ -10,8 +10,10 @@
   <!-- Retro font -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   
-  {% load static %}
   
+  {% load static %}
+  <!-- Allauth custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/allauth-custom.css' %}">
   <!-- Tailwind Configuration -->
   <script src="{% static 'js/tailwind-config.js' %}"></script>
   
@@ -52,6 +54,7 @@
               <div class="win-button text-xs px-2 py-1">
                 <span>Logged in as: {{ user.username }}</span>
               </div>
+              <a href="{% url 'user_profile' %}" class="block p-2 text-xs hover:bg-retro-highlight">My Profile</a>
               <a href="{% url 'account_email' %}" class="win-button text-center w-full px-2 py-1 text-xs">Manage Email</a>
               <a href="{% url 'account_change_password' %}" class="win-button text-center w-full px-2 py-1 text-xs">Change Password</a>
               <a href="{% url 'account_logout' %}" class="win-button text-center w-full px-2 py-1 text-xs">Sign Out</a>
@@ -78,6 +81,7 @@
             </button>
             <div class="hidden group-hover:block absolute right-0 w-48 win-window z-50">
               <div class="p-2">
+                <a href="{% url 'user_profile' %}" class="block p-2 text-xs hover:bg-retro-highlight">My Profile</a>
                 <a href="{% url 'account_email' %}" class="block p-2 text-xs hover:bg-retro-highlight">Manage Email</a>
                 <a href="{% url 'account_change_password' %}" class="block p-2 text-xs hover:bg-retro-highlight">Change Password</a>
                 <a href="{% url 'account_logout' %}" class="block p-2 text-xs hover:bg-retro-highlight">Sign Out</a>

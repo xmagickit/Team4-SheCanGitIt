@@ -1,0 +1,55 @@
+/* Main form input styling */
+#id_login,
+#id_password,
+#id_email,
+#id_username,
+#id_password1,
+#id_password2,
+.win-window input[type="text"],
+.win-window input[type="email"],
+.win-window input[type="password"] {
+  border: 1px solid #7B9EBD !important;
+  background-color: white !important;
+  padding: 2px 5px !important;
+  font-size: 12px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  font-family: Tahoma, Arial, sans-serif !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+}
+
+/* Button styling */
+.win-window form button[type="submit"],
+.win-window input[type="submit"] {
+  border: 1px solid #000 !important;
+  background: linear-gradient(to bottom, #E1E1E1, #C1C1C1) !important;
+  padding: 2px 12px !important;
+  font-family: Tahoma, Arial, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: bold !important;
+  margin-top: 10px !important;
+  cursor: pointer !important;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2) !important;
+}
+
+.win-window form button[type="submit"]:hover,
+.win-window input[type="submit"]:hover {
+  background: linear-gradient(to bottom, #E8E8E8, #D1D1D1) !important;
+}
+
+/* Checkbox styling */
+.win-window input[type="checkbox"] {
+  width: auto !important;
+  margin-right: 6px !important;
+  vertical-align: middle !important;
+}
+
+/* Label styling */
+.win-window form label {
+  font-family: Tahoma, Arial, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: bold !important;
+  margin-bottom: 3px !important;
+  display: block !important;
+}
