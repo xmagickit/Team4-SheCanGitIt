@@ -79,6 +79,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -112,6 +113,27 @@ TEMPLATES = [
 WSGI_APPLICATION = 'team_4.wsgi.application'
 ASGI_APPLICATION = 'team_4.asgi.application'
 
+REDIS_URL = os.getenv("REDISCLOUD_URL", "redis://localhost:6379")
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [REDIS_URL],
+        },
+    },
+}
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = os.getenv("SESSION_COOKIE_SECURE", True)
+CSRF_COOKIE_SECURE = os.getenv("CSRF_COOKIE_SECURE", True)
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://localhost",
+    "https://*.herokuapp.com",
+    'wss://she-gits-it-8555f0353cc7.herokuapp.com',
+    'http://192.168.178.48:8000',
+]
 
 # Database Configuration (Using DATABASE_URL)
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -122,10 +144,6 @@ DATABASES = {
     }
 }
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://localhost",
-    "https://*.herokuapp.com"
-]
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -140,6 +158,8 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+MEDIA_URL = '/media/'
 
 
 # Internationalization
