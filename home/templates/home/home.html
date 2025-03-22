@@ -6,43 +6,73 @@
 
 <!-- Hero Section -->
 <div class="bg-retro-purple text-white py-20 px-6 text-center">
-    <h1 class="text-4xl md:text-6xl font-retro">SheCanGitIt</h1>
-    <p class="mt-4 text-lg md:text-xl max-w-2xl mx-auto">
-        Empowering women in tech through collaboration, mentorship, and community.
-    </p>
-    <a href="x" class="mt-6 inline-block bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-bold 
-        text-lg hover:bg-yellow-400 transition-all shadow-md active:translate-y-1">
-        Get Started
-    </a>
+  <h1 class="text-4xl md:text-6xl font-retro">SheCanGitIt</h1>
+  <p class="mt-4 text-lg md:text-xl max-w-2xl mx-auto">
+    Empowering women in tech through collaboration, mentorship, and community.
+  </p>
+  <a href="#" class="mt-6 inline-block bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-bold 
+      text-lg hover:bg-yellow-400 transition-all shadow-md active:translate-y-1">
+    Get Started
+  </a>
 </div>
 
-<!-- Women in Tech Section -->
-<div class="max-w-5xl mx-auto mt-10 win-window p-4">
-    <div class="win-header flex justify-between items-center bg-retro-purple p-2 text-white">
-      <span class="font-retro">Women in Tech History</span>
-    </div>
-  
-    <div class="p-6 flex justify-center">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center max-w-screen-lg mx-auto">
-        {% for woman in women %}
-          <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col max-w-[350px] transform hover:scale-[1.03] transition-transform duration-300 border border-retro-purple/20">
-            {% if woman.image %}
-              <img src="{{ woman.image.url }}"
-                   alt="{{ woman.name }}"
+<!-- Women in Tech Slideshow -->
+<div class="max-w-6xl mx-auto mt-10 win-window p-4 group relative">
+  <div class="win-header flex justify-between items-center bg-retro-purple p-2 text-white">
+    <span class="font-retro">Women in Tech History</span>
+  </div>
+
+  <div id="slideshow" class="relative overflow-hidden">
+    <div id="slidesWrapper" class="flex transition-transform duration-700 ease-in-out">
+      {% for woman in women %}
+        {% if forloop.counter0|divisibleby:4 %}
+          <div class="flex flex-shrink-0 w-full max-w-full mx-auto slide-group">
+        {% endif %}
+
+        <div class="w-full sm:w-1/2 lg:w-1/4 flex-shrink-0 p-4">
+          <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col h-full border border-retro-purple/20 cursor-pointer open-modal"
+               data-name="{{ woman.name }}"
+               data-image="{{ woman.image_url }}"
+               data-bio="{{ woman.bio }}">
+            {% if woman.image_url %}
+              <img src="{{ woman.image_url }}" alt="{{ woman.name }}"
                    class="w-full h-48 object-cover rounded-lg shadow-md border border-retro-purple/30 mb-3">
             {% else %}
               <div class="w-full h-48 flex items-center justify-center bg-retro-purple text-white text-sm rounded-lg mb-3">
-                No image uploaded
+                No image available
               </div>
             {% endif %}
             <h3 class="text-lg font-semibold text-retro-purple">{{ woman.name }}</h3>
-            <p class="text-sm text-gray-600 mt-2">{{ woman.bio }}</p>
+            <p class="text-sm text-gray-600 mt-2">{{ woman.bio|truncatewords:20 }}</p>
           </div>
-        {% empty %}
-          <p class="text-white">No women found in the database. Add some via the admin panel!</p>
-        {% endfor %}
-      </div>
+        </div>
+
+        {% if forloop.counter|divisibleby:4 or forloop.last %}
+          </div>
+        {% endif %}
+      {% empty %}
+        <div class="text-white p-4 text-center">No women found in the database.</div>
+      {% endfor %}
     </div>
+
+    <!-- Navigation Buttons -->
+    <button id="prevSlide" class="absolute top-1/2 -translate-y-1/2 left-0 bg-retro-purple text-white px-3 py-1 z-10 hidden group-hover:block rounded-r-lg">
+      ‹
+    </button>
+    <button id="nextSlide" class="absolute top-1/2 -translate-y-1/2 right-0 bg-retro-purple text-white px-3 py-1 z-10 hidden group-hover:block rounded-l-lg">
+      ›
+    </button>
+  </div>
+</div>
+
+<!-- Modal for Full Info -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50">
+  <div class="bg-white p-6 rounded-lg max-w-md w-full relative">
+    <button id="closeModal" class="absolute top-2 right-3 text-gray-500 text-xl">&times;</button>
+    <img id="modalImage" class="w-full h-64 object-cover rounded mb-4" src="" alt="Modal Image">
+    <h2 id="modalName" class="text-xl font-bold text-retro-purple mb-2"></h2>
+    <p id="modalBio" class="text-gray-700 text-sm"></p>
+  </div>
 </div>
 
 <!-- Testimonials Section -->
@@ -84,4 +114,83 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const slidesWrapper = document.getElementById('slidesWrapper');
+  const slideGroups = document.querySelectorAll('.slide-group');
+  const slideshow = document.getElementById('slideshow');
+  const totalSlides = slideGroups.length;
+
+  let currentSlide = 0;
+  let interval = null;
+
+  function updateSlide() {
+    if (totalSlides === 0) return;
+    const containerWidth = slideshow.offsetWidth;
+    slidesWrapper.style.transform = `translateX(-${containerWidth * currentSlide}px)`;
+  }
+
+  function nextSlide() {
+    if (totalSlides === 0) return;
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateSlide();
+  }
+
+  function prevSlide() {
+    if (totalSlides === 0) return;
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    updateSlide();
+  }
+
+  document.getElementById('nextSlide').addEventListener('click', nextSlide);
+  document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+  // Auto-play
+  function startSlideshow() {
+    interval = setInterval(nextSlide, 5000);
+  }
+
+  function stopSlideshow() {
+    clearInterval(interval);
+  }
+
+  slideshow.addEventListener('mouseenter', stopSlideshow);
+  slideshow.addEventListener('mouseleave', startSlideshow);
+  window.addEventListener('resize', updateSlide);
+
+  // Swipe support
+  let startX = 0;
+  slideshow.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+  slideshow.addEventListener('touchend', e => {
+    const endX = e.changedTouches[0].clientX;
+    if (startX - endX > 50) nextSlide();
+    else if (endX - startX > 50) prevSlide();
+  });
+
+  // Modal logic
+  const modal = document.getElementById('modal');
+  const modalImage = document.getElementById('modalImage');
+  const modalName = document.getElementById('modalName');
+  const modalBio = document.getElementById('modalBio');
+  const closeModal = document.getElementById('closeModal');
+
+  document.querySelectorAll('.open-modal').forEach(card => {
+    card.addEventListener('click', () => {
+      modalImage.src = card.dataset.image;
+      modalName.textContent = card.dataset.name;
+      modalBio.textContent = card.dataset.bio;
+      modal.classList.remove('hidden');
+    });
+  });
+
+  closeModal.addEventListener('click', () => modal.classList.add('hidden'));
+  window.addEventListener('click', e => {
+    if (e.target === modal) modal.classList.add('hidden');
+  });
+
+  startSlideshow();
+  updateSlide();
+</script>
 {% endblock %}
