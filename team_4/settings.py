@@ -63,7 +63,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Configure Allauth
-ACCOUNT_LOGIN_METHODS = ['email']  # Use email instead of username
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email' # Use email instead of username
 ACCOUNT_SIGNUP_FIELDS = ['username*', 'email*', 'password1*', 'password2*']
 # ACCOUNT_EMAIL_REQUIRED = False   Email not required for sign-up
 ACCOUNT_SIGNUP_REDIRECT_URL = '/'  # Redirect after sign-up
