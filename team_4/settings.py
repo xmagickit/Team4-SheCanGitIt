@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'channels',  # for async messaging
     'daphne',  # for async messaging, must be placed before django.contrib.staticfiles
     'django.contrib.staticfiles',
+    'widget_tweaks',  # for form tweaking
 
     #cloudinary
     'cloudinary',

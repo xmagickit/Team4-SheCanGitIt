@@ -8,7 +8,7 @@
 
 {% block allauth_content %}
     <!-- Windows-style login box -->
-    <div class="border-3 border-white rounded shadow-md overflow-hidden">
+    <div id="allauth-form-container" class="border-3 border-white rounded shadow-md overflow-hidden">
         <!-- Blue gradient header with SheCanGitIt logo -->
         <div class="bg-gradient-to-b from-retro-purple to-retro-highlight flex items-center p-4 border-b border-white border-opacity-40">
             <div class="bg-retro-cream w-10 h-10 flex items-center justify-center border border-white mr-4">
@@ -25,32 +25,19 @@
             <form method="post" action="{% url 'account_login' %}">
                 {% csrf_token %}
                 
+                {% for field in form %}
                 <div class="mb-4">
-                    <label for="id_login" class="block text-xs mb-1">{% trans "Username:" %}</label>
-                    <input type="text" name="login" id="id_login" class="win-input w-full text-xs">
-                    {% if form.login.errors %}
-                        <div class="text-red-500 text-xs mt-1">{{ form.login.errors }}</div>
+                    <label for="{{ field.id_for_label }}" class="block text-xs mb-1">{{ field.label }}:</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="text-red-500 text-xs mt-1">{{ field.errors }}</div>
                     {% endif %}
                 </div>
-                
-                <div class="mb-4">
-                    <label for="id_password" class="block text-xs mb-1">{% trans "Password:" %}</label>
-                    <input type="password" name="password" id="id_password" class="win-input w-full text-xs">
-                    {% if form.password.errors %}
-                        <div class="text-red-500 text-xs mt-1">{{ form.password.errors }}</div>
-                    {% endif %}
-                </div>
+                {% endfor %}
                 
                 {% if redirect_field_value %}
                     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                 {% endif %}
-                
-                <div class="mb-4">
-                    <label class="flex items-center text-xs">
-                        <input type="checkbox" name="remember" class="win-input mr-2 w-4 h-4">
-                        {% trans "Remember Me" %}
-                    </label>
-                </div>
                 
                 <div class="flex justify-end gap-2 mt-5">
                     <button type="submit" class="win-button text-xs">{% trans "OK" %}</button>
