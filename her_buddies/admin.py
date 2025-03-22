@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import TechStack, StudyGroup, Discussion
 
-# Register your models here.
+admin.site.register(TechStack)
+admin.site.register(StudyGroup)
+admin.site.register(Discussion)
