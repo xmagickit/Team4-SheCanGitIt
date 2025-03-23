@@ -8,24 +8,17 @@ import dj_database_url # type: ignore
 from dotenv import load_dotenv
 
 
+# Load environment variables from .env
+load_dotenv()
+
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Explicit path to .env file
-env_path = BASE_DIR / '.env'
-
-# Print to debug
-print(f"Looking for .env file at: {env_path}")
-print(f"File exists: {env_path.exists()}")
-
-# Load the .env file
-load_dotenv(dotenv_path=env_path)
-
 # Security settings
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = True
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,.herokuapp.com").split(",")
+DEBUG = os.environ.get("DEBUG", "True") != "False"
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,.herokuapp.com").split(",")
 
 
 # Application definition
@@ -33,6 +26,7 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,.herokuapp.com")
 INSTALLED_APPS = [
     # predefined django apps
     'jazzmin',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,7 +43,7 @@ INSTALLED_APPS = [
     #allauth
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
+    # 'allauth.socialaccount',
      
     # custom project apps
     'affirmation',
@@ -57,9 +51,11 @@ INSTALLED_APPS = [
     'her_buddies',
     'her_mentor',
     'her_story',
+    'user_profile',
     'home',
-    'retro_editor',
 ]
+
+SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default auth backend
@@ -67,15 +63,21 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Configure Allauth
-ACCOUNT_LOGIN_METHODS = ['email']  # Use email instead of username
-ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email' # Use email instead of username
+ACCOUNT_SIGNUP_FIELDS = ['username*', 'email*', 'password1*', 'password2*']
+# ACCOUNT_EMAIL_REQUIRED = False   Email not required for sign-up
 ACCOUNT_SIGNUP_REDIRECT_URL = '/'  # Redirect after sign-up
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
 LOGIN_REDIRECT_URL = '/'  # Redirect after login
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
+# Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@shecangitit.com'
+
 MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -93,7 +95,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -101,18 +103,39 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'retro_editor.context_processors.recent_code_snippets',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'team_4.wsgi.application'
+
 ASGI_APPLICATION = 'team_4.asgi.application'
+
+REDIS_URL = os.getenv("REDISCLOUD_URL", "redis://localhost:6379")
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [REDIS_URL],
+        },
+    },
+}
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = os.getenv("SESSION_COOKIE_SECURE", True)
+CSRF_COOKIE_SECURE = os.getenv("CSRF_COOKIE_SECURE", True)
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://sparksync-test-baedaeaf485c.herokuapp.com',
+    'wss://sparksync-test-baedaeaf485c.herokuapp.com',
+    'http://192.168.178.48:8000',
+]
 
 
 # Database Configuration (Using DATABASE_URL)
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.environ.get("DATABASE_URL")
 DATABASES = {
     'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600) if DATABASE_URL else {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -128,12 +151,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-CLOUDINARY_STORAGE = {
-    'CLOUDINARY_URL': os.getenv('CLOUDINARY_URL'),
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -144,14 +161,25 @@ USE_TZ = True
 
 # Static files
 STATIC_URL = '/static/'
-
-
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Or wherever you store custom static files
+    BASE_DIR / "static", 
 ]
 
-# Static files for collecting in production
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET')
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = 'https://res.cloudinary.com/{}/'.format(os.getenv('CLOUDINARY_CLOUD_NAME'))
+
 
 # Default auto field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

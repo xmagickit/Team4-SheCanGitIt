@@ -1,163 +1,49 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base.html" %} 
+{% load static %} 
 
-{% block window_title %}
-&lt;/&gt; SheCanGitIt Affirmation Generator
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/affirmation/style.css' %}"/>
 {% endblock %}
 
+{% block window_title %} SheCanGitIt Affirmation Generator 
+{% endblock %} 
+
 {% block content %}
-<head>
-    <title>&lt;/&gt; SheCanGitIt Affirmation Generator</title>
-    <style>
-        :root {
-            --retro-purple: #6B5B95;
-            --retro-pink: #FFB7C5;
-            --retro-cream: #FFF5E1;
-            --retro-dark: #2D243F;
-            --retro-highlight: #E0B1CB;
-        }
+<div class="content">
+  <div>
+    <p>
+      We understand that being a woman in tech isn't always easy. At times, you
+      might find yourself battling imposter syndrome or doubting your own
+      abilities. But you're not alone—we've got you covered.
+    </p>
+    <p>
+      Whenever you need a little boost, use our generator to lift your spirits,
+      remind yourself of your strength, and embrace your unique journey. You've
+      got this, and we're here to cheer you on every step of the way!
+    </p>
+    <br/>
+  </div>
+  <div class="form-group">
+    <label for="mood">Select your mood:</label>
+    <select id="mood">
+      <option value="discouraged">Feeling discouraged</option>
+      <option value="motivated">Need motivation</option>
+      <option value="confident">Confident</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="career-stage">Select your career stage:</label>
+    <select id="career-stage">
+      <option value="beginner">Beginner</option>
+      <option value="intermediate">Intermediate</option>
+      <option value="advanced">Advanced</option>
+    </select>
+  </div>
+  <button id="generate-btn" class="win-button generate-btn">Generate Affirmation</button>
+  <div class="affirmation" id="affirmation-box" style="display: none"></div>
+</div>
+{% endblock %}
 
-        body {
-            font-family: "Courier New", Courier, monospace;
-            background-color: var(--retro-cream);
-            color: var(--retro-dark);
-            margin: 0;
-            padding: 0;
-        }
-
-        .window {
-            width: 80vw;
-            border: 2px solid var(--retro-dark);
-            background-color: var(--retro-cream);
-            margin: 50px auto;
-            box-shadow: 5px 5px var(--retro-dark);
-        }
-
-        .title-bar {
-            background-color: var(--retro-purple);
-            color: var(--retro-cream);
-            padding: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .title-bar-text {
-            font-weight: bold;
-        }
-
-        .title-bar-controls button {
-            background-color: var(--retro-pink);
-            border: none;
-            width: 20px;
-            height: 20px;
-            margin-left: 5px;
-            cursor: pointer;
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        select, button {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--retro-dark);
-            background-color: var(--retro-highlight);
-            color: var(--retro-dark);
-            cursor: pointer;
-        }
-
-        #generate-btn {
-            width: auto;
-            padding: 5px 10px;
-            border: 1px solid var(--retro-dark);
-            background-color: var(--retro-highlight);
-            color: var(--retro-dark);
-            cursor: pointer;
-            display: block;
-            margin: 0 auto;
-        }
-
-        button:hover {
-            background-color: var(--retro-pink);
-        }
-
-        .affirmation {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px solid var(--retro-dark);
-            background-color: var(--retro-highlight);
-        }
-    </style>
-</head>
-<body>
-        <div class="content">
-            <div>
-            <p>We understand that being a woman in tech isn't always easy. At times, you might find yourself battling imposter syndrome or doubting your own abilities. But you're not alone—we've got you covered.</p>
-            <p>Whenever you need a little boost, use our generator to lift your spirits, remind yourself of your strength, and embrace your unique journey. You've got this, and we're here to cheer you on every step of the way!</p>
-            <br>
-            </div>
-            <div class="form-group">
-                <label for="mood">Select your mood:</label>
-                <select id="mood">
-                    <option value="discouraged">Feeling discouraged</option>
-                    <option value="motivated">Need motivation</option>
-                    <option value="confident">Confident</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="career-stage">Select your career stage:</label>
-                <select id="career-stage">
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced</option>
-                </select>
-            </div>
-            <button id="generate-btn">Generate New Affirmation</button>
-            <div class="affirmation" id="affirmation-box" style="display: none;"></div>
-        </div>
-        
-
-    <script>
-        const affirmations = {
-            discouraged: [
-                "You are capable of overcoming any challenge.",
-                "Every expert was once a beginner. Keep going!",
-                "Your efforts today are building a brighter tomorrow."
-            ],
-            motivated: [
-                "Your passion for learning is your superpower.",
-                "You are making progress every single day.",
-                "Your dedication inspires those around you."
-            ],
-            confident: [
-                "You have the skills to tackle any problem.",
-                "Your confidence is your greatest strength.",
-                "You are a leader in your field."
-            ]
-        };
-
-        document.getElementById('generate-btn').addEventListener('click', () => {
-            const mood = document.getElementById('mood').value;
-            const careerStage = document.getElementById('career-stage').value;
-
-            const moodAffirmations = affirmations[mood] || [];
-            const randomAffirmation = moodAffirmations[Math.floor(Math.random() * moodAffirmations.length)];
-
-            const affirmationBox = document.getElementById('affirmation-box');
-            affirmationBox.textContent = randomAffirmation || "Keep pushing forward, you're doing great!";
-            affirmationBox.style.display = 'block';
-        });
-    </script>
-</body>
+{% block extra_js %}
+<script src="{% static 'js/script.js' %}"></script>
 {% endblock %}

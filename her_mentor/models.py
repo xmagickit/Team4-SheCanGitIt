@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db import models
-from django.contrib.auth.models import User
+from django.db.models import Avg
 
 
 class Mentor(models.Model):
@@ -16,16 +15,24 @@ class Mentor(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.experience_level}"
+    
+    def average_rating(self):
+        return self.mentor_requests.filter(status="accepted", rating__isnull=False).aggregate(
+            Avg("rating")
+        )["rating__avg"]
 
 
 class MentorshipRequest(models.Model):
+    STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("accepted", "Accepted"),
+        ("declined", "Declined"),
+    ]
     mentee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="mentee_requests")
     mentor = models.ForeignKey(Mentor, on_delete=models.CASCADE, related_name="mentor_requests")
-    status = models.CharField(
-        choices=[("pending", "Pending"), ("accepted", "Accepted"), ("declined", "Declined")], 
-        max_length=10, 
-        default="pending"
-    )
+    status = models.CharField(choices=STATUS_CHOICES, max_length=10, default="pending")
+    feedback = models.TextField(blank=True, null=True)
+    rating = models.PositiveIntegerField(blank=True, null=True)  # 1-5
 
     def __str__(self):
         return f"Request from {self.mentee.username} to {self.mentor.user.username} - {self.status}"

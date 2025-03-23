@@ -3,26 +3,45 @@
 {% block title %}Find a Mentor{% endblock %}
 
 {% block content %}
-<h1 class="text-xl font-bold text-retro-dark">Find a Mentor</h1>
+<h1 class="text-2xl font-retro text-retro-dark mb-6">Find a Mentor</h1>
 
 <!-- Mentor Search Form -->
-<form method="GET" class="mt-4">
-    {{ form.as_p }}
-    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Search</button>
+<form method="GET" class="bg-white border-2 border-retro-dark p-4 rounded-lg shadow-sm max-w-xl space-y-4">
+  <div>
+    <label for="id_skills" class="block font-retro text-sm text-retro-dark mb-1">Search by skills</label>
+    <input type="text" name="skills" id="id_skills" value="{{ form.skills.value|stringformat:'s' }}"
+           class="win-input w-full border px-3 py-2 rounded text-sm" placeholder="e.g. Python, Django">
+  </div>
+  <button type="submit" class="win-button bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded shadow transition">
+    Search
+  </button>
 </form>
 
-<ul class="mt-4">
-    {% for mentor in mentors %}
-    <li class="border p-4 my-2 flex justify-between items-center">
-        <div>
-            <p class="font-bold">{{ mentor.user.username }}</p>
-            <p>Skills: {{ mentor.skills }}</p>
-            <p>Experience: {{ mentor.experience_level }}</p>
-        </div>
-        <a href="{% url 'send_request' mentor.id %}" class="bg-green-500 text-white px-4 py-2 rounded">Request Mentorship</a>
-    </li>
-    {% empty %}
-    <p class="text-red-500">No matching mentors found.</p>
-    {% endfor %}
+{% if mentors %}
+<ul class="mt-8 space-y-4">
+  {% for mentor in mentors %}
+  <li class="bg-white border-2 border-retro-dark rounded-xl p-4 shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-retro">
+    <div>
+      <p class="text-lg font-bold text-retro-dark">{{ mentor.user.username }}</p>
+      <p>Skills: {{ mentor.skills }}</p>
+      <p>Experience: {{ mentor.experience_level }}</p>
+
+      {% with mentor.average_rating as avg_rating %}
+        {% if avg_rating %}
+          <p class="text-yellow-600 text-sm mt-1">⭐ {{ avg_rating|floatformat:1 }} / 5</p>
+        {% else %}
+          <p class="text-gray-500 text-sm mt-1">No ratings yet</p>
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    <a href="{% url 'send_request' mentor.id %}" class="win-button bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded shadow transition">
+        Request Mentorship
+    </a>
+  </li>
+  {% endfor %}
 </ul>
+{% else %}
+<p class="text-retro-dark font-retro italic mt-6">No matching mentors found.</p>
+{% endif %}
 {% endblock %}

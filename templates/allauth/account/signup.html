@@ -1,34 +1,58 @@
-{% extends "account/base_entrance.html" %}
-{% load allauth i18n %}
-{% block head_title %}
-    {% trans "Signup" %}
-{% endblock head_title %}
-{% block content %}
-    {% element h1 %}
-        {% trans "Sign Up" %}
-    {% endelement %}
-    <p>
-        {% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
-    </p>
-    {% url 'account_signup' as action_url %}
-    {% element form form=form method="post" action=action_url tags="entrance,signup" %}
-        {% slot body %}
-            {% csrf_token %}
-            {% element fields form=form unlabeled=True %}
-            {% endelement %}
-            {% if redirect_field_value %}
-                <input type="hidden"
-                       name="{{ redirect_field_name }}"
-                       value="{{ redirect_field_value }}" />
+{% extends "allauth/layouts/entrance.html" %}
+{% load static %}
+
+{% block content_entrance %}
+<div class="max-w-md mx-auto mt-6">
+  <div class="win-window rounded overflow-hidden" style="border: 1px solid #0A246A;">
+    <!-- Windows XP style header -->
+    <div style="background: linear-gradient(to right, #1E5799, #2989D8, #207CE5, #0D53B5); padding: 8px; color: white; font-weight: bold; font-family: Tahoma, Arial, sans-serif; font-size: 13px;">
+      <span>Sign Up for SheCanGitIt</span>
+    </div>
+    
+    <div style="background-color: #ECE9D8; padding: 15px 20px;">
+      <!-- Logo area -->
+      <div class="flex mb-5">
+        <div class="mr-4">
+          <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; font-size: 24px; background: linear-gradient(to bottom, #6B5B95, #E0B1CB); color: white; border-radius: 5px;">
+            &lt;/&gt;
+          </div>
+        </div>
+        <div>
+          <div style="font-weight: bold; font-family: Tahoma, Arial, sans-serif; font-size: 18px; color: #0A246A;">SheCanGitIt</div>
+          <div style="font-family: Tahoma, Arial, sans-serif; font-size: 10px; color: #666;">Create New Account</div>
+        </div>
+      </div>
+
+      <!-- Form area -->
+      <form method="POST" action="{% url 'account_signup' %}" class="mt-4">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+          <div style="margin-bottom: 12px;">
+            <label for="{{ field.id_for_label }}" style="font-family: Tahoma, Arial, sans-serif; font-size: 11px; font-weight: bold; display: block; margin-bottom: 3px;">{{ field.label }}:</label>
+            {{ field }}
+            {% if field.help_text %}
+              <p style="font-family: Tahoma, Arial, sans-serif; font-size: 10px; color: #666; margin-top: 2px;">{{ field.help_text }}</p>
             {% endif %}
-        {% endslot %}
-        {% slot actions %}
-            {% element button tags="prominent,signup" type="submit" %}
-                {% trans "Sign Up" %}
-            {% endelement %}
-        {% endslot %}
-    {% endelement %}
-    {% if SOCIALACCOUNT_ENABLED %}
-        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-    {% endif %}
-{% endblock content %}
+            {% for error in field.errors %}
+              <p style="color: red; font-size: 10px; margin-top: 2px;">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endfor %}
+
+        <!-- Button area - Windows XP style -->
+        <div style="display: flex; justify-content: flex-end; margin-top: 15px; gap: 5px;">
+          <a href="{% url 'account_login' %}" style="font-family: Tahoma, Arial, sans-serif; font-size: 11px; margin-right: auto; color: #0A246A; text-decoration: none;">Already have an account?</a>
+          <button type="submit" style="padding: 2px 12px; border: 1px solid #000; background: linear-gradient(to bottom, #E1E1E1, #C1C1C1); font-family: Tahoma, Arial, sans-serif; font-size: 11px; font-weight: bold; cursor: pointer; box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);">
+            Sign Up
+          </button>
+          <a href="{% url 'home' %}" style="padding: 2px 12px; border: 1px solid #000; background: linear-gradient(to bottom, #E1E1E1, #C1C1C1); font-family: Tahoma, Arial, sans-serif; font-size: 11px; font-weight: bold; cursor: pointer; box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2); text-decoration: none; color: black;">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
