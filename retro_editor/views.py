@@ -66,3 +66,25 @@ def get_random_tip(request):
             'content': random_tip.tip_content
         })
     return JsonResponse({'error': 'No tips available'}, status=404)
+  
+def load_sample(request, sample_id):
+    sample = get_object_or_404(CodeSample, id=sample_id)
+    form = CodeSnippetForm(initial={
+        'title': f"My version of {sample.title}",
+        'language': sample.language,
+        'code_content': sample.code_content
+    })
+    
+    # Get a random tip appropriate for this language
+    tips = TechPioneerTip.objects.filter(language__in=[sample.language, ''])
+    random_tip = random.choice(tips) if tips.exists() else None
+    
+    return render(request, 'retro_editor/editor.html', {
+        'form': form,
+        'sample': sample,
+        'random_tip': random_tip
+    })
+
+def sample_library(request):
+    samples = CodeSample.objects.all().order_by('difficulty', 'title')
+    return render(request, 'retro_editor/sample_library.html', {'samples': samples})
