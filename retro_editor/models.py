@@ -27,3 +27,19 @@ class TechPioneerTip(models.Model):
     
     def __str__(self):
         return f"Tip from {self.pioneer}"
+      
+class CodeSample(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    language = models.CharField(max_length=20, choices=LANGUAGE_CHOICES)
+    code_content = models.TextField()
+    difficulty = models.CharField(max_length=20, choices=[
+        ('beginner', 'Beginner'), 
+        ('intermediate', 'Intermediate'),
+        ('advanced', 'Advanced')
+    ])
+    created_by = models.CharField(max_length=100)  # Name of woman in tech who contributed
+    featured = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.title
