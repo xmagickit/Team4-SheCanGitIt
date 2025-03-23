@@ -70,6 +70,7 @@ def profile_list(request):
     """
     View for displaying a list of user profiles.
     Filter by mentor or buddy status if requested.
+    Search by username if provided.
     """
     profiles = Profile.objects.all()
     
@@ -79,10 +80,14 @@ def profile_list(request):
     elif request.GET.get('buddy') == 'true':
         profiles = profiles.filter(seeking_buddy=True)
     
+    # Simple username search
+    search_query = request.GET.get('search', '').strip()
+    if search_query:
+        profiles = profiles.filter(user__username__icontains=search_query)
+    
     return render(request, 'user_profile/profile_list.html', {
         'profiles': profiles,
     })
-
 @login_required
 def select_profile_image(request):
     """Handle selection of a predefined profile image"""

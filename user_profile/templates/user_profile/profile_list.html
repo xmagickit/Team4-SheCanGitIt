@@ -38,9 +38,6 @@
             {% if profile.avatar_choice %}
               <img src="{% static 'images/profiles/avatar' %}{{ profile.avatar_choice }}.png" 
                   alt="{{ profile.user.username }}" class="w-full h-full object-cover">
-            {% elif profile.profile_image %}
-              <img src="{{ profile.profile_image.url }}" alt="{{ profile.user.username }}" class="w-full h-full object-cover">
-            {% else %}
               <div class="text-2xl">👤</div>
             {% endif %}
           </div>
