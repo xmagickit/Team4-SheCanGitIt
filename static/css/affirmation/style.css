@@ -32,9 +32,9 @@ label {
 select, button {
     width: 100%;
     padding: 10px;
-    border: 1px solid #2D243F; /* retro-dark */
-    background-color: #E0B1CB; /* retro-highlight */
-    color: #2D243F; /* retro-dark */
+    border: 1px solid #2D243F; 
+    background-color: #FFF5E1; 
+    color: #2D243F; 
     cursor: pointer;
 }
 
@@ -46,17 +46,13 @@ select, button {
     margin: 0 auto;
 }
 
-.generate-btn:hover {
-    background-color: #FFB7C5; 
-}
-
-.generate-btn:active {
-    background-color: #FFB7C5; 
-}
-
-.affirmation {
+.ab {
     margin-top: 20px;
     padding: 15px;
-    border: 1px solid #2D243F; /* retro-dark */
-    background-color: #E0B1CB; /* retro-highlight */
+    border: 1px solid #2D243F;
+    background: linear-gradient(90deg, var(--highlight), var(--retro-purple));
+}
+
+#affirmation-box {
+    background-color: linear-gradient(90deg, var(--highlight), var(--retro-purple)); !important
 }
