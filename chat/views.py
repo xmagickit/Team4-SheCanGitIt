@@ -14,7 +14,7 @@ def chat(request):
         mentor_requests__mentee=user,
         mentor_requests__status="accepted"
     ).select_related("user")  # Get all mentors with their user details
-    return render(request, "chat/chat.html", {"mentors": mentors}, "is_mentor": is_mentor})
+    return render(request, "chat/chat.html", {"mentors": mentors}, {"is_mentor": is_mentor})
 
 
 def chatroom(request, room_name):
