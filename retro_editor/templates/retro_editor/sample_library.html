@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Code Samples Library | SheGitsIt{% endblock %}
+
+{% block window_title %}Retro Code Samples Library{% endblock %}
+
+{% block content %}
+<div class="samples-container">
+    <h1 class="font-retro text-retro-dark mb-4">RETRO CODE EXAMPLES</h1>
+    <p class="mb-4">Explore these code examples created by pioneering women in technology. Click on any sample to load it into the editor.</p>
+    
+    <div class="filters mb-4">
+        <button class="win-button active" data-filter="all">All</button>
+        <button class="win-button" data-filter="beginner">Beginner</button>
+        <button class="win-button" data-filter="intermediate">Intermediate</button>
+        <button class="win-button" data-filter="advanced">Advanced</button>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for sample in samples %}
+        <div class="sample-card win-window bg-white" data-difficulty="{{ sample.difficulty }}">
+            <div class="win-header font-retro text-xs">
+                <span>{{ sample.title }}</span>
+                <div class="flex space-x-1">
+                    <button class="win-button text-xs px-1">×</button>
+                </div>
+            </div>
+            <div class="p-3">
+                <div class="flex justify-between mb-2">
+                    <span class="language-badge bg-retro-purple text-retro-cream text-xs px-2 py-1 rounded">{{ sample.language }}</span>
+                    <span class="difficulty-badge text-xs px-2 py-1 rounded
+                        {% if sample.difficulty == 'beginner' %}bg-green-200 text-green-800
+                        {% elif sample.difficulty == 'intermediate' %}bg-yellow-200 text-yellow-800
+                        {% else %}bg-red-200 text-red-800{% endif %}">
+                        {{ sample.difficulty }}
+                    </span>
+                </div>
+                <p class="text-sm text-gray-700 mb-2">{{ sample.description }}</p>
+                <p class="text-xs text-retro-purple italic mb-3">Created by: {{ sample.created_by }}</p>
+                <a href="{% url 'retro_editor:load_sample' sample.id %}" class="win-button block text-center">Load Sample</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No samples available yet. Check back soon!</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.filters .win-button');
+        const sampleCards = document.querySelectorAll('.sample-card');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                
+                // Filter cards
+                sampleCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.difficulty === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}
