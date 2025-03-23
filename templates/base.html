@@ -181,21 +181,23 @@
     });
     
     // Notification bell dropdown toggle (if added)
-    const toggleBtn = document.getElementById("notif-toggle");
-    const panel = document.getElementById("notif-panel");
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggleBtn = document.getElementById("notif-toggle");
 
-    if (toggleBtn && panel) {
-      toggleBtn.addEventListener("click", () => {
-        panel.classList.toggle("hidden");
-      });
+      toggleBtn?.addEventListener("click", function (e) {
+        const panel = document.getElementById("notif-panel");
+        if (panel) {
+          panel.classList.toggle("hidden");
 
-      // Optional: close if clicked outside
-      document.addEventListener("click", function (e) {
-        if (!toggleBtn.contains(e.target) && !panel.contains(e.target)) {
-          panel.classList.add("hidden");
+          // Optional: close when clicking outside
+          document.addEventListener("click", function (event) {
+            if (!toggleBtn.contains(event.target) && !panel.contains(event.target)) {
+              panel.classList.add("hidden");
+            }
+          });
         }
       });
-    }
+    });
   </script>
   {% endblock %}
 
