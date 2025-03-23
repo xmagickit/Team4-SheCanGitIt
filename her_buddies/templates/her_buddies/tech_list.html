@@ -29,22 +29,7 @@
     </button>
 </form>
 
-<!-- Modal for Create a tech group -->
     <button id="add-tech-btn" class="win-button bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded shadow transition font-retro"><a href="{% url 'add_tech_stack' %}">Create A New HerBuddies Group</a></button>
-
-        <div id="add-tech-modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-            <div class="bg-white p-6 rounded shadow-lg">
-                <h2 class="text-xl font-bold mb-4">Create HerBuddies Group</h2>
-                <form method="POST" action="{% url 'add_tech_stack' %}">
-                    {% csrf_token %}
-                    <input type="text" name="name" placeholder="Tech Stack Name" class="border p-2 w-full rounded mb-2">
-                    <textarea name="description" placeholder="Description" class="border p-2 w-full rounded mb-2"></textarea>
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
-                </form>
-                <button id="close-modal" class="text-red-500 mt-2">Close</button>
-            </div>
-        </div>
-    </div>
 
 <!-- Tech Stack List -->
     <ul class="mt-8 space-y-4">

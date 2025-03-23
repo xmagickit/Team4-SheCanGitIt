@@ -6,7 +6,12 @@ from .forms import TechStackForm, DiscussionForm
 from django.contrib import messages
 
 def tech_list(request):
-    tech_stacks = TechStack.objects.all()
+    search_query = request.GET.get('search', '')  
+    if search_query:
+        tech_stacks = TechStack.objects.filter(name__icontains=search_query)  
+    else:
+        tech_stacks = TechStack.objects.all()  
+
     return render(request, 'her_buddies/tech_list.html', {'tech_stacks': tech_stacks})
 
 def tech_discussion(request, study_group_id):
@@ -17,6 +22,7 @@ def tech_discussion(request, study_group_id):
         'discussions': discussions
     })
 
+# Create a new HerBuddies Group (TechStack to be learned together)
 @login_required
 def add_tech_stack(request):
     if request.method == "POST":
@@ -26,7 +32,7 @@ def add_tech_stack(request):
             tech_stack.user = request.user
             tech_stack.save()
 
-            # Create a StudyGroup associated with the TechStack
+            # Create a HerBuddies Group associated with the TechStack
             StudyGroup.objects.create(
                 tech_stack=tech_stack,
                 description=f"Study group for {tech_stack.name}",
@@ -50,8 +56,6 @@ def add_discussion(request, study_group_id):
             discussion.user = request.user
             discussion.save()
             return redirect('tech_discussion', study_group_id=study_group.id)
-        else:
-            print(form.errors)  # Debugging: Print form errors if invalid
     else:
         form = DiscussionForm()
     return render(request, 'her_buddies/add_discussion.html', {'form': form, 'study_group': study_group})
