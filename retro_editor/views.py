@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import CodeSnippet, TechPioneerTip
+from .models import CodeSnippet, TechPioneerTip, CodeSample
 from .forms import CodeSnippetForm
 import random
 
