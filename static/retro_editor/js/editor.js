@@ -233,18 +233,6 @@ document.querySelector('#run-code').addEventListener('click', function() {
         });
     });
     
-    // Pioneer links
-    document.querySelectorAll('.pioneer-item').forEach(pioneer => {
-        pioneer.addEventListener('click', function() {
-            // Add blip effect
-            this.classList.add('active');
-            setTimeout(() => this.classList.remove('active'), 300);
-            
-            // Link to HerStory app
-            const pioneerName = this.getAttribute('data-pioneer') || this.textContent;
-            window.location.href = '/her_story/?pioneer=' + encodeURIComponent(pioneerName);
-        });
-    });
     
     // Close tip popup
     if (document.querySelector('.close-tip')) {
