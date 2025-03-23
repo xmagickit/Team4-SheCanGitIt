@@ -8,6 +8,7 @@ class Mentor(models.Model):
     skills = models.TextField(help_text="Comma-separated skills, e.g., Python, Django, AI")
     experience_level = models.CharField(max_length=50)
     bio = models.TextField(blank=True, null=True)
+    available = models.BooleanField(default=False)
 
     def get_skill_list(self):
         """Convert comma-separated skills into a list."""
