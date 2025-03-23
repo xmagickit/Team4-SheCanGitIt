@@ -5,11 +5,16 @@ from her_mentor.models import Mentor, MentorshipRequest
 def chat(request):
     user = request.user
 
+    print(f"DEBUG -- user type: {type(user)}")
+
+    # Check if the user is a mentor
+    is_mentor = Mentor.objects.filter(user=user).exists()
+
     mentors = Mentor.objects.filter(
         mentor_requests__mentee=user,
         mentor_requests__status="accepted"
     ).select_related("user")  # Get all mentors with their user details
-    return render(request, "chat/chat.html", {"mentors": mentors})
+    return render(request, "chat/chat.html", {"mentors": mentors}, "is_mentor": is_mentor})
 
 
 def chatroom(request, room_name):

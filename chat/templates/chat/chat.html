@@ -9,6 +9,10 @@
             <h1 class="text-center">With which of your mentors would you like to have an instant chat?</h1>
             <select id="room-name-input" name="room_name" class="py-2 w-100 rounded shadow">
                 <option value="" disabled selected>-- Select a chat room --</option>
+                {% if is_mentor %}
+                    <!-- Display the mentor's own name in the dropdown or other special content -->
+                    <option value="{{ request.user.id }}" selected>{{ request.user.first_name }} {{ request.user.last_name }}</option>
+                {% endif %}
                 {% for mentor in mentors %}
                     {% if mentor.available %}
                         <option value="{{ mentor.user.username }}">{{ mentor.user.first_name }} {{ mentor.user.last_name }}</option>
