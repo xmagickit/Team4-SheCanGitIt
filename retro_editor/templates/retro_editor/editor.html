@@ -28,7 +28,7 @@
         <!-- Left sidebar -->
         <div class="sidebar">
             <div class="sidebar-section">
-                <img src="{% static 'retro_editor/img/computer.gif' %}" alt="Computer" class="sidebar-icon">
+                <img src="{% static 'retro_editor/img/clippc.png' %}" alt="Computer" class="sidebar-icon">
                 <h3 class="font-retro text-retro-highlight text-xs">COMMAND CENTER</h3>
                 <div id="file-list">
                     {% if user.is_authenticated %}
@@ -103,6 +103,46 @@
                 <p id="tip-content" class="text-retro-cream text-xs mb-4">Try using CSS Grid for your retro layout! It's the modern way to create table layouts.</p>
                 <button class="close-tip text-retro-cream text-lg">&times;</button>
             </div>
+            <!-- Tech Legend Trading Cards -->
+<div class="tech-legend-card" id="tech-legend-card">
+    <div class="card-inner">
+        <div class="card-front">
+            <div class="card-header">
+                <h3 class="card-title">TECH LEGEND</h3>
+                <div class="card-year">EST. <span id="legend-year">1843</span></div>
+            </div>
+            <div class="card-image" id="legend-image"></div>
+            <div class="card-name" id="legend-name">Ada Lovelace</div>
+            <div class="card-stats">
+                <div class="stat">
+                    <div class="stat-name">CODING</div>
+                    <div class="stat-value" id="stat-coding">98</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-name">VISION</div>
+                    <div class="stat-value" id="stat-vision">99</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-name">IMPACT</div>
+                    <div class="stat-value" id="stat-impact">100</div>
+                </div>
+            </div>
+        </div>
+        <div class="card-back">
+            <h3 class="back-title">ABOUT</h3>
+            <p id="legend-about" class="back-text"></p>
+            <h3 class="back-title">FUN FACT</h3>
+            <p id="legend-funfact" class="back-text"></p>
+            <div class="back-quote">
+                <p id="legend-quote"></p>
+                <div class="card-footer">
+                    <button class="tech-card-close">CLOSE</button>
+                    <a id="legend-link" href="#" class="tech-card-more">LEARN MORE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
         </div>
         {% endblock %}
         

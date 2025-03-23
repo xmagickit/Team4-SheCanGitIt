@@ -294,6 +294,175 @@ select {
   cursor: pointer;
 }
 
+/* Tech Legend Trading Cards */
+.tech-legend-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  perspective: 1000px;
+}
+
+.tech-legend-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(45, 36, 63, 0.85);
+}
+
+.card-inner {
+  position: relative;
+  width: 300px;
+  height: 450px;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 20px var(--retro-highlight);
+  overflow: hidden;
+}
+
+.card-front {
+  background: linear-gradient(135deg, var(--retro-purple) 0%, var(--retro-dark) 100%);
+  color: var(--retro-cream);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-back {
+  background: linear-gradient(135deg, var(--retro-dark) 0%, var(--retro-purple) 100%);
+  color: var(--retro-cream);
+  transform: rotateY(180deg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: var(--retro-highlight);
+  color: var(--retro-dark);
+}
+
+.card-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  margin: 0;
+}
+
+.card-year {
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.card-image {
+  height: 200px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--retro-dark);
+  border-top: 2px solid var(--retro-pink);
+  border-bottom: 2px solid var(--retro-pink);
+}
+
+.card-name {
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+  padding: 15px 10px;
+  color: var(--retro-pink);
+  text-shadow: 2px 2px 0 var(--retro-dark);
+}
+
+.card-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: auto;
+  padding: 10px;
+  background-color: rgba(45, 36, 63, 0.8);
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-name {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--retro-cream);
+}
+
+.stat-value {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 18px;
+  color: var(--retro-pink);
+}
+
+.back-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: var(--retro-highlight);
+  margin: 0 0 10px 0;
+}
+
+.back-text {
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+
+.back-quote {
+  font-style: italic;
+  color: var(--retro-highlight);
+  border-left: 3px solid var(--retro-pink);
+  padding-left: 10px;
+  margin-top: auto;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.tech-card-close, .tech-card-more {
+  font-family: monospace;
+  font-size: 12px;
+  background-color: var(--retro-highlight);
+  color: var(--retro-dark);
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.tech-card-close:hover, .tech-card-more:hover {
+  background-color: var(--retro-pink);
+}
+
 /* CRT screen effect */
 .retro-window::after {
   content: '';
