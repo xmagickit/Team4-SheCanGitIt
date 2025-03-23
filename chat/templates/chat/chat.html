@@ -6,13 +6,17 @@
     <div class="row text-center py-2"">
         {% if user.is_authenticated %}
         <div class="col-md-10 col-lg-8 mx-auto">
-            <h1 class="text-center">What chat room would you like to enter?</h1>
+            <h1 class="text-center">With which of your mentors would you like to have an instant chat?</h1>
             <select id="room-name-input" name="room_name" class="py-2 w-100 rounded shadow">
                 <option value="" disabled selected>-- Select a chat room --</option>
-                {% for chatroom in chatrooms %}
-                    <option value="{{ chatroom.name }}">{{ chatroom.friendly_name }}</option>
+                {% for mentor in mentors %}
+                    {% if mentor.available %}
+                        <option value="{{ mentor.user.username }}">{{ mentor.user.first_name }} {{ mentor.user.last_name }}</option>
+                    {% else %}
+                        <option value="{{ mentor.user.username }}" disabled style="color: gray;">{{ mentor.user.first_name }} {{ mentor.user.last_name }} (unavailable at the moment)</option>
+                    {% endif %}
                 {% empty %}
-                    <option disabled>No chatrooms available</option>
+                    <option disabled>No mentors assigned!</option>
                 {% endfor %}
             </select>
         </div>

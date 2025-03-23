@@ -1,4 +1,4 @@
-from .models import Mentor
+from .models import Mentor, Notification
 
 def match_mentors(skill_input):
     """
@@ -20,3 +20,7 @@ def match_mentors(skill_input):
     mentor_scores.sort(key=lambda x: (-x[1], x[0].experience_level))
 
     return [mentor[0] for mentor in mentor_scores]
+
+
+def send_notification(user, message):
+    Notification.objects.create(user=user, message=message)

@@ -8,6 +8,7 @@ class Mentor(models.Model):
     skills = models.TextField(help_text="Comma-separated skills, e.g., Python, Django, AI")
     experience_level = models.CharField(max_length=50)
     bio = models.TextField(blank=True, null=True)
+    available = models.BooleanField(default=False)
 
     def get_skill_list(self):
         """Convert comma-separated skills into a list."""
@@ -36,3 +37,13 @@ class MentorshipRequest(models.Model):
 
     def __str__(self):
         return f"Request from {self.mentee.username} to {self.mentor.user.username} - {self.status}"
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"To {self.user.username}: {self.message[:40]}"

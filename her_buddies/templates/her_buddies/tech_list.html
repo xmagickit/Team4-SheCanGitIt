@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 
+{% block title %}Find HerBuddies{% endblock %}
+{% block window_title %} Find HerBuddies: A Safe Place to Connect{% endblock %} 
+
 {% block content %}
 <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Find HerBuddies</h1>
+    <h1 class="text-2xl font-retro text-retro-dark mb-6">Find HerBuddies</h1>
     <p>HerBuddies is a safe place for women in tech to connect, learn and thrive together!</p>
     {% if not user.is_authenticated %}
         <p class="mb-4">
@@ -13,13 +16,21 @@
     {% endif %}
 </div>
     
-    <!-- Search Bar -->
-    <form method="GET" action="" class="mb-4">
-        <input type="text" name="search" placeholder="Search here: What language or framework do you want to learn today?" class="border p-2 w-full rounded">
-    </form>
+<!-- Search Bar -->
+<form method="GET" class="bg-white border-2 border-retro-dark p-4 rounded-lg shadow-sm max-w-xl space-y-4">
+    <div>
+        <label for="Search for HerBuddies" class="block font-retro text-sm text-retro-dark mb-1">What do you want to learn with Herbuddies today?</label>
+        <input type="text" name="search" id="search" value="{{ request.GET.search }}" 
+               class="win-input w-full border px-3 py-2 rounded text-sm" 
+               placeholder="e.g. Python, Django, JavaScript">
+    </div>
+    <button type="submit" class="win-button bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded shadow transition">
+        Search
+    </button>
+</form>
 
-        <!-- Modal for Create a tech group -->
-        <button id="add-tech-btn" class="bg-blue-500 text-white px-4 py-2 rounded mt-4"><a href="{% url 'add_tech_stack' %}" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Create New HerBuddies Group</a></button>
+<!-- Modal for Create a tech group -->
+    <button id="add-tech-btn" class="win-button bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded shadow transition font-retro"><a href="{% url 'add_tech_stack' %}">Create A New HerBuddies Group</a></button>
 
         <div id="add-tech-modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
             <div class="bg-white p-6 rounded shadow-lg">
@@ -35,16 +46,18 @@
         </div>
     </div>
 
-    <!-- Tech Stack List -->
-    <ul>
+<!-- Tech Stack List -->
+    <ul class="mt-8 space-y-4">
         {% for tech in tech_stacks %}
-        <li class="border-b py-2">
-            <h2 class="text-lg font-semibold">{{ tech.name }}</h2>
-            <p>{{ tech.description|truncatechars:100 }}</p>
+        <li class="bg-white border-2 border-retro-dark rounded-xl p-4 shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-retro">
+            <div>
+            <h2 class="text-lg font-bold text-retro-dark">{{ tech.name }}</h2>
+            <p class="text-lg font-semibold text-retro-dark">{{ tech.description|truncatechars:100 }}</p>
+            </div>
             {% if tech.studygroup %}
-                <a href="{% url 'tech_discussion' tech.studygroup.id %}" class="text-blue-500 hover:underline">Join these HerBuddies</a>
+                <a href="{% url 'tech_discussion' tech.studygroup.id %}" class="win-button bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded shadow transition">Join these HerBuddies</a>
             {% else %}
-                <p class="text-red-500">Study Group not available</p>
+                <p class="text-red-500">HerBuddies Group not available. Create your own!</p>
             {% endif %}
         </li>
         {% empty %}
