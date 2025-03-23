@@ -1,9 +1,15 @@
 from django.shortcuts import render
 from .models import ChatRoom
+from her_mentor.models import Mentor, MentorshipRequest
 
 def chat(request):
-    chatrooms = ChatRoom.objects.all()  # Get all chatrooms
-    return render(request, "chat/chat.html", {'chatrooms': chatrooms})
+    user = request.user
+
+    mentors = Mentor.objects.filter(
+        mentor_requests__mentee=user,
+        mentor_requests__status="accepted"
+    ).select_related("user")  # Get all mentors with their user details
+    return render(request, "chat/chat.html", {"mentors": mentors})
 
 
 def chatroom(request, room_name):
