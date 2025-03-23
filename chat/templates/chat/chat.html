@@ -10,7 +10,7 @@
             <select id="room-name-input" name="room_name" class="py-2 w-100 rounded shadow">
                 <option value="" disabled selected>-- Select a chat room --</option>
                 {% if is_mentor %}
-                    <option value="{{ request.user.id }}" style="font-weight: bold;">{{ request.user.first_name }} {{ request.user.last_name }}</option>
+                    <option value="{{ request.user.username }}" style="font-weight: bold;">{{ request.user.first_name }} {{ request.user.last_name }}</option>
                 {% endif %}
                 {% for mentor in mentors %}
                     {% if mentor.available %}
