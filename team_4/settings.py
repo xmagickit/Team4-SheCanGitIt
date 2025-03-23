@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount',
      
     # custom project apps
+    'about',
     'affirmation',
     'chat',
     'her_buddies',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'her_story',
     'user_profile',
     'home',
+    
 ]
 
 SITE_ID = 1

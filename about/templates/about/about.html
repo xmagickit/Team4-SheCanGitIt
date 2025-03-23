@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-screen bg-retro-cream p-6 flex justify-center items-start">
+  <div class="win-window max-w-4xl w-full rounded shadow-lg">
+    
+    <!-- Retro Header -->
+    <div class="win-header rounded-t">
+      <span class="text-lg font-bold">About SheGitsIt</span>
+      <div class="flex gap-1">
+        <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+        <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
+        <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="p-6 text-sm md:text-base text-gray-800 space-y-5 font-mono">
+      
+      <!-- Code Institute Logo -->
+      <div class="flex justify-center mb-4">
+        <img 
+          src="https://lms-juniper-staticfiles-codeinstitute.s3.eu-west-1.amazonaws.com/static/ci-theme/images/logo.e8a545c07759.png" 
+          alt="Code Institute Logo" 
+          class="h-16"
+        >
+      </div>
+
+      <p>
+        <strong>SheGitsIt</strong> is a retro-inspired platform created to celebrate and empower women in tech.  
+        It’s all about <span class="font-semibold text-purple-700">collaboration</span>, 
+        <span class="font-semibold text-purple-700">mentorship</span>, and a supportive 
+        <span class="font-semibold text-purple-700">community</span> for women!. 💜
+      </p>
+
+      <p>
+        This site was created during the inspiring <strong>"Code Her"</strong> hackathon hosted by <strong>Code Institute</strong>, 
+        where teams came together to build meaningful projects in just one weekend!
+      </p>
+
+      <p>
+        Our team, <strong>Team 4</strong>, is made up of <strong>7 amazing developers</strong> with a diverse range of skills — from frontend to backend. 
+        Together, we formed a well-balanced full-stack team capable of designing, building, and deploying a complete web application in just one weekend! 💻🛠️
+      </p>
+            <!-- Team 4 Section -->
+            <div class="mt-8">
+                <h2 class="text-lg font-bold font-mono text-retro-dark mb-3">👩‍💻 Team 4</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-center">
+                  <!-- Team Members -->
+                  <div class="win-window p-2">
+                    <p class="font-bold text-sm">Carlos</p>
+                  </div>
+                  <div class="win-window p-2">
+                    <p class="font-bold text-sm">Evangelos Alexiou</p>
+                  </div>
+                  <div class="win-window p-2">
+                    <p class="font-bold text-sm">Jaime</p>
+                  </div>
+                  <div class="win-window p-2">
+                    <p class="font-bold text-sm">Kim Hanlon</p>
+                  </div>
+                  <div class="win-window p-2">
+                    <p class="font-bold text-sm">Lochlann O'Higgins Theilmann</p>
+                  </div>
+                  <div class="win-window p-2">
+                    <p class="font-bold text-sm">Owen Cotter</p>
+                  </div>
+                  <div class="win-window p-2">
+                    <p class="font-bold text-sm">Wai Yi Wong</p>
+                  </div>
+                </div>
+              </div>
+      
+      <p>
+        We collaborated on everything from crafting responsive user interfaces to integrating backend logic and real-time features — all while maintaining a cohesive and accessible retro design.
+      </p>
+      
+      <!-- Technologies Section -->
+      <div class="mt-6">
+        <h3 class="text-lg font-bold font-mono text-retro-dark mb-2">🧰 Tech Stack</h3>
+        <ul class="list-disc pl-6 space-y-1 text-sm">
+          <li><strong>Framework:</strong> Django 5.1.7</li>
+          <li><strong>Auth & Admin:</strong> django-allauth, django-jazzmin, django-widget-tweaks</li>
+          <li><strong>Async Features:</strong> Channels, Daphne, Redis, Channels-Redis</li>
+          <li><strong>Database:</strong> PostgreSQL (via psycopg2-binary)</li>
+          <li><strong>Media:</strong> Cloudinary & django-cloudinary-storage</li>
+          <li><strong>Environment:</strong> python-dotenv, dj-database-url</li>
+          <li><strong>Deployment:</strong> Heroku (with WhiteNoise for static files)</li>
+          <li><strong>Security & Utilities:</strong> pyOpenSSL, cryptography, service-identity</li>
+        </ul>
+      </div>
+
+      <p>
+        We chose to build <strong>SheGitsIt</strong> because we believe in breaking barriers, lifting others up, 
+        and making the tech world more inclusive for everyone. This project is our love letter to the future of women in tech. 💻💖
+      </p>
+
+      <div class="border-t border-retro-purple pt-4">
+        <p class="italic text-gray-600 text-center">
+          “This is what happens when people come together to code with purpose and passion.”
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
