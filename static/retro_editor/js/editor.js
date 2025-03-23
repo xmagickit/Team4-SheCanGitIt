@@ -325,3 +325,112 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
+
+// Tech Legend Card data
+const techLegendsData = {
+  "Ada Lovelace": {
+      year: "1843",
+      image: "url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Ada_Lovelace_portrait.jpg/220px-Ada_Lovelace_portrait.jpg')", 
+      stats: {
+          coding: 97,
+          vision: 99,
+          impact: 100
+      },
+      about: "The world's first programmer who wrote the first algorithm for Babbage's Analytical Engine. She predicted computers could go beyond calculations to create music and art.",
+      funFact: "She was Lord Byron's daughter but never knew him - her mother pushed her into mathematics to prevent her from developing her father's 'dangerous poetic tendencies'.",
+      quote: "The Analytical Engine weaves algebraic patterns, just as the Jacquard loom weaves flowers and leaves.",
+      link: "https://en.wikipedia.org/wiki/Ada_Lovelace"
+  },
+  "Grace Hopper": {
+      year: "1944",
+      image: "url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg/220px-Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg')",
+      stats: {
+          coding: 95,
+          vision: 98,
+          impact: 98
+      },
+      about: "Pioneered computer programming languages that used English-like commands instead of machine code. Developed COBOL and the first compiler.",
+      funFact: "She coined the term 'debugging' after removing an actual moth from a computer. She was also a U.S. Navy rear admiral!",
+      quote: "It's easier to ask forgiveness than it is to get permission.",
+      link: "https://en.wikipedia.org/wiki/Grace_Hopper"
+  },
+  "Katherine Johnson": {
+      year: "1961",
+      image: "url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Katherine_Johnson_1983.jpg/220px-Katherine_Johnson_1983.jpg')",
+      stats: {
+          coding: 93,
+          vision: 95,
+          impact: 99
+      },
+      about: "NASA mathematician whose orbital calculations were critical to the success of the first U.S. crewed spaceflights. Her work helped send astronauts to the moon.",
+      funFact: "She was so accurate with her calculations that John Glenn requested she personally verify the electronic computer's results before his historic orbital mission.",
+      quote: "Like what you do, and then you will do your best.",
+      link: "https://en.wikipedia.org/wiki/Katherine_Johnson"
+  }
+};
+
+// Initialize Tech Legend Cards
+document.addEventListener('DOMContentLoaded', function() {
+  // Set up pioneer card functionality
+  const pioneerItems = document.querySelectorAll('.pioneer-item');
+  const techLegendCard = document.getElementById('tech-legend-card');
+  const cardInner = techLegendCard.querySelector('.card-inner');
+  
+  // Show card when clicking on a pioneer
+  pioneerItems.forEach(item => {
+      item.addEventListener('click', function(e) {
+          // Prevent default navigation
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Get pioneer name
+          const pioneerName = this.textContent;
+          
+          // Show card with pioneer data
+          if (techLegendsData[pioneerName]) {
+              const data = techLegendsData[pioneerName];
+              
+              // Update card content
+              document.getElementById('legend-year').textContent = data.year;
+              document.getElementById('legend-image').style.backgroundImage = data.image;
+              document.getElementById('legend-name').textContent = pioneerName;
+              document.getElementById('stat-coding').textContent = data.stats.coding;
+              document.getElementById('stat-vision').textContent = data.stats.vision;
+              document.getElementById('stat-impact').textContent = data.stats.impact;
+              document.getElementById('legend-about').textContent = data.about;
+              document.getElementById('legend-funfact').textContent = data.funFact;
+              document.getElementById('legend-quote').textContent = data.quote;
+              document.getElementById('legend-link').href = data.link;
+              
+              // Show the card
+              techLegendCard.style.display = 'flex';
+              
+              // Reset to front side
+              cardInner.classList.remove('flipped');
+          }
+      });
+  });
+  
+  // Flip card when clicking on it
+  cardInner.addEventListener('click', function() {
+      this.classList.toggle('flipped');
+  });
+  
+  // Close button
+  techLegendCard.querySelector('.tech-card-close').addEventListener('click', function(e) {
+      e.stopPropagation();
+      techLegendCard.style.display = 'none';
+  });
+  
+  // Prevent link click from flipping card
+  techLegendCard.querySelector('.tech-card-more').addEventListener('click', function(e) {
+      e.stopPropagation();
+  });
+  
+  // Close on background click
+  techLegendCard.addEventListener('click', function(e) {
+      if (e.target === this) {
+          this.style.display = 'none';
+      }
+  });
+});
