@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}CodeBlast 95 | SheGitsIt{% endblock %}
+
+{% block window_title %}CodeBlast 95{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'retro_editor/css/editor_styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="retro-container">
+    <div class="text-center mb-8">
+        <img src="{% static 'retro_editor/img/clippc.png' %}" alt="Retro Computer" class="pixel-computer">
+        <h1 class="font-retro text-3xl text-retro-highlight mb-4 relative overflow-hidden retro-spotlight">
+            <span class="glitch">CODE</span>BLAST <span class="blink">95</span>
+        </h1>
+        <div class="text-sm text-retro-cream mb-4">VERSION 3.1.4 // (C) 1995 SHEGITSIT CORP.</div>
+    </div>
+
+    <div class="retro-window-inner retro-scanline">
+        <div class="font-mono mb-6">
+            <p class="mb-2 scanline">> INITIALIZING RETRO CODING ENVIRONMENT...</p>
+            <p class="mb-2">> LOADING NOSTALGIA MODULES: <span class="text-retro-highlight">COMPLETE</span></p>
+            <p class="mb-2">> CONFIGURING <span class="text-retro-pink">FEMALE PROGRAMMER</span> INSPIRATION ENGINE: <span class="text-retro-highlight">ACTIVE</span></p>
+            <p class="mb-4">> SYSTEM READY<span class="flashing-cursor"></span></p>
+            <p class="mb-2 text-retro-pink italic">"Where code meets time travel... without the paradoxes!"</p>
+        </div>
+
+        <div class="retro-features grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="feature p-4 border-2 border-retro-highlight">
+                <h3 class="font-retro text-retro-pink mb-2">🔥 CODE LIKE IT'S 1995</h3>
+                <p class="text-sm">Experience the joy of writing code with none of the Y2K bugs! Our retro-styled editor brings back the golden age of computing, but without the dial-up wait times.</p>
+            </div>
+            <div class="feature p-4 border-2 border-retro-highlight">
+                <h3 class="font-retro text-retro-pink mb-2">💾 SAVE YOUR GENIUS</h3>
+                <p class="text-sm">No more floppy disks required! Save your code snippets with more than 1.44MB of space. Revolutionary technology!</p>
+            </div>
+            <div class="feature p-4 border-2 border-retro-highlight">
+                <h3 class="font-retro text-retro-pink mb-2">🎮 PLAY WITH CODE</h3>
+                <p class="text-sm">Try our retro examples created by some legendary women in tech. Snake game? Text adventure? We've got the coolest collection this side of the information superhighway!</p>
+            </div>
+            <div class="feature p-4 border-2 border-retro-highlight">
+                <h3 class="font-retro text-retro-pink mb-2">👾 PIXELATED WISDOM</h3>
+                <p class="text-sm">Receive coding tips from legendary tech pioneers. It's like having Ada Lovelace and Grace Hopper as your digital BFFs!</p>
+            </div>
+        </div>
+
+        <div class="retro-actions text-center">
+            <a href="{% url 'retro_editor:new_editor' %}" class="retro-button-big">CREATE NEW SNIPPET</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'retro_editor:my_snippets' %}" class="retro-button-big">MY SAVED CODE</a>
+            {% endif %}
+            <a href="{% url 'retro_editor:sample_library' %}" class="retro-button-big">LEGENDARY LADY EXAMPLES</a>
+        </div>
+    </div>
+
+    {% if public_snippets %}
+    <div class="retro-section mt-8">
+        <h2 class="font-retro text-retro-highlight text-xl mb-4">COMMUNITY CODEZ</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for snippet in public_snippets %}
+            <div class="win-window bg-white">
+                <div class="win-header font-retro text-xs">
+                    <span>{{ snippet.title|truncatechars:20 }}</span>
+                    <div class="flex space-x-1">
+                        <button class="win-button text-xs px-1">×</button>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div class="flex justify-between mb-2">
+                        <span class="bg-retro-purple text-retro-cream text-xs px-2 py-1 rounded">{{ snippet.language }}</span>
+                        <span class="text-xs text-gray-500">{{ snippet.created_at|date:"M d, Y" }}</span>
+                    </div>
+                    <div class="text-xs text-gray-700 mb-3">By: {{ snippet.user.username }}</div>
+                    <a href="{% url 'retro_editor:editor' snippet.id %}" class="win-button block text-center">View</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script src="{% static 'retro_editor/js/editor.js' %}"></script>
+{% endblock %}
