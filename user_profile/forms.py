@@ -13,7 +13,7 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = [
-            'profile_image', 'bio', 'tech_interests', 'skills', 
+            'avatar_choice', 'bio', 'tech_interests', 'skills', 
             'experience_level', 'github_url', 'linkedin_url', 
             'twitter_url', 'portfolio_url', 'seeking_buddy', 
             'buddy_description', 'is_mentor', 'mentor_bio'

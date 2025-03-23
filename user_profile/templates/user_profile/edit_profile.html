@@ -1,0 +1,279 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile - SheCanGitIt{% endblock %}
+{% load static %}
+{% block window_title %}Edit Your Profile{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+  {% if messages %}
+    <div class="win-window mb-4">
+      <div class="win-header font-retro text-xs">
+        <span>Messages</span>
+      </div>
+      <div class="p-4 bg-white">
+        {% for message in messages %}
+          <div class="{% if message.tags %}{{ message.tags }}{% endif %} mb-2 last:mb-0">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="space-y-4">
+    {% csrf_token %}
+    
+    <!-- Account Information -->
+    <div class="win-window">
+      <div class="win-header font-retro text-xs">
+        <span>Account Information</span>
+      </div>
+      <div class="p-4 bg-white">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Username -->
+          <div>
+            <label for="{{ user_form.username.id_for_label }}" class="block text-sm font-medium mb-1">Username</label>
+            {{ user_form.username.errors }}
+            <input type="text" name="{{ user_form.username.name }}" id="{{ user_form.username.id_for_label }}" 
+                  value="{{ user_form.username.value|default_if_none:'' }}"
+                  class="win-input w-full px-2 py-1 text-sm border border-gray-300">
+          </div>
+          
+          <!-- Email -->
+          <div>
+            <label for="{{ user_form.email.id_for_label }}" class="block text-sm font-medium mb-1">Email</label>
+            {{ user_form.email.errors }}
+            <input type="email" name="{{ user_form.email.name }}" id="{{ user_form.email.id_for_label }}" 
+                  value="{{ user_form.email.value|default_if_none:'' }}"
+                  class="win-input w-full px-2 py-1 text-sm border border-gray-300">
+          </div>
+          
+          <!-- First Name -->
+          <div>
+            <label for="{{ user_form.first_name.id_for_label }}" class="block text-sm font-medium mb-1">First Name</label>
+            {{ user_form.first_name.errors }}
+            <input type="text" name="{{ user_form.first_name.name }}" id="{{ user_form.first_name.id_for_label }}" 
+                  value="{{ user_form.first_name.value|default_if_none:'' }}"
+                  class="win-input w-full px-2 py-1 text-sm border border-gray-300">
+          </div>
+          
+          <!-- Last Name -->
+          <div>
+            <label for="{{ user_form.last_name.id_for_label }}" class="block text-sm font-medium mb-1">Last Name</label>
+            {{ user_form.last_name.errors }}
+            <input type="text" name="{{ user_form.last_name.name }}" id="{{ user_form.last_name.id_for_label }}" 
+                  value="{{ user_form.last_name.value|default_if_none:'' }}"
+                  class="win-input w-full px-2 py-1 text-sm border border-gray-300">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Profile Information Section -->
+    <div class="win-window">  
+      <div class="win-header font-retro text-xs">
+        <span>Profile Information</span>
+      </div>
+      <div class="p-4 bg-white">
+        <!-- Current Profile Image -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium mb-2">Current Profile Image</label>
+          <div class="flex items-center">
+            <div class="w-24 h-24 win-button overflow-hidden flex items-center justify-center bg-gray-100">
+              {% if user.profile.avatar_choice %}
+                <img src="{% static 'images/profiles/avatar' %}{{ user.profile.avatar_choice }}.png" 
+                    alt="{{ user.username }}" class="w-full h-full object-cover">
+              {% else %}
+                <div class="text-4xl">👤</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Avatar Selection - Interactive Version -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium mb-2">Select a Profile Avatar</label>
+          <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
+            {% for value, name in user.profile.AVATAR_CHOICES %}
+              <div class="relative">
+                <input type="radio" name="avatar_choice" id="avatar_{{ value }}" value="{{ value }}" 
+                      {% if user.profile.avatar_choice == value %}checked{% endif %}
+                      class="absolute opacity-0 w-full h-full cursor-pointer z-10">
+                <label for="avatar_{{ value }}" class="win-button p-1 block cursor-pointer {% if user.profile.avatar_choice == value %}bg-retro-highlight border-2 border-retro-purple{% endif %}">
+                  <img src="{% static 'images/profiles/avatar' %}{{ value }}.png" 
+                      alt="{{ name }}" class="w-16 h-16 mx-auto object-cover">
+                </label>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <!-- Bio -->
+        <div class="mb-4">
+          <label for="{{ profile_form.bio.id_for_label }}" class="block text-sm font-medium mb-1">Bio</label>
+          {{ profile_form.bio.errors }}
+          <textarea name="{{ profile_form.bio.name }}" id="{{ profile_form.bio.id_for_label }}" 
+                  rows="3" class="win-input w-full px-2 py-1 text-sm border border-gray-300">{{ profile_form.bio.value|default_if_none:'' }}</textarea>
+        </div>
+        
+        <!-- Tech Interests Dropdown (Fixed) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="{{ profile_form.tech_interests.id_for_label }}" class="block text-sm font-medium mb-1">Tech Interests</label>
+            {{ profile_form.tech_interests.errors }}
+            <select name="{{ profile_form.tech_interests.name }}" id="{{ profile_form.tech_interests.id_for_label }}" class="win-input w-full px-2 py-1 text-sm border border-gray-300">
+              <option value="" {% if not profile_form.tech_interests.value %}selected{% endif %}>-- Select your interest --</option>
+              <option value="frontend" {% if profile_form.tech_interests.value == 'frontend' %}selected{% endif %}>Frontend Development</option>
+              <option value="backend" {% if profile_form.tech_interests.value == 'backend' %}selected{% endif %}>Backend Development</option>
+              <option value="fullstack" {% if profile_form.tech_interests.value == 'fullstack' %}selected{% endif %}>Full Stack Development</option>
+              <option value="mobile" {% if profile_form.tech_interests.value == 'mobile' %}selected{% endif %}>Mobile Development</option>
+              <option value="ai" {% if profile_form.tech_interests.value == 'ai' %}selected{% endif %}>Artificial Intelligence</option>
+              <option value="data" {% if profile_form.tech_interests.value == 'data' %}selected{% endif %}>Data Science</option>
+              <option value="cybersecurity" {% if profile_form.tech_interests.value == 'cybersecurity' %}selected{% endif %}>Cybersecurity</option>
+              <option value="devops" {% if profile_form.tech_interests.value == 'devops' %}selected{% endif %}>DevOps</option>
+              <option value="game" {% if profile_form.tech_interests.value == 'game' %}selected{% endif %}>Game Development</option>
+              <option value="ux" {% if profile_form.tech_interests.value == 'ux' %}selected{% endif %}>UX/UI Design</option>
+              <option value="other" {% if profile_form.tech_interests.value == 'other' %}selected{% endif %}>Other</option>
+            </select>
+          </div>
+          
+          <!-- Experience Level Dropdown (Fixed) -->
+          <div>
+            <label for="{{ profile_form.experience_level.id_for_label }}" class="block text-sm font-medium mb-1">Experience Level</label>
+            {{ profile_form.experience_level.errors }}
+            <select name="{{ profile_form.experience_level.name }}" id="{{ profile_form.experience_level.id_for_label }}" class="win-input w-full px-2 py-1 text-sm border border-gray-300">
+              <option value="" {% if not profile_form.experience_level.value %}selected{% endif %}>-- Select your experience level --</option>
+              <option value="beginner" {% if profile_form.experience_level.value == 'beginner' %}selected{% endif %}>Beginner (0-1 years)</option>
+              <option value="intermediate" {% if profile_form.experience_level.value == 'intermediate' %}selected{% endif %}>Intermediate (1-3 years)</option>
+              <option value="advanced" {% if profile_form.experience_level.value == 'advanced' %}selected{% endif %}>Advanced (3-5 years)</option>
+              <option value="expert" {% if profile_form.experience_level.value == 'expert' %}selected{% endif %}>Expert (5+ years)</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Skills -->
+        <div class="mt-4">
+          <label for="{{ profile_form.skills.id_for_label }}" class="block text-sm font-medium mb-1">Skills (comma-separated)</label>
+          {{ profile_form.skills.errors }}
+          <input type="text" name="{{ profile_form.skills.name }}" id="{{ profile_form.skills.id_for_label }}" 
+                value="{{ profile_form.skills.value|default_if_none:'' }}"
+                class="win-input w-full px-2 py-1 text-sm border border-gray-300">
+          <p class="text-xs mt-1 text-gray-500">Example: Python, JavaScript, React, CSS</p>
+        </div>
+      </div>
+    </div>
+        
+    <!-- Social Links -->
+    <div class="win-window">
+      <div class="win-header font-retro text-xs">
+        <span>Social Links</span>
+      </div>
+      <div class="p-4 bg-white">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- GitHub -->
+          <div>
+            <label for="{{ profile_form.github_url.id_for_label }}" class="block text-sm font-medium mb-1">GitHub URL</label>
+            {{ profile_form.github_url.errors }}
+            <input type="url" name="{{ profile_form.github_url.name }}" id="{{ profile_form.github_url.id_for_label }}" 
+                  value="{{ profile_form.github_url.value|default_if_none:'' }}"
+                  class="win-input w-full px-2 py-1 text-sm border border-gray-300">
+          </div>
+          
+          <!-- LinkedIn -->
+          <div>
+            <label for="{{ profile_form.linkedin_url.id_for_label }}" class="block text-sm font-medium mb-1">LinkedIn URL</label>
+            {{ profile_form.linkedin_url.errors }}
+            <input type="url" name="{{ profile_form.linkedin_url.name }}" id="{{ profile_form.linkedin_url.id_for_label }}" 
+                  value="{{ profile_form.linkedin_url.value|default_if_none:'' }}"
+                  class="win-input w-full px-2 py-1 text-sm border border-gray-300">
+          </div>
+          
+          <!-- Twitter -->
+          <div>
+            <label for="{{ profile_form.twitter_url.id_for_label }}" class="block text-sm font-medium mb-1">Twitter URL</label>
+            {{ profile_form.twitter_url.errors }}
+            <input type="url" name="{{ profile_form.twitter_url.name }}" id="{{ profile_form.twitter_url.id_for_label }}" 
+                  value="{{ profile_form.twitter_url.value|default_if_none:'' }}"
+                  class="win-input w-full px-2 py-1 text-sm border border-gray-300">
+          </div>
+          
+          <!-- Portfolio -->
+          <div>
+            <label for="{{ profile_form.portfolio_url.id_for_label }}" class="block text-sm font-medium mb-1">Portfolio URL</label>
+            {{ profile_form.portfolio_url.errors }}
+            <input type="url" name="{{ profile_form.portfolio_url.name }}" id="{{ profile_form.portfolio_url.id_for_label }}" 
+                  value="{{ profile_form.portfolio_url.value|default_if_none:'' }}"
+                  class="win-input w-full px-2 py-1 text-sm border border-gray-300">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Buddy Information -->
+    <div class="win-window">
+      <div class="win-header font-retro text-xs">
+        <span>Study Buddy Information</span>
+      </div>
+      <div class="p-4 bg-white">
+        <!-- Seeking Buddy -->
+        <div class="mb-4">
+          <label class="flex items-center space-x-2">
+            <input type="checkbox" name="{{ profile_form.seeking_buddy.name }}" id="{{ profile_form.seeking_buddy.id_for_label }}" 
+                  {% if profile_form.seeking_buddy.value %}checked{% endif %}
+                  class="win-checkbox">
+            <span class="text-sm">I'm looking for a study buddy</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mentor Information -->
+    <div class="win-window">
+      <div class="win-header font-retro text-xs">
+        <span>Mentor Information</span>
+      </div>
+      <div class="p-4 bg-white">
+        <!-- Is Mentor -->
+        <div class="mb-4">
+          <label class="flex items-center space-x-2">
+            <input type="checkbox" name="{{ profile_form.is_mentor.name }}" id="{{ profile_form.is_mentor.id_for_label }}" 
+                  {% if profile_form.is_mentor.value %}checked{% endif %}
+                  class="win-checkbox">
+            <span class="text-sm">I want to be a mentor</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Submit Buttons -->
+    <div class="flex justify-end gap-2">
+      <a href="{% url 'user_profile' %}" class="win-button text-xs px-4 py-1 border border-gray-300">Cancel</a>
+      <button type="submit" class="win-button text-xs px-4 py-1 bg-retro-purple text-white">Save Profile</button>
+    </div>
+  </form>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get all avatar radio inputs
+    const avatarRadios = document.querySelectorAll('input[name="avatar_choice"]');
+    
+    // Add event listeners to each radio input
+    avatarRadios.forEach(radio => {
+      radio.addEventListener('change', function() {
+        // Remove highlight class from all avatar labels
+        const allLabels = document.querySelectorAll('label[for^="avatar_"]');
+        allLabels.forEach(label => {
+          label.classList.remove('bg-retro-highlight', 'border-2', 'border-retro-purple');
+        });
+        
+        // Add highlight class to the selected label
+        if(this.checked) {
+          const label = document.querySelector(`label[for="${this.id}"]`);
+          label.classList.add('bg-retro-highlight', 'border-2', 'border-retro-purple');
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

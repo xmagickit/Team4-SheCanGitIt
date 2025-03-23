@@ -1,6 +1,6 @@
 from django.utils.html import format_html
 from django.contrib import admin
-from .models import WomenInTech
+from .models import WomenInTech, FeaturedWoman
 
 @admin.register(WomenInTech)
 class WomenInTechAdmin(admin.ModelAdmin):
@@ -14,3 +14,8 @@ class WomenInTechAdmin(admin.ModelAdmin):
         return "-"
     
     preview_image.short_description = "Image"
+    
+@admin.register(FeaturedWoman)
+class FeaturedWomanAdmin(admin.ModelAdmin):
+    list_display = ('name', 'date_featured')
+    search_fields = ('name', 'bio')

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'css/affirmation/style.css' %}"/>
 {% endblock %}
 
-{% block window_title %} SheCanGitIt Affirmation Generator 
+{% block window_title %} SheGitsIt Affirmation Generator 
 {% endblock %} 
 
 {% block content %}
@@ -23,24 +23,24 @@
     </p>
     <br/>
   </div>
-  <div class="form-group">
+  <div class="form-group font-retro">
     <label for="mood">Select your mood:</label>
-    <select id="mood">
+    <select id="mood" class="border-2 border-retro-dark rounded-xl p-4 shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-retro">
       <option value="discouraged">Feeling discouraged</option>
       <option value="motivated">Need motivation</option>
       <option value="confident">Confident</option>
     </select>
   </div>
-  <div class="form-group">
+  <div class="form-group font-retro">
     <label for="career-stage">Select your career stage:</label>
-    <select id="career-stage">
+    <select id="career-stage" class="border-2 border-retro-dark rounded-xl p-4 shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-retro">
       <option value="beginner">Beginner</option>
       <option value="intermediate">Intermediate</option>
       <option value="advanced">Advanced</option>
     </select>
   </div>
-  <button id="generate-btn" class="win-button generate-btn">Generate Affirmation</button>
-  <div class="affirmation" id="affirmation-box" style="display: none"></div>
+  <button id="generate-btn" class="win-button generate-btn bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded shadow transition font-retro">Generate Affirmation</button>
+  <div id="affirmation-box" class="affirmation border-retro-dark rounded-xl shadow-md font-retro border-4 border-purple-400 animate-pulse" style="display: none"></div>
 </div>
 {% endblock %}
 

@@ -5,14 +5,19 @@
 {% block content %}
 
 <!-- Hero Section -->
-<div class="bg-retro-purple text-white py-20 px-6 text-center">
-  <h1 class="text-4xl md:text-6xl font-retro">SheCanGitIt</h1>
-  <p class="mt-4 text-lg md:text-xl max-w-2xl mx-auto">
+<div class="bg-retro-purple text-white py-16 px-4 sm:py-20 sm:px-6 text-center">
+  <h1 class="text-3xl sm:text-4xl md:text-6xl font-retro leading-tight break-words">
+    SheGitsIt
+  </h1>
+  
+  <p class="mt-4 text-base sm:text-lg md:text-xl max-w-xl mx-auto font-retro retro-text leading-relaxed">
     Empowering women in tech through collaboration, mentorship, and community.
   </p>
-  <a href="#" class="mt-6 inline-block bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-bold 
-      text-lg hover:bg-yellow-400 transition-all shadow-md active:translate-y-1">
-    Get Started
+  
+  <a href="{% url 'account_signup' %}"
+     class="mt-6 inline-block bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-bold 
+            text-base sm:text-lg hover:bg-yellow-400 transition-all shadow-md active:translate-y-1">
+    Git Started
   </a>
 </div>
 
@@ -25,53 +30,86 @@
   <div id="slideshow" class="relative overflow-hidden">
     <div id="slidesWrapper" class="flex transition-transform duration-700 ease-in-out">
       {% for woman in women %}
-        {% if forloop.counter0|divisibleby:4 %}
-          <div class="flex flex-shrink-0 w-full max-w-full mx-auto slide-group">
-        {% endif %}
-
-        <div class="w-full sm:w-1/2 lg:w-1/4 flex-shrink-0 p-4">
+        <div class="slide-group w-full lg:w-1/4 sm:w-1/2 flex-shrink-0 p-4">
+          <!-- Card content -->
           <div class="bg-white p-4 shadow-lg rounded-lg win-window flex flex-col h-full border border-retro-purple/20 cursor-pointer open-modal"
-               data-name="{{ woman.name }}"
-               data-image="{{ woman.image_url }}"
-               data-bio="{{ woman.bio }}">
+              data-name="{{ woman.name }}"
+              data-image="{{ woman.image_url }}"
+              data-bio="{{ woman.bio }}">
             {% if woman.image_url %}
               <img src="{{ woman.image_url }}" alt="{{ woman.name }}"
-                   class="w-full h-48 object-cover rounded-lg shadow-md border border-retro-purple/30 mb-3">
+                  class="w-full h-48 object-cover rounded-lg shadow-md border border-retro-purple/30 mb-3">
             {% else %}
               <div class="w-full h-48 flex items-center justify-center bg-retro-purple text-white text-sm rounded-lg mb-3">
                 No image available
               </div>
             {% endif %}
-            <h3 class="text-lg font-semibold text-retro-purple">{{ woman.name }}</h3>
-            <p class="text-sm text-gray-600 mt-2">{{ woman.bio|truncatewords:20 }}</p>
+            <h3 class="font-semibold text-retro-purple font-retro retro-text">{{ woman.name }}</h3>
+            <p class="text-sm text-retro-dark mt-2 font-retro leading-snug tracking-wide break-words">
+              {{ woman.bio|truncatewords:20 }}
+            </p>
           </div>
         </div>
-
-        {% if forloop.counter|divisibleby:4 or forloop.last %}
-          </div>
-        {% endif %}
-      {% empty %}
-        <div class="text-white p-4 text-center">No women found in the database.</div>
       {% endfor %}
     </div>
 
     <!-- Navigation Buttons -->
-    <button id="prevSlide" class="absolute top-1/2 -translate-y-1/2 left-0 bg-retro-purple text-white px-3 py-1 z-10 hidden group-hover:block rounded-r-lg">
-      ‹
-    </button>
-    <button id="nextSlide" class="absolute top-1/2 -translate-y-1/2 right-0 bg-retro-purple text-white px-3 py-1 z-10 hidden group-hover:block rounded-l-lg">
-      ›
-    </button>
+      <!-- Prev Slide Button -->
+      <button id="prevSlide"
+        class="absolute top-1/2 -translate-y-1/2 -left-8 bg-retro-purple text-white px-2 py-1 text-sm z-10 rounded-r-md shadow-md">
+        ‹
+      </button>
+
+      <!-- Next Slide Button -->
+      <button id="nextSlide"
+        class="absolute top-1/2 -translate-y-1/2 -right-8 bg-retro-purple text-white px-2 py-1 text-sm z-10 rounded-l-md shadow-md">
+        ›
+      </button>
   </div>
 </div>
 
-<!-- Modal for Full Info -->
-<div id="modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50">
-  <div class="bg-white p-6 rounded-lg max-w-md w-full relative">
-    <button id="closeModal" class="absolute top-2 right-3 text-gray-500 text-xl">&times;</button>
-    <img id="modalImage" class="w-full h-64 object-cover rounded mb-4" src="" alt="Modal Image">
-    <h2 id="modalName" class="text-xl font-bold text-retro-purple mb-2"></h2>
-    <p id="modalBio" class="text-gray-700 text-sm"></p>
+<!-- Featured Women This Week -->
+<div class="max-w-5xl mx-auto mt-10 win-window p-4">
+  <div class="win-header flex justify-between items-center bg-retro-purple p-2 text-white">
+    <span class="font-retro">🌟 Our Women This Week 🌟</span>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 p-6">
+    {% for woman in featured_women %}
+    <div class="relative bg-gradient-to-br from-yellow-50 to-purple-100 p-6 shadow-2xl rounded-xl text-center border-4 border-retro-purple/30 transform hover:scale-105 transition duration-300">
+
+      <!-- Glowing border effect -->
+      <div class="absolute inset-0 rounded-xl border-4 border-yellow-400 animate-pulse z-0 opacity-20"></div>
+
+      <!-- Featured ribbon -->
+      <div class="absolute top-0 left-0 bg-yellow-400 text-retro-purple font-retro px-3 py-1 text-xs rounded-br-lg z-10 shadow-md">
+        ★ Featured
+      </div>
+
+      <!-- Image -->
+      {% if woman.image_url %}
+      <img src="{{ woman.image_url }}" alt="{{ woman.name }}"
+      class="w-full h-64 object-contain rounded-xl bg-white border-4 border-retro-purple mx-auto shadow-lg z-10" />
+    {% elif woman.image %}
+      <img src="{{ woman.image.url }}" alt="{{ woman.name }}"
+      class="w-full h-64 object-contain rounded-xl bg-white border-4 border-retro-purple mx-auto shadow-lg z-10" />
+    {% else %}
+      <div  class="w-full h-64 object-contain rounded-xl bg-white border-4 border-retro-purple mx-auto shadow-lg z-10" />
+        No image
+      </div>
+    {% endif %}
+
+      <!-- Name & Bio -->
+      <div class="relative z-10 mt-4">
+        <h3 class="text-sm font-retro text-retro-purple">{{ woman.name }}</h3>
+        <p class="text-sm text-retro-dark mt-2 font-retro leading-snug tracking-wide px-2 break-words">
+          {{ woman.bio|truncatewords:50 }}
+        </p>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-white text-center col-span-2">No featured women this week.</p>
+    {% endfor %}
   </div>
 </div>
 
@@ -85,20 +123,20 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Testimonial 1 -->
             <div class="bg-white p-4 shadow-lg rounded-lg">
-                <p class="text-gray-700 italic">"SheCanGitIt gave me the confidence to apply for my dream job in tech! I love the supportive community and resources available."</p>
-                <p class="mt-4 font-semibold text-retro-purple">— Emily, Software Engineer</p>
+                <p class="text-gray-500 italic font-retro text-sm">"SheGitsIt gave me the confidence to apply for my dream job in tech! I love the supportive community and resources available."</p>
+                <p class="mt-4 font-semibold text-retro-purple font-retro">— Emily, Software Engineer</p>
             </div>
 
             <!-- Testimonial 2 -->
             <div class="bg-white p-4 shadow-lg rounded-lg">
-                <p class="text-gray-700 italic">"I've met incredible mentors and peers who inspire me every day. This platform has truly been a game-changer for my tech journey."</p>
-                <p class="mt-4 font-semibold text-retro-purple">— Olivia, Data Scientist</p>
+                <p class="text-gray-500 italic font-retro text-sm">"I've met incredible mentors and peers who inspire me every day. This platform has truly been a game-changer for my tech journey."</p>
+                <p class="mt-4 font-semibold text-retro-purple font-retro">— Olivia, Data Scientist</p>
             </div>
 
             <!-- Testimonial 3 -->
             <div class="bg-white p-4 shadow-lg rounded-lg">
-                <p class="text-gray-700 italic">"From learning new skills to networking with amazing women, SheCanGitIt is the place to be if you're a woman in tech!"</p>
-                <p class="mt-4 font-semibold text-retro-purple">— Sarah, UX Designer</p>
+                <p class="text-gray-500 italic font-retro text-sm">"From learning new skills to networking with amazing women, SheCanGitIt is the place to be if you're a woman in tech!"</p>
+                <p class="mt-4 font-semibold text-retro-purple font-retro">— Sarah, UX Designer</p>
             </div>
         </div>
     </div>
@@ -117,80 +155,208 @@
 {% endblock %}
 
 {% block extra_js %}
-<script>
-  const slidesWrapper = document.getElementById('slidesWrapper');
-  const slideGroups = document.querySelectorAll('.slide-group');
-  const slideshow = document.getElementById('slideshow');
-  const totalSlides = slideGroups.length;
+  <script>
+// Slideshow logic
+const slidesWrapper = document.getElementById('slidesWrapper');
+const slideGroups = document.querySelectorAll('.slide-group');
+const slideshow = document.getElementById('slideshow');
+const prevButton = document.getElementById('prevSlide');
+const nextButton = document.getElementById('nextSlide');
+const totalSlides = slideGroups.length;
 
-  let currentSlide = 0;
-  let interval = null;
+let currentSlide = 0;
+let interval = null;
+let slidesPerView = 4; // Default for desktop
 
-  function updateSlide() {
-    if (totalSlides === 0) return;
-    const containerWidth = slideshow.offsetWidth;
-    slidesWrapper.style.transform = `translateX(-${containerWidth * currentSlide}px)`;
+// Calculate visible slides based on screen width
+function calculateSlidesPerView() {
+  if (window.matchMedia("(max-width: 640px)").matches) {
+    return 1; // Mobile: 1 slide
+  } else if (window.matchMedia("(max-width: 1024px)").matches) {
+    return 2; // Tablet: 2 slides
+  } else {
+    return 4; // Desktop: 4 slides
   }
+}
 
-  function nextSlide() {
-    if (totalSlides === 0) return;
-    currentSlide = (currentSlide + 1) % totalSlides;
+function updateSlide() {
+  if (totalSlides === 0) return;
+  
+  // Recalculate slides per view
+  slidesPerView = calculateSlidesPerView();
+  
+  // Calculate maximum slide index
+  const maxSlideIndex = Math.max(0, totalSlides - slidesPerView);
+  
+  // Ensure currentSlide doesn't exceed max
+  if (currentSlide > maxSlideIndex) {
+    currentSlide = maxSlideIndex;
+  }
+  
+  const slideWidth = slideshow.offsetWidth / slidesPerView;
+  slidesWrapper.style.transform = `translateX(-${slideWidth * currentSlide}px)`;
+  
+  // Update button states
+  updateNavButtons(maxSlideIndex);
+}
+
+function nextSlide() {
+  if (totalSlides === 0) return;
+  
+  const maxSlideIndex = Math.max(0, totalSlides - slidesPerView);
+  if (currentSlide < maxSlideIndex) {
+    currentSlide++;
     updateSlide();
   }
+}
 
-  function prevSlide() {
-    if (totalSlides === 0) return;
-    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+function prevSlide() {
+  if (totalSlides === 0) return;
+  
+  if (currentSlide > 0) {
+    currentSlide--;
     updateSlide();
   }
+}
 
-  document.getElementById('nextSlide').addEventListener('click', nextSlide);
-  document.getElementById('prevSlide').addEventListener('click', prevSlide);
+function updateNavButtons(maxSlideIndex) {
+  // Update button states based on current position
+  prevButton.disabled = currentSlide === 0;
+  nextButton.disabled = currentSlide >= maxSlideIndex;
+  
+  // Visually indicate disabled state
+  prevButton.style.opacity = prevButton.disabled ? '0.5' : '1';
+  nextButton.style.opacity = nextButton.disabled ? '0.5' : '1';
+  
+  // Show buttons on all screen sizes for better UX on mobile
+  prevButton.classList.remove('hidden');
+  nextButton.classList.remove('hidden');
+  prevButton.classList.add('block');
+  nextButton.classList.add('block');
+}
 
-  // Auto-play
-  function startSlideshow() {
-    interval = setInterval(nextSlide, 5000);
+// Slideshow auto-play: only on desktop
+function startSlideshow() {
+  stopSlideshow(); // Clear any previous interval first
+  const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+  if (isDesktop) {
+    interval = setInterval(() => {
+      const maxSlideIndex = Math.max(0, totalSlides - slidesPerView);
+      if (currentSlide >= maxSlideIndex) {
+        // Reset to beginning when reaching the end
+        currentSlide = 0;
+      } else {
+        nextSlide();
+      }
+    }, 5000);
   }
+}
 
-  function stopSlideshow() {
+function stopSlideshow() {
+  if (interval) {
     clearInterval(interval);
+    interval = null;
+  }
+}
+
+// Event listeners
+prevButton.addEventListener('click', prevSlide);
+nextButton.addEventListener('click', nextSlide);
+
+// Pause on hover (desktop)
+slideshow.addEventListener('mouseenter', stopSlideshow);
+slideshow.addEventListener('mouseleave', startSlideshow);
+
+// Recalculate on resize
+window.addEventListener('resize', () => {
+  // Reset all slide dimensions and positions
+  slideGroups.forEach(slide => {
+    if (window.matchMedia("(max-width: 640px)").matches) {
+      slide.classList.remove('w-1/2', 'w-1/4');
+      slide.classList.add('w-full');
+    } else if (window.matchMedia("(max-width: 1024px)").matches) {
+      slide.classList.remove('w-full', 'w-1/4');
+      slide.classList.add('w-1/2');
+    } else {
+      slide.classList.remove('w-full', 'w-1/2');
+      slide.classList.add('w-1/4');
+    }
+  });
+  
+  updateSlide();
+  startSlideshow(); // re-check device width and restart if needed
+});
+
+// Swipe support (mobile)
+let startX = 0;
+slideshow.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+  stopSlideshow(); // Stop autoplay on touch interaction
+});
+
+slideshow.addEventListener('touchend', e => {
+  const endX = e.changedTouches[0].clientX;
+  if (startX - endX > 50) nextSlide();
+  else if (endX - startX > 50) prevSlide();
+});
+
+// Update CSS for the navigation buttons to make them more visible on mobile
+document.addEventListener('DOMContentLoaded', () => {
+  // Add these styles to make buttons more visible on all devices
+  const style = document.createElement('style');
+  style.textContent = `
+  #prevSlide, #nextSlide {
+    display: block !important;
+    background-color: rgba(107, 70, 193, 0.9); /* Stronger purple */
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 1.25rem;
+    transition: all 0.2s;
+    z-index: 20;
   }
 
-  slideshow.addEventListener('mouseenter', stopSlideshow);
-  slideshow.addEventListener('mouseleave', startSlideshow);
-  window.addEventListener('resize', updateSlide);
+  @media (max-width: 768px) {
+    #prevSlide, #nextSlide {
+      padding: 12px 16px;
+      font-size: 1.5rem;
+      top: auto !important;
+      bottom: 20px;
+      transform: none;
+    }
 
-  // Swipe support
-  let startX = 0;
-  slideshow.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-  slideshow.addEventListener('touchend', e => {
-    const endX = e.changedTouches[0].clientX;
-    if (startX - endX > 50) nextSlide();
-    else if (endX - startX > 50) prevSlide();
+    #prevSlide {
+      left: 20px;
+      right: auto;
+    }
+
+    #nextSlide {
+      right: 20px;
+      left: auto;
+    }
+  }
+`;
+  document.head.appendChild(style);
+});
+
+// Kick off logic
+window.onload = () => {
+  // Initialize slide widths based on screen size
+  slideGroups.forEach(slide => {
+    if (window.matchMedia("(max-width: 640px)").matches) {
+      slide.classList.remove('w-1/2', 'w-1/4');
+      slide.classList.add('w-full');
+    } else if (window.matchMedia("(max-width: 1024px)").matches) {
+      slide.classList.remove('w-full', 'w-1/4');
+      slide.classList.add('w-1/2');
+    } else {
+      slide.classList.remove('w-full', 'w-1/2');
+      slide.classList.add('w-1/4');
+    }
   });
-
-  // Modal logic
-  const modal = document.getElementById('modal');
-  const modalImage = document.getElementById('modalImage');
-  const modalName = document.getElementById('modalName');
-  const modalBio = document.getElementById('modalBio');
-  const closeModal = document.getElementById('closeModal');
-
-  document.querySelectorAll('.open-modal').forEach(card => {
-    card.addEventListener('click', () => {
-      modalImage.src = card.dataset.image;
-      modalName.textContent = card.dataset.name;
-      modalBio.textContent = card.dataset.bio;
-      modal.classList.remove('hidden');
-    });
-  });
-
-  closeModal.addEventListener('click', () => modal.classList.add('hidden'));
-  window.addEventListener('click', e => {
-    if (e.target === modal) modal.classList.add('hidden');
-  });
-
-  startSlideshow();
+  
   updateSlide();
-</script>
+  startSlideshow();
+};
+
+  </script>
 {% endblock %}

@@ -25,10 +25,11 @@ urlpatterns = [
     path('', include('home.urls')),  # Root homepage
     path('herstory/', include('her_story.urls')),
     path('mentor/', include('her_mentor.urls')),
-    # path('buddies/', include('her_buddies.urls')),
+    path('her_buddies/', include('her_buddies.urls')),
     path('chat/', include('chat.urls')),
     path('affirmation/', include('affirmation.urls')),
     path('', include('user_profile.urls')),
+    path('about/', include('about.urls')),
 ]
 
 if settings.DEBUG:
