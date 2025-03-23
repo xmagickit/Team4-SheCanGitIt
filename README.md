@@ -229,10 +229,11 @@ Ma
 
 ### Use of AI
 #### Code Generation
-Th
+The team used Copilot, ChatGPT and Claude to help with create new code during the project building.<br>
+Wehn using AI we had to check the suggestions and adapt the prompts as AI can provide code that doesn't fit the purpose wanted, with need for correction.<br>
 
 #### Debugging
-Co
+Different AI where used to debug the code created and check errors, or directly asking for what could be wrong in their website for solutions. <br>
 
 #### Code Optimisation
 Whe
