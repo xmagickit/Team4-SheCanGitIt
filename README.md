@@ -164,7 +164,14 @@ From the new app Settings, click Reveal Config Vars, and set your environment va
 | USE_AWS | True |<br>
 Heroku needs three additional files in order to deploy properly.<br>
 requirements.txt<br>
+
 Procfile<br>
+
+To cater for the needs of the async messaging function in the app, instead of using a gunicorn-based process type declaration (typically web: gunicorn team_4.wsgi:application), which can't handle web sockets, the declaration we used calls daphne, a similar application to gunicorn, whose advantage in this case is that it can deal with websockets very well.
+
+The line in the Procfile that launches the app after deployment is therefore "web: daphne -b 0.0.0.0 -p $PORT team_4.asgi:application".
+
+
 runtime.txt<br>
 You can install this project's requirements (where applicable) using:<br>
 pip3 install -r requirements.txt<br>
@@ -188,6 +195,11 @@ git push heroku main<br>
 The project should now be connected and deployed to Heroku!
 </details>
 Once the MVP was achieved and tested on Gitpod, the deployment was done on Heroku.
+
+Redis after deployment<br>
+Asyncronous messaging using websockets needs a Redis process running constantly in the background. This service is provided in the dev environment via a Redis process running in docker. While Heroku can also work with docker, the easiest and cheapest option for us (at 0$ per month) was to use the free plan for Redis® Cloud, which works perfectly well for our purposes on the deployment side. Its chief limitation is that it can only be used once per Heroku account before monthly payments begin to kick in.
+
+It automatically writes a Config Variable to Heroku, telling the app where to look for the Publish/Subscribe broker that websockets need.
 
 [Back to top](#top)
 
