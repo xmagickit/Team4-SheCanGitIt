@@ -1,40 +1,226 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Retro Code Editor | SheGitsIt{% endblock %}
+{% block title %}CodeBlast 95 | SheGitsIt{% endblock %}
+
+{% block window_title %}CodeBlast 95{% endblock %}
+
+{% block extra_css %}
+<style>
+    @keyframes blink {
+        0%, 49% { opacity: 1; }
+        50%, 100% { opacity: 0; }
+    }
+
+    @keyframes scan {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(2px); }
+    }
+
+    @keyframes glitch {
+        0% { transform: translateX(0) }
+        20% { transform: translateX(-2px) }
+        40% { transform: translateX(2px) }
+        60% { transform: translateX(-2px) }
+        80% { transform: translateX(2px) }
+        100% { transform: translateX(0) }
+    }
+    
+    .pixel-art {
+        image-rendering: pixelated;
+    }
+    
+    .retro-scanline::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+            transparent 0px,
+            rgba(0, 0, 0, 0.05) 1px,
+            transparent 2px
+        );
+        pointer-events: none;
+    }
+    
+    .blink {
+        animation: blink 1s infinite;
+    }
+    
+    .scanline {
+        animation: scan 0.5s linear infinite alternate;
+    }
+    
+    .glitch {
+        animation: glitch 0.2s ease-in-out;
+    }
+    
+    .retro-spotlight {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .retro-spotlight::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0) 70%
+        );
+        transform: rotate(30deg);
+        animation: spotlight 8s linear infinite;
+    }
+    
+    @keyframes spotlight {
+        0% { transform: scale(1) rotate(0deg); }
+        50% { transform: scale(1.2) rotate(180deg); }
+        100% { transform: scale(1) rotate(360deg); }
+    }
+    
+    .retro-window-inner {
+        border: 2px solid var(--retro-purple);
+        padding: 1rem;
+        margin-bottom: 2rem;
+        background-color: var(--retro-dark);
+        color: var(--retro-cream);
+        position: relative;
+    }
+    
+    .retro-button-big {
+        display: inline-block;
+        background-color: var(--retro-purple);
+        color: var(--retro-cream);
+        font-family: 'Press Start 2P', monospace;
+        font-size: 12px;
+        padding: 12px 24px;
+        margin: 10px;
+        border: 4px outset var(--retro-highlight);
+        text-transform: uppercase;
+        text-decoration: none;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.1s;
+    }
+    
+    .retro-button-big:hover {
+        background-color: var(--retro-highlight);
+        color: var(--retro-dark);
+    }
+    
+    .retro-button-big:active {
+        border-style: inset;
+        transform: translateY(4px);
+    }
+    
+    .pixel-computer {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 20px;
+        display: block;
+    }
+    
+    .flashing-cursor::after {
+        content: '|';
+        animation: blink 1s step-end infinite;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
 <div class="retro-container">
-    <h1 class="retro-title">RETRO CODE EDITOR</h1>
-    <div class="retro-intro">
-        <p>Welcome to the SheGitsIt Retro Code Editor! Create, edit, and share your code snippets in a nostalgic environment inspired by early computing.</p>
-        <p>Get coding tips from pioneering women in technology as you write!</p>
+    <div class="text-center mb-8">
+        <img src="{% static 'retro_editor/img/computer.gif' %}" alt="Retro Computer" class="pixel-computer">
+        <h1 class="font-retro text-3xl text-retro-highlight mb-4 relative overflow-hidden retro-spotlight">
+            <span class="glitch">CODE</span>BLAST <span class="blink">95</span>
+        </h1>
+        <div class="text-sm text-retro-cream mb-4">VERSION 3.1.4 // (C) 1995 SHEGITSIT CORP.</div>
     </div>
 
-    <div class="retro-actions">
-        <a href="{% url 'retro_editor:new_editor' %}" class="retro-button">NEW SNIPPET</a>
-        {% if user.is_authenticated %}
-        <a href="{% url 'retro_editor:my_snippets' %}" class="retro-button">MY SNIPPETS</a>
-        {% endif %}
+    <div class="retro-window-inner retro-scanline">
+        <div class="font-mono mb-6">
+            <p class="mb-2 scanline">> INITIALIZING RETRO CODING ENVIRONMENT...</p>
+            <p class="mb-2">> LOADING NOSTALGIA MODULES: <span class="text-retro-highlight">COMPLETE</span></p>
+            <p class="mb-2">> CONFIGURING <span class="text-retro-pink">FEMALE PROGRAMMER</span> INSPIRATION ENGINE: <span class="text-retro-highlight">ACTIVE</span></p>
+            <p class="mb-4">> SYSTEM READY<span class="flashing-cursor"></span></p>
+            <p class="mb-2 text-retro-pink italic">"Where code meets time travel... without the paradoxes!"</p>
+        </div>
+
+        <div class="retro-features grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="feature p-4 border-2 border-retro-highlight">
+                <h3 class="font-retro text-retro-pink mb-2">🔥 CODE LIKE IT'S 1995</h3>
+                <p class="text-sm">Experience the joy of writing code with none of the Y2K bugs! Our retro-styled editor brings back the golden age of computing, but without the dial-up wait times.</p>
+            </div>
+            <div class="feature p-4 border-2 border-retro-highlight">
+                <h3 class="font-retro text-retro-pink mb-2">💾 SAVE YOUR GENIUS</h3>
+                <p class="text-sm">No more floppy disks required! Save your code snippets with more than 1.44MB of space. Revolutionary technology!</p>
+            </div>
+            <div class="feature p-4 border-2 border-retro-highlight">
+                <h3 class="font-retro text-retro-pink mb-2">🎮 PLAY WITH CODE</h3>
+                <p class="text-sm">Try our rad examples created by awesome women in tech. Snake game? Text adventure? We've got the coolest collection this side of the information superhighway!</p>
+            </div>
+            <div class="feature p-4 border-2 border-retro-highlight">
+                <h3 class="font-retro text-retro-pink mb-2">👾 PIXELATED WISDOM</h3>
+                <p class="text-sm">Receive coding tips from legendary tech pioneers. It's like having Ada Lovelace and Grace Hopper as your digital BFFs!</p>
+            </div>
+        </div>
+
+        <div class="retro-actions text-center">
+            <a href="{% url 'retro_editor:new_editor' %}" class="retro-button-big">CREATE NEW SNIPPET</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'retro_editor:my_snippets' %}" class="retro-button-big">MY SAVED CODE</a>
+            {% endif %}
+            <a href="{% url 'retro_editor:sample_library' %}" class="retro-button-big">RADICAL EXAMPLES</a>
+        </div>
     </div>
 
     {% if public_snippets %}
-    <div class="retro-section">
-        <h2 class="retro-subtitle">COMMUNITY SNIPPETS</h2>
-        <div class="snippet-grid">
+    <div class="retro-section mt-8">
+        <h2 class="font-retro text-retro-highlight text-xl mb-4">COMMUNITY CODEZ</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for snippet in public_snippets %}
-            <div class="snippet-card">
-                <div class="snippet-header">
-                    <h3>{{ snippet.title }}</h3>
-                    <span class="language-badge">{{ snippet.language }}</span>
+            <div class="win-window bg-white">
+                <div class="win-header font-retro text-xs">
+                    <span>{{ snippet.title|truncatechars:20 }}</span>
+                    <div class="flex space-x-1">
+                        <button class="win-button text-xs px-1">×</button>
+                    </div>
                 </div>
-                <div class="snippet-author">By: {{ snippet.user.username }}</div>
-                <div class="snippet-date">{{ snippet.created_at|date:"M d, Y" }}</div>
-                <a href="{% url 'retro_editor:editor' snippet.id %}" class="view-button">VIEW</a>
+                <div class="p-4">
+                    <div class="flex justify-between mb-2">
+                        <span class="bg-retro-purple text-retro-cream text-xs px-2 py-1 rounded">{{ snippet.language }}</span>
+                        <span class="text-xs text-gray-500">{{ snippet.created_at|date:"M d, Y" }}</span>
+                    </div>
+                    <div class="text-xs text-gray-700 mb-3">By: {{ snippet.user.username }}</div>
+                    <a href="{% url 'retro_editor:editor' snippet.id %}" class="win-button block text-center">View</a>
+                </div>
             </div>
             {% endfor %}
         </div>
     </div>
     {% endif %}
 </div>
+
+<script>
+    // Add some fun retro effects
+    document.addEventListener('DOMContentLoaded', function() {
+        // Random glitch effect
+        setInterval(() => {
+            const glitchElements = document.querySelectorAll('.glitch');
+            const randomIndex = Math.floor(Math.random() * glitchElements.length);
+            glitchElements[randomIndex].classList.remove('glitch');
+            setTimeout(() => {
+                glitchElements[randomIndex].classList.add('glitch');
+            }, 50);
+        }, 3000);
+    });
+</script>
 {% endblock %}

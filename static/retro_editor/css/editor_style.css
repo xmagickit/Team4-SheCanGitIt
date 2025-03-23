@@ -169,11 +169,41 @@ select {
 }
 
 /* Button styles */
+/* Fix for run button visibility */
 .button-bar {
-  display: flex;
-  padding: 10px;
-  gap: 10px;
+  position: sticky;
+  bottom: 0;
   background-color: var(--retro-purple);
+  z-index: 10;
+  padding: 8px;
+  display: flex;
+  gap: 8px;
+  border-top: 2px solid var(--retro-dark);
+}
+
+.retro-button {
+  min-width: 80px;
+  cursor: pointer;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  background-color: var(--retro-dark);
+  color: var(--retro-cream);
+  border: 2px outset var(--retro-highlight);
+  padding: 5px 10px;
+  text-transform: uppercase;
+  transition: all 0.1s;
+  box-shadow: 2px 2px 0px var(--retro-dark);
+}
+
+.retro-button:hover {
+  background-color: var(--retro-highlight);
+  color: var(--retro-dark);
+}
+
+.retro-button:active {
+  border-style: inset;
+  transform: translateY(2px);
+  box-shadow: 0px 0px 0px var(--retro-dark);
 }
 
 /* Output area */

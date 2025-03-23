@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Code Editor | SheGitsIt{% endblock %}
+{% block title %}CodeBlast 95 Editor | SheGitsIt{% endblock %}
+
+{% block window_title %}CodeBlast 95 - Editing: {% if snippet %}{{ snippet.title }}{% else %}New Snippet{% endif %}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
@@ -10,9 +12,11 @@
 {% endblock %}
 
 {% block content %}
-<div class="retro-window">
+<div class="retro-window relative">
     <div class="retro-header">
-        <div class="window-title">SHE_GITS_IT.EXE - RETRO CODE EDITOR v1.0</div>
+        <div class="window-title">
+            {% if snippet %}{{ snippet.title }}{% else %}Untitled_Awesome_Code.{{ form.language.value|default:"html" }}{% endif %}
+        </div>
         <div class="window-controls">
             <span class="control-btn minimize"></span>
             <span class="control-btn maximize"></span>
@@ -24,23 +28,24 @@
         <!-- Left sidebar -->
         <div class="sidebar">
             <div class="sidebar-section">
-                <h3>FILES</h3>
+                <img src="{% static 'retro_editor/img/computer.gif' %}" alt="Computer" class="sidebar-icon">
+                <h3 class="font-retro text-retro-highlight text-xs">COMMAND CENTER</h3>
                 <div id="file-list">
                     {% if user.is_authenticated %}
-                        <div class="file-item active">{% if snippet %}{{ snippet.title }}{% else %}Untitled{% endif %}</div>
+                        <div class="file-item active blip-effect">{% if snippet %}{{ snippet.title }}{% else %}New Awesome Code{% endif %}</div>
                     {% endif %}
                 </div>
                 
-                <a href="{% url 'retro_editor:my_snippets' %}" class="sidebar-link">My Snippets</a>
-                <a href="{% url 'retro_editor:editor_home' %}" class="sidebar-link">Home</a>
-                <a href="{% url 'retro_editor:sample_library' %}" class="sidebar-link">Cool Code Examples</a>
+                <a href="{% url 'retro_editor:my_snippets' %}" class="sidebar-link">My L33t Code</a>
+                <a href="{% url 'retro_editor:editor_home' %}" class="sidebar-link">Command HQ</a>
+                <a href="{% url 'retro_editor:sample_library' %}" class="sidebar-link">Rad Examples</a>
             </div>
           
             <div class="sidebar-section pioneers">
-                <h3>PIONEERS</h3>
-                <div class="pioneer-item" data-pioneer="Ada Lovelace">Ada Lovelace</div>
-                <div class="pioneer-item" data-pioneer="Grace Hopper">Grace Hopper</div>
-                <div class="pioneer-item" data-pioneer="Katherine Johnson">Katherine Johnson</div>
+                <h3 class="font-retro text-retro-pink text-xs">TECH LEGENDS</h3>
+                <div class="pioneer-item blip-effect" data-pioneer="Ada Lovelace">Ada Lovelace</div>
+                <div class="pioneer-item blip-effect" data-pioneer="Grace Hopper">Grace Hopper</div>
+                <div class="pioneer-item blip-effect" data-pioneer="Katherine Johnson">Katherine Johnson</div>
             </div>
         </div>
       
@@ -49,26 +54,29 @@
             <form method="post" id="editor-form">
                 {% csrf_token %}
                 <div class="form-group">
+                    <label for="{{ form.title.id_for_label }}" class="block text-xs text-retro-cream mb-1">FILE NAME:</label>
                     {{ form.title }}
                 </div>
                 <div class="form-group language-selector">
+                    <label for="{{ form.language.id_for_label }}" class="block text-xs text-retro-cream mb-1">LANGUAGE:</label>
                     {{ form.language }}
                 </div>
-                <div class="code-container">
+                <div class="code-container retro-scanline">
                     {{ form.code_content }}
                 </div>
                 <div class="form-group visibility">
-                    {{ form.is_public }} <label for="{{ form.is_public.id_for_label }}">Public</label>
+                    {{ form.is_public }} <label for="{{ form.is_public.id_for_label }}" class="text-xs text-retro-cream ml-1">Share with the world</label>
                 </div>
                 <div class="status-bar">
-                    <div class="status-info">Line: 1 | Col: 1 | <span id="current-language">
+                    <div class="status-info">LINE: 1 | COL: 1 | <span id="current-language" class="blink">
                         {% if form.instance.language %}{{ form.instance.language|upper }}{% else %}HTML{% endif %}
                     </span></div>
-                    <div class="encoding">UTF-8</div>
+                    <div class="encoding">UTF-8 | CPU: 33MHz</div>
                 </div>
                 <div class="button-bar">
                     <button type="submit" class="retro-button save-btn">SAVE</button>
                     <button type="button" class="retro-button run-btn" id="run-code">RUN</button>
+                    <span class="text-xs text-retro-cream ml-auto">POWERED BY SHEGITSIT</span>
                 </div>
             </form>
         </div>
@@ -83,34 +91,9 @@
                 <iframe id="preview-frame"></iframe>
             </div>
             <div class="tab-content hidden" id="console-content">
-                <div class="console-output"></div>
+                <div class="console-output">
+                    <p>> SYSTEM READY</p>
+                    <p>> AWAITING CODE EXECUTION...</p>
+                </div>
             </div>
         </div>
-    </div>
-  
-    <!-- Pioneer tips popup -->
-    <div class="pioneer-tip" id="tip-popup">
-        <h4>TIP FROM <span id="pioneer-name">GRACE</span>:</h4>
-        <p id="tip-content">Try using CSS Grid for your retro layout! It's the modern way to create table layouts.</p>
-        <button class="close-tip">×</button>
-    </div>
-</div>
-{% endblock %}
-
-{% block extra_js %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/xml/xml.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/css/css.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/htmlmixed/htmlmixed.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
-<script src="{% static 'retro_editor/js/editor.js' %}"></script>
-
-{% if random_tip %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        showPioneerTip("{{ random_tip.pioneer|escapejs }}", "{{ random_tip.tip_content|escapejs }}");
-    });
-</script>
-{% endif %}
-{% endblock %}
