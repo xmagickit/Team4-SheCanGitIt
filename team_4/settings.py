@@ -107,6 +107,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'her_mentor.context_processors.unread_notifications',
+                'retro_editor.context_processors.recent_code_snippets',
             ],
         },
     },
