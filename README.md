@@ -128,13 +128,26 @@ Most
 
 ## Technologies Used
 ### Languages and Technologies
-
+![Static Badge](https://img.shields.io/badge/HTML5-Language-blue)
+![Static Badge](https://img.shields.io/badge/CSS3-Language-blue)
+![Static Badge](https://img.shields.io/badge/GitHub-RepoHosting-black)
+![Static Badge](https://img.shields.io/badge/logo-javascript-blue?logo=javascript)
+![Static Badge](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 
 ### Libraries
-
+![Static Badge](https://img.shields.io/badge/GoogleFonts-Typography-blue)
 
 ### Tools and Programs
+![Static Badge](https://img.shields.io/badge/Balsamiq-Wireframes-green)
+![Static Badge](https://img.shields.io/badge/MSCopilot-AI-orange)
+![Static Badge](https://img.shields.io/badge/GitHubCopilot-AI-orange)
 
+### DataBases
+![Static Badge](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white)
+
+### Frameworks
+![Static Badge](https://img.shields.io/badge/Django-092E20?style=flat&logo=django&logoColor=white)
+![Static Badge](readme\cloudinary-squareLogo.webp)
 
 [Back to top](#top)
 
@@ -245,10 +258,23 @@ On
 
 
 ### Media References
+Different sites were used to seach and use information about different women that influenced directly or indirectly the history of coding and tech.
 
+- https://www.womenintech.co.uk/10-famous-women-technology-changed-world/
+- https://mashable.com/article/unsung-women-in-tech
+- https://www.techtarget.com/whatis/feature/Top-9-most-influential-women-in-technology
 
 ### Acknowledgements
-Ev
+The team was composed by 7 elements, with 4 working more on the frontend, and 2 on the backend and databases. One element to help as needed and work on the admin part.
+
+GitHub profiles for all the elements of the team:
+- https://github.com/JaimeHyland
+- https://github.com/Lochy2000
+- https://github.com/kimatron
+- https://github.com/waiyiwong
+- https://github.com/Ojay97-hub
+- https://github.com/Carlos-n21
+- https://github.com/Alexiou981
 
 [Back to top](#top)
 
