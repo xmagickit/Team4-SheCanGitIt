@@ -53,6 +53,7 @@
       <a href="{% url 'tech_list' %}" class="win-button px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight">HerBuddies</a>
       <a href="#" class="win-button px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight">Chat</a>
       <a href="{% url 'affirmation' %}" class="win-button px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight">Affirmations</a>
+      <a href="{% url 'about' %}" class="win-button px-2 py-1 text-xs md:text-sm hover:bg-retro-highlight">About</a>
     </nav>
 
     <!-- User Account Section (Desktop only) -->
@@ -115,6 +116,7 @@
       <a href="{% url 'tech_list' %}" class="win-button text-xs px-2 py-1">HerBuddies</a>
       <a href="#" class="win-button text-xs px-2 py-1">Chat</a>
       <a href="{% url 'affirmation' %}" class="win-button text-xs px-2 py-1">Affirmations</a>
+      <a href="{% url 'about' %}" class="win-button px-2 py-1">About</a>
 
       {% if user.is_authenticated %}
         <a href="{% url 'user_profile' %}" class="win-button text-xs px-2 py-1">My Profile</a>
