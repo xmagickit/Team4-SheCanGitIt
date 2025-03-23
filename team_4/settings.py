@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'her_story',
     'user_profile',
     'home',
+    'retro_editor',
     
 ]
 
