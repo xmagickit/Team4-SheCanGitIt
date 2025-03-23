@@ -378,38 +378,38 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Show card when clicking on a pioneer
   pioneerItems.forEach(item => {
-      item.addEventListener('click', function(e) {
-          // Prevent default navigation
-          e.preventDefault();
-          e.stopPropagation();
-          
-          // Get pioneer name
-          const pioneerName = this.textContent;
-          
-          // Show card with pioneer data
-          if (techLegendsData[pioneerName]) {
-              const data = techLegendsData[pioneerName];
-              
-              // Update card content
-              document.getElementById('legend-year').textContent = data.year;
-              document.getElementById('legend-image').style.backgroundImage = data.image;
-              document.getElementById('legend-name').textContent = pioneerName;
-              document.getElementById('stat-coding').textContent = data.stats.coding;
-              document.getElementById('stat-vision').textContent = data.stats.vision;
-              document.getElementById('stat-impact').textContent = data.stats.impact;
-              document.getElementById('legend-about').textContent = data.about;
-              document.getElementById('legend-funfact').textContent = data.funFact;
-              document.getElementById('legend-quote').textContent = data.quote;
-              document.getElementById('legend-link').href = data.link;
-              
-              // Show the card
-              techLegendCard.style.display = 'flex';
-              
-              // Reset to front side
-              cardInner.classList.remove('flipped');
-          }
-      });
-  });
+    item.addEventListener('click', function(e) {
+        // Prevent default navigation
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Get pioneer name
+        const pioneerName = this.textContent;
+        
+        // Show card with pioneer data
+        if (techLegendsData[pioneerName]) {
+            const data = techLegendsData[pioneerName];
+            
+            // Update card content
+            document.getElementById('legend-year').textContent = data.year;
+            document.getElementById('legend-image').style.backgroundImage = data.image;
+            document.getElementById('legend-name').textContent = pioneerName;
+            document.getElementById('stat-coding').textContent = data.stats.coding;
+            document.getElementById('stat-vision').textContent = data.stats.vision;
+            document.getElementById('stat-impact').textContent = data.stats.impact;
+            document.getElementById('legend-about').textContent = data.about;
+            document.getElementById('legend-funfact').textContent = data.funFact;
+            document.getElementById('legend-quote').textContent = data.quote;
+            document.getElementById('legend-link').href = data.link;
+            
+            // Show the card
+            techLegendCard.style.display = 'flex';
+            
+            // Reset to front side
+            cardInner.classList.remove('flipped');
+        }
+    });
+});
   
   // Flip card when clicking on it
   cardInner.addEventListener('click', function() {
