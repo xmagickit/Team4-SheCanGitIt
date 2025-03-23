@@ -10,6 +10,24 @@
 {% block window_title %}{{ profile_user.username }}'s Profile{% endblock %}
 
 {% block content %}
+<!-- Full-width search bar at the top -->
+<div class="win-window mb-4 w-full">
+  <div class="win-header font-retro text-xs">
+    <span>Find Users</span>
+  </div>
+  <div class="p-4 bg-white">
+    <form method="get" action="{% url 'profile_list' %}" class="flex items-center gap-2">
+      <input type="text" name="search" placeholder="Search by username..." 
+             class="win-input flex-grow px-2 py-1 text-sm border-2 border-gray-300"
+             style="border-style: inset;">
+      <button type="submit" class="win-button text-xs px-4 py-1 bg-retro-purple text-white">
+        Find
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Main profile content in two columns -->
 <div class="flex flex-col md:flex-row gap-4">
   <!-- Profile Card -->
   <div class="win-window w-full md:w-1/3">
@@ -139,7 +157,7 @@
       </div>
     </div>
     
-    <!-- Mentor & Buddy Sections - Only show if applicable and make them more substantial -->
+    <!-- Mentor & Buddy Sections -->
     {% if profile_user.profile.is_mentor %}
       <div class="win-window">
         <div class="win-header font-retro text-xs">
