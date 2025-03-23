@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'css/affirmation/style.css' %}"/>
 {% endblock %}
 
-{% block window_title %} SheCanGitIt Affirmation Generator 
+{% block window_title %} SheGitsIt Affirmation Generator 
 {% endblock %} 
 
 {% block content %}
@@ -40,7 +40,7 @@
     </select>
   </div>
   <button id="generate-btn" class="win-button generate-btn bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded shadow transition font-retro">Generate Affirmation</button>
-  <div id="affirmation-box" class="ab border-retro-dark rounded-xl shadow-md font-retro" style="display: none"></div>
+  <div id="affirmation-box" class="affirmation border-retro-dark rounded-xl shadow-md font-retro border-4 border-purple-400 animate-pulse" style="display: none"></div>
 </div>
 {% endblock %}
 
