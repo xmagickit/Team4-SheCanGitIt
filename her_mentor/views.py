@@ -4,7 +4,7 @@ from .models import Mentor, MentorshipRequest
 from django.http import HttpResponseForbidden
 from django.core.mail import send_mail
 from django.contrib import messages
-from .utils import match_mentors
+from .utils import match_mentors, send_notification
 from .forms import MentorSearchForm, FeedbackForm, MentorProfileForm
 
 @login_required
@@ -27,22 +27,24 @@ def send_request(request, mentor_id):
 
     # Ensure mentee does not send duplicate requests
     existing_request = MentorshipRequest.objects.filter(mentee=mentee, mentor=mentor).exists()
-    #if not existing_request:
-    MentorshipRequest.objects.create(mentee=mentee, mentor=mentor)
+    if not existing_request:
+        MentorshipRequest.objects.create(mentee=mentee, mentor=mentor)
 
-    print("Sending email to mentor:", mentor.user.email)
+        print("Sending email to mentor:", mentor.user.email)
 
-    send_mail(
-        subject="New Mentorship Request",
-        message=(
-            f"Hi {mentor.user.username},\n\n"
-            f"You have a new mentorship request from {mentee.username}.\n"
-            f"Log in to view it: http://127.0.0.1:8000/mentor_dashboard/"
-        ),
-        from_email=None,  # uses DEFAULT_FROM_EMAIL
-        recipient_list=[mentor.user.email],
-        fail_silently=False,
-    )
+        send_mail(
+            subject="New Mentorship Request",
+            message=(
+                f"Hi {mentor.user.username},\n\n"
+                f"You have a new mentorship request from {mentee.username}.\n"
+                f"Log in to view it: http://127.0.0.1:8000/mentor_dashboard/"
+            ),
+            from_email=None,  # uses DEFAULT_FROM_EMAIL
+            recipient_list=[mentor.user.email],
+            fail_silently=False,
+        )
+
+        send_notification(mentor.user, f"You received a new mentorship request from {mentee.username}.")
     
     return redirect("mentorship_dashboard")
 
@@ -69,6 +71,7 @@ def accept_request(request, request_id):
     mentorship_request.status = "accepted"
     mentorship_request.save()
     messages.success(request, "You accepted the mentorship request.")
+    send_notification(mentorship_request.mentee, f"{request.user.username} accepted your mentorship request.")
     return redirect("mentorship_dashboard")
 
 
@@ -82,6 +85,7 @@ def decline_request(request, request_id):
     mentorship_request.status = "declined"
     mentorship_request.save()
     messages.info(request, "You declined the mentorship request.")
+    send_notification(mentorship_request.mentee, f"{request.user.username} declined your mentorship request.")
     return redirect("mentorship_dashboard")
 
 
