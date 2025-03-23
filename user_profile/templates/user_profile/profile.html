@@ -19,8 +19,9 @@
     <div class="flex flex-col items-center p-4 bg-white">
       <!-- Profile Picture -->
       <div class="w-32 h-32 mb-4 win-button overflow-hidden flex items-center justify-center">
-        {% if profile_user.profile.profile_image %}
-          <img src="{{ profile_user.profile.profile_image.url }}" alt="{{ profile_user.username }}" class="w-full h-full object-cover">
+        {% if profile_user.profile.avatar_choice %}
+        <img src="{% static 'images/profiles/avatar' %}{{ profile_user.profile.avatar_choice }}.png" 
+             alt="{{ profile_user.username }}" class="w-full h-full object-cover">
         {% else %}
           <div class="text-4xl">👤</div>
         {% endif %}
@@ -36,21 +37,10 @@
       
       <!-- Experience Level Badge -->
       {% if profile_user.profile.experience_level %}
-        <span class="win-button text-xs px-2 py-1 mb-2">
+        <span class="win-button text-xs px-3 py-1 mb-2 font-semibold">
           {{ profile_user.profile.get_experience_level_display }}
         </span>
       {% endif %}
-      
-      <!-- Roles/Badges -->
-      <div class="flex flex-wrap gap-2 justify-center mb-2">
-        {% if profile_user.profile.is_mentor %}
-          <span class="win-button bg-retro-purple text-white text-xs px-2 py-1">Mentor</span>
-        {% endif %}
-        
-        {% if profile_user.profile.seeking_buddy %}
-          <span class="win-button bg-retro-pink text-xs px-2 py-1">Looking for Buddy</span>
-        {% endif %}
-      </div>
       
       <!-- Bio -->
       {% if profile_user.profile.bio %}
@@ -64,8 +54,23 @@
         </div>
       {% endif %}
       
+      <!-- Roles/Badges in a more organized way -->
+      <div class="w-full flex justify-center space-x-2 mb-4">
+        {% if profile_user.profile.is_mentor %}
+          <div class="win-button bg-retro-purple text-white text-center px-3 py-1">
+            <span class="text-xs font-bold">Mentor</span>
+          </div>
+        {% endif %}
+        
+        {% if profile_user.profile.seeking_buddy %}
+          <div class="win-button bg-retro-pink text-center px-3 py-1">
+            <span class="text-xs font-bold">Looking for Buddy</span>
+          </div>
+        {% endif %}
+      </div>
+      
       <!-- Social Links -->
-      <div class="flex gap-2 justify-center">
+      <div class="flex gap-2 justify-center mt-2">
         {% if profile_user.profile.github_url %}
           <a href="{{ profile_user.profile.github_url }}" target="_blank" rel="noopener noreferrer" class="win-button text-xs px-2 py-1">
             GitHub
@@ -134,19 +139,24 @@
       </div>
     </div>
     
-    <!-- Mentor Section (if applicable) -->
+    <!-- Mentor & Buddy Sections - Only show if applicable and make them more substantial -->
     {% if profile_user.profile.is_mentor %}
       <div class="win-window">
         <div class="win-header font-retro text-xs">
           <span>Mentor Information</span>
         </div>
-        <div class="p-4 bg-white">
-          {% if profile_user.profile.mentor_bio %}
-            <p class="mb-4">{{ profile_user.profile.mentor_bio }}</p>
-          {% endif %}
+        <div class="p-4 bg-white flex items-center justify-between">
+          <div>
+            <p class="font-medium">Available as a mentor</p>
+            {% if profile_user.profile.mentor_bio %}
+              <p class="text-sm mt-1">{{ profile_user.profile.mentor_bio }}</p>
+            {% else %}
+              <p class="text-sm mt-1 text-gray-500">Contact for mentoring opportunities.</p>
+            {% endif %}
+          </div>
           
           {% if user.is_authenticated and user != profile_user %}
-            <a href="{% url 'mentor_list' %}?request={{ profile_user.id }}" class="win-button text-xs px-4 py-1">
+            <a href="{% url 'mentor_list' %}?request={{ profile_user.id }}" class="win-button text-xs px-4 py-1 bg-retro-purple text-white">
               Request Mentorship
             </a>
           {% endif %}
@@ -154,19 +164,23 @@
       </div>
     {% endif %}
     
-    <!-- Buddy Section (if applicable) -->
     {% if profile_user.profile.seeking_buddy %}
       <div class="win-window">
         <div class="win-header font-retro text-xs">
-          <span>Study Buddy Information</span>
+          <span>Study Buddy</span>
         </div>
-        <div class="p-4 bg-white">
-          {% if profile_user.profile.buddy_description %}
-            <p class="mb-4">{{ profile_user.profile.buddy_description }}</p>
-          {% endif %}
+        <div class="p-4 bg-white flex items-center justify-between">
+          <div>
+            <p class="font-medium">Looking for study buddies</p>
+            {% if profile_user.profile.buddy_description %}
+              <p class="text-sm mt-1">{{ profile_user.profile.buddy_description }}</p>
+            {% else %}
+              <p class="text-sm mt-1 text-gray-500">Interested in finding partners to study and learn together.</p>
+            {% endif %}
+          </div>
           
           {% if user.is_authenticated and user != profile_user %}
-            <a href="#" class="win-button text-xs px-4 py-1">
+            <a href="#" class="win-button text-xs px-4 py-1 bg-retro-pink">
               Message as Buddy
             </a>
           {% endif %}

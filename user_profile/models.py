@@ -27,7 +27,21 @@ class Profile(models.Model):
     ]
     
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_image = CloudinaryField('image', null=True, blank=True)
+    AVATAR_CHOICES = [
+        ('1', 'Alien Avatar'),
+        ('2', 'Blue Monster Avatar'),
+        ('3', 'Purple Monster Avatar'),
+        ('4', 'Green Monster Avatar'),
+        ('5', 'Space Invader Avatar'),
+        ('6', 'Frog Avatar'),
+    ]
+    
+    avatar_choice = models.CharField(
+        max_length=2,
+        choices=AVATAR_CHOICES,
+        blank=True,
+        null=True
+    )
     bio = models.TextField(max_length=500, blank=True)
     tech_interests = models.CharField(
         max_length=100, 
