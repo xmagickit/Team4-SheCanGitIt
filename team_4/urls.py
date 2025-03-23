@@ -30,6 +30,7 @@ urlpatterns = [
     path('affirmation/', include('affirmation.urls')),
     path('', include('user_profile.urls')),
     path('about/', include('about.urls')),
+    path('retro-editor/', include('retro_editor.urls', namespace='retro_editor')),
 ]
 
 if settings.DEBUG:
