@@ -10,9 +10,13 @@
             <select id="room-name-input" name="room_name" class="py-2 w-100 rounded shadow">
                 <option value="" disabled selected>-- Select a chat room --</option>
                 {% for mentor in mentors %}
-                    <option value="{{ mentor.user.username }}">{{ mentor.user.first_name }} {{ mentor.user.last_name }}</option>
+                    {% if mentor.available %}
+                        <option value="{{ mentor.user.username }}">{{ mentor.user.first_name }} {{ mentor.user.last_name }}</option>
+                    {% else %}
+                        <option value="{{ mentor.user.username }}" disabled style="color: gray;">{{ mentor.user.first_name }} {{ mentor.user.last_name }} (unavailable at the moment)</option>
+                    {% endif %}
                 {% empty %}
-                    <option disabled>No mentors available or assigned!</option>
+                    <option disabled>No mentors assigned!</option>
                 {% endfor %}
             </select>
         </div>
