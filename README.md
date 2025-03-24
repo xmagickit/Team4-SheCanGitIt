@@ -12,24 +12,29 @@ Another idea was to show positive inspirational quotes - "Affirmations", for use
 - [Project Brief](#project-brief)
 - [Users](#users)
 - [Project Plan](#project-plan)
-- [User Stories](#user-stories)
 - [Wireframes](#wireframes)
 - [Design](#design)
     - [Colour Scheme](#colour-scheme)
     - [Typography](#typography)
-    - [Imagery](#imagery)
 - [Website Features](#website-features)
     - [Homepage](#homepage)
+    - [Her Mentor](#her-mentor)
+    - [Her Story](#her-story)
+    - [Her Buddies](#her-buddies)
+    - [Chat](#chat)
+    - [Affirmation](#affirmation)
+    - [About](#about)
+    - [Profile](#profile)
 - [Responsive Design](#responsive-design)
 - [Future Features](#future-features)
 - [Technologies Used](#technologies-used)
 - [Deployment](#deployment)
 - [Testing](#testing)
 - [Credits](#credits)
-    - [Use of AI](use-of-ai)
-    - [Content References](content-references)
-    - [Media References](media-references)
-    - [Acknowledgements](acknowledgements)
+    - [Use of AI](#use-of-ai)
+    - [Content References](#content-references)
+    - [Media References](#media-references)
+    - [Acknowledgements](#acknowledgements)
 
 [Back to top](#top)
 
@@ -79,14 +84,7 @@ Personality: Optimistic, supportive, and enthusiastic. Code Muse keeps the energ
 For the project plan, the team used GitHub Project, created on the first day of the hackathon.<br>
 https://github.com/users/Carlos-n21/projects/18
 
-### User Stories
-Here 
-| User Stories                                    | MoSCoW priority           |  Status |
-| ----------------------------------------------- |:-------------------------:| -------:|
-| Homepage                                        | must have                 |   Done  |
-
-
-Al
+Project plan contains user stories and features worked on for the site.
 
 [Back to top](#top)
 
@@ -142,11 +140,6 @@ https://learn.microsoft.com/en-us/typography/font-list/courier-new
 
 - Courier<br>
 https://fontsgeek.com/fonts/Courier-Regular
-
-
-### Imagery
-- Ba<br>
-  <img src="">
 
 [Back to top](#top)
 
@@ -281,8 +274,6 @@ It automatically writes a Config Variable to Heroku, telling the app where to lo
 [Back to top](#top)
 
 ## Testing
-V
-
 ### HTML Validation
 - Used [W3C Markup Validation Service](https://validator.w3.org/#validate_by_uri) to check the HTML code of the project:
 <details>
