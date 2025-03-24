@@ -1,0 +1,106 @@
+.retro-container {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    background-color: #f0e5d8; /* Soft, light retro beige */
+    font-family: 'Courier New', Courier, monospace; /* Retro typewriter font */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.retro-header {
+    font-size: 16px;
+    color: #004d40; /* Dark retro green */
+    text-shadow: 1px 1px 2px #000, 0 0 25px #f0f0f0, 0 0 5px #555;
+    text-align: center;  /* Ensures text is centered */
+    width: 100%;  /* Stretches across full width */
+    margin: 0 auto;  /* Centers it */
+    padding: 10px 0; /* Top and bottom padding */
+    background-color: #004d40; /* Keeps retro styling */
+    color: white; /* Ensures good contrast */
+    display: flex;  
+    justify-content: center; /* Centers the text */
+    align-items: center; 
+}
+
+.retro-row {
+    display: flex;
+    flex-direction: column;
+}
+
+.retro-col {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.retro-chat-log {
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    padding: 15px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.retro-chat-input {
+    font-size: 16px;
+    padding: 10px;
+    margin-top: 10px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    background-color: #f7f7f7  !important;
+    color: #333  !important;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+}
+
+.retro-chat-input:focus {
+    background-color: #e0e0e0;
+    outline: none;
+}
+
+.retro-chat-submit {
+    background-color: #ff6600; /* Retro orange */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.retro-chat-submit:hover {
+    background-color: #e55b00; /* Darker retro orange */
+}
+
+.retro-not-allowed {
+    text-align: center;
+    padding: 30px;
+    background-color: #ffcccc;
+    border-radius: 8px;
+}
+
+.retro-message {
+    font-size: 18px;
+    color: #d9534f; /* Retro red */
+}
+
+.retro-btn {
+    background-color: #007bff; /* Retro blue */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.retro-btn:hover {
+    background-color: #0056b3;
+}
