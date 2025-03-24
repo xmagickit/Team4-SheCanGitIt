@@ -249,17 +249,63 @@ select {
   display: none;
 }
 
+/* Improved preview area */
+#preview-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 #preview-frame {
   width: 100%;
   height: 100%;
   border: none;
+  flex-grow: 1;
   background-color: white;
 }
 
+/* Better scrollbars for the preview */
+.output-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.tab-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent double scrollbars */
+}
+
 .console-output {
+  height: 100%;
+  overflow: auto;
   padding: 10px;
-  color: var(--retro-cream);
-  white-space: pre-wrap;
+}
+
+/* Custom scrollbars for retro feel */
+.console-output::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+.console-output::-webkit-scrollbar-track {
+  background-color: var(--retro-dark);
+  border: 1px solid var(--retro-purple);
+}
+
+.console-output::-webkit-scrollbar-thumb {
+  background-color: var(--retro-purple);
+  border: 2px outset var(--retro-highlight);
+}
+
+.console-output::-webkit-scrollbar-thumb:hover {
+  background-color: var(--retro-highlight);
+}
+
+.console-output::-webkit-scrollbar-corner {
+  background-color: var(--retro-dark);
 }
 
 /* Pioneer tip popup */

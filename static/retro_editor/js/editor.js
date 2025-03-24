@@ -42,9 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 `LINE: ${cursor.line + 1} | COL: ${cursor.ch + 1} | ${document.querySelector('#id_language').value.toUpperCase()}`;
         });
         
-        // Run/Preview code
-// In retro_editor/static/retro_editor/js/editor.js
-// Update the run button event listener:
 
 // Run/Preview code
 document.querySelector('#run-code').addEventListener('click', function() {
@@ -55,158 +52,337 @@ document.querySelector('#run-code').addEventListener('click', function() {
   this.classList.add('active');
   setTimeout(() => this.classList.remove('active'), 300);
   
-  // Simple preview for HTML
+  const iframe = document.querySelector('#preview-frame');
+  
+  // Create a new iframe to avoid state persistence issues
+  const newIframe = document.createElement('iframe');
+  newIframe.id = 'preview-frame';
+  newIframe.style.width = '100%';
+  newIframe.style.height = '100%';
+  newIframe.style.border = 'none';
+  
+  // Replace old iframe
+  iframe.parentNode.replaceChild(newIframe, iframe);
+  
   if (language === 'html') {
-      const iframe = document.querySelector('#preview-frame');
+      // Direct HTML rendering
+      newIframe.onload = function() {
+          try {
+              newIframe.contentWindow.document.open();
+              newIframe.contentWindow.document.write(code);
+              newIframe.contentWindow.document.close();
+          } catch(e) {
+              console.error('Error rendering HTML:', e);
+              showExecutionError(e);
+          }
+      };
       
-      // Clear the iframe first
-      iframe.contentWindow.document.open();
-      iframe.contentWindow.document.write('');
-      iframe.contentWindow.document.close();
-      
-      // Add the code with slight delay to ensure clean environment
-      setTimeout(() => {
-          iframe.contentWindow.document.open();
-          iframe.contentWindow.document.write(code);
-          iframe.contentWindow.document.close();
-      }, 100);
-      
-      // Switch to preview tab
+      // Trigger load event
+      newIframe.src = 'about:blank';
       setActiveTab('preview');
   }
   else if (language === 'css') {
-      // For CSS, create a simple HTML wrapper with the CSS applied
-      const iframe = document.querySelector('#preview-frame');
+      // CSS preview with wrapper
       const html = `
           <!DOCTYPE html>
           <html>
           <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>CSS Preview</title>
               <style>${code}</style>
+              <style>
+                  body {
+                      font-family: system-ui, sans-serif;
+                      padding: 20px;
+                      background: #f7f7f7;
+                  }
+                  .demo-elements {
+                      display: grid;
+                      gap: 20px;
+                      max-width: 600px;
+                      margin: 0 auto;
+                  }
+                  .header {
+                      background: #6B5B95;
+                      color: white;
+                      padding: 10px 20px;
+                      border-radius: 4px;
+                      margin-bottom: 20px;
+                  }
+              </style>
           </head>
           <body>
-              <div class="preview-container" style="padding: 20px; font-family: monospace;">
+              <div class="header">
                   <h1>CSS Preview</h1>
-                  <p>This is a paragraph with your CSS applied to the page.</p>
-                  <button>Button Element</button>
-                  <a href="#">Link Element</a>
-                  <div class="test-box" style="margin-top: 20px; padding: 20px; border: 1px dashed #ccc;">Div Element</div>
+                  <p>Your styles are applied to these elements:</p>
+              </div>
+              <div class="demo-elements">
+                  <div>
+                      <h2>Heading Level 2</h2>
+                      <p>This is a paragraph with <a href="#">a link</a> and some <strong>bold text</strong> inside it.</p>
+                  </div>
+                  
+                  <div>
+                      <h3>Form Elements</h3>
+                      <form>
+                          <div style="margin-bottom: 10px;">
+                              <label for="input">Text Input:</label>
+                              <input type="text" id="input" placeholder="Type something...">
+                          </div>
+                          <div style="margin-bottom: 10px;">
+                              <label for="select">Select:</label>
+                              <select id="select">
+                                  <option>Option 1</option>
+                                  <option>Option 2</option>
+                              </select>
+                          </div>
+                          <button type="button">Button</button>
+                      </form>
+                  </div>
+                  
+                  <div class="test-box" style="border: 1px dashed #ccc; padding: 15px;">
+                      <h3>Test Box</h3>
+                      <p>This is a container that you can style.</p>
+                  </div>
               </div>
           </body>
           </html>
       `;
       
-      // Clear first
-      iframe.contentWindow.document.open();
-      iframe.contentWindow.document.write('');
-      iframe.contentWindow.document.close();
+      newIframe.onload = function() {
+          try {
+              newIframe.contentWindow.document.open();
+              newIframe.contentWindow.document.write(html);
+              newIframe.contentWindow.document.close();
+          } catch(e) {
+              console.error('Error rendering CSS:', e);
+              showExecutionError(e);
+          }
+      };
       
-      // Add with delay
-      setTimeout(() => {
-          iframe.contentWindow.document.open();
-          iframe.contentWindow.document.write(html);
-          iframe.contentWindow.document.close();
-      }, 100);
-      
+      newIframe.src = 'about:blank';
       setActiveTab('preview');
   }
   else if (language === 'js') {
-      // For JavaScript, provide a simple HTML environment with the script
-      const iframe = document.querySelector('#preview-frame');
-      
-      // Create a container div and add it to the output div if needed
+      // JS execution environment
       const html = `
           <!DOCTYPE html>
           <html>
           <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>JavaScript Execution</title>
               <style>
-                  body { 
-                      font-family: monospace; 
+                  body {
+                      font-family: monospace;
                       padding: 20px; 
                       background-color: #2D243F;
                       color: #FFF5E1;
                   }
-                  .output { 
-                      background: #6B5B95; 
-                      padding: 10px; 
+                  .output-container {
+                      background: #6B5B95;
                       border: 2px solid #E0B1CB;
+                      border-radius: 4px;
+                      padding: 15px;
                       margin-top: 20px;
-                      color: #FFF5E1;
+                      overflow: auto;
+                      max-height: 400px;
+                  }
+                  .output-line {
+                      margin: 5px 0;
                       font-family: monospace;
                       white-space: pre-wrap;
-                      min-height: 100px;
                   }
-                  h1 { color: #FFB7C5; font-family: monospace; }
-                  #canvas-container { margin-top: 20px; }
+                  .error { color: #FF6B6B; }
+                  h1 { color: #FFB7C5; margin-bottom: 5px; }
+                  #canvas-container { 
+                      margin-top: 20px;
+                      background: rgba(255, 255, 255, 0.1);
+                      border-radius: 4px;
+                      overflow: hidden;
+                  }
+                  .blink {
+                      animation: blink 1s step-end infinite;
+                  }
+                  @keyframes blink {
+                      50% { opacity: 0; }
+                  }
+                  .controls {
+                      margin: 10px 0;
+                      padding: 10px;
+                      background: rgba(255, 255, 255, 0.1);
+                      border-radius: 4px;
+                  }
+                  button {
+                      background: #E0B1CB;
+                      color: #2D243F;
+                      border: none;
+                      padding: 5px 10px;
+                      margin-right: 10px;
+                      cursor: pointer;
+                  }
               </style>
           </head>
           <body>
-              <h1>JavaScript Output</h1>
-              <p>Check out the awesome results of your code below:</p>
-              <div class="output" id="output"></div>
+              <h1>JavaScript Output <span class="blink">_</span></h1>
+              <p>Running your awesome code:</p>
+              
+              <div class="controls">
+                  <button id="btn-clear">Clear Output</button>
+                  <button id="btn-run">Run Again</button>
+              </div>
+              
               <div id="canvas-container"></div>
+              <div id="output" class="output-container"></div>
               
               <script>
-                  // Redirect console.log to the output div
-                  const originalLog = console.log;
-                  console.log = function(...args) {
-                      originalLog.apply(console, args);
-                      const output = document.getElementById('output');
-                      output.innerHTML += args.map(arg => {
-                          if (typeof arg === 'object') {
-                              return JSON.stringify(arg, null, 2);
-                          }
-                          return arg;
-                      }).join(' ') + '<br>';
-                  };
+                  // Set up output handling
+                  const output = document.getElementById('output');
+                  const canvasContainer = document.getElementById('canvas-container');
                   
-                  // Create an output div for canvas
-                  window.addEventListener('DOMContentLoaded', function() {
-                      const outputDiv = document.getElementById('output');
-                      if (!outputDiv.parentElement) {
-                          document.body.appendChild(outputDiv);
-                      }
+                  // Clear button
+                  document.getElementById('btn-clear').addEventListener('click', function() {
+                      output.innerHTML = '';
                   });
                   
-                  // Execute the user code
-                  try {
-                      ${code}
-                  } catch(error) {
-                      console.log('⚠️ Error: ' + error.message);
+                  // Run button
+                  document.getElementById('btn-run').addEventListener('click', function() {
+                      // Clear output
+                      output.innerHTML = '';
+                      
+                      // Clear any canvases
+                      canvasContainer.innerHTML = '';
+                      
+                      // Run the code again
+                      runUserCode();
+                  });
+                  
+                  // Override console methods
+                  const originalLog = console.log;
+                  const originalWarn = console.warn;
+                  const originalError = console.error;
+                  
+                  console.log = function(...args) {
+                      originalLog.apply(console, args);
+                      addToOutput(args, 'log');
+                  };
+                  
+                  console.warn = function(...args) {
+                      originalWarn.apply(console, args);
+                      addToOutput(args, 'warn');
+                  };
+                  
+                  console.error = function(...args) {
+                      originalError.apply(console, args);
+                      addToOutput(args, 'error');
+                  };
+                  
+                  function addToOutput(args, type) {
+                      const line = document.createElement('div');
+                      line.className = 'output-line ' + type;
+                      
+                      if (type === 'error') {
+                          line.classList.add('error');
+                          line.textContent = '❌ ' + args.join(' ');
+                      } else if (type === 'warn') {
+                          line.textContent = '⚠️ ' + args.join(' ');
+                      } else {
+                          line.textContent = '> ' + args.join(' ');
+                      }
+                      
+                      output.appendChild(line);
+                      output.scrollTop = output.scrollHeight;
                   }
+                  
+                  // Handle canvas creation
+                  function hookCanvasCreation() {
+                      const originalCreate = document.createElement;
+                      document.createElement = function(tagName) {
+                          const element = originalCreate.call(document, tagName);
+                          
+                          // If canvas was created, append it to our container
+                          if (tagName.toLowerCase() === 'canvas') {
+                              canvasContainer.appendChild(element);
+                          }
+                          
+                          return element;
+                      };
+                  }
+                  
+                  // Run user code function
+                  function runUserCode() {
+                      hookCanvasCreation();
+                      
+                      try {
+                          ${code}
+                      } catch(error) {
+                          console.error('Error: ' + error.message);
+                      }
+                  }
+                  
+                  // Initial execution
+                  runUserCode();
               </script>
           </body>
           </html>
       `;
       
-      // Clear first
-      iframe.contentWindow.document.open();
-      iframe.contentWindow.document.write('');
-      iframe.contentWindow.document.close();
+      newIframe.onload = function() {
+          try {
+              newIframe.contentWindow.document.open();
+              newIframe.contentWindow.document.write(html);
+              newIframe.contentWindow.document.close();
+          } catch(e) {
+              console.error('Error executing JavaScript:', e);
+              showExecutionError(e);
+          }
+      };
       
-      // Add with delay
-      setTimeout(() => {
-          iframe.contentWindow.document.open();
-          iframe.contentWindow.document.write(html);
-          iframe.contentWindow.document.close();
-      }, 100);
-      
+      newIframe.src = 'about:blank';
       setActiveTab('preview');
   }
   else {
-      // For other languages, show execution in "console"
+      // Python or other server-side languages
       const consoleOutput = document.querySelector('.console-output');
       consoleOutput.innerHTML = `<p>> RUNNING ${language.toUpperCase()} CODE...</p>`;
       consoleOutput.innerHTML += `<p class="code-display">${escapeHtml(code)}</p>`;
       consoleOutput.innerHTML += `<p>> PROCESSING... BEEP BOOP... 🤖</p>`;
       
       setTimeout(() => {
-          consoleOutput.innerHTML += `<p>> Sorry, can't execute ${language.toUpperCase()} in your browser! This would work in a full stack environment.</p>`;
-          consoleOutput.innerHTML += `<p>> But hey, your code looks totally rad! 💯</p>`;
+          consoleOutput.innerHTML += `<p>> Sorry, can't execute ${language.toUpperCase()} directly in your browser!</p>`;
+          consoleOutput.innerHTML += `<p>> But imagine your code doing amazing things... 🚀</p>`;
+          
+          // For Python, show a fun animation
+          if (language === 'py') {
+              consoleOutput.innerHTML += `
+              <pre class="ascii-art">
+  _________
+ /         /|
+/         / |
+/         /  |
+/_________/   |       Python!
+|         |  /
+|         | /
+|_________|/
+              </pre>
+              `;
+          }
       }, 1500);
       
       setActiveTab('console');
   }
 });
+
+// Helper function to show execution errors
+function showExecutionError(error) {
+  const consoleOutput = document.querySelector('.console-output');
+  consoleOutput.innerHTML = `<p>> ERROR EXECUTING CODE:</p>`;
+  consoleOutput.innerHTML += `<p class="error">${error.message || 'Unknown error'}</p>`;
+  consoleOutput.innerHTML += `<p>> Try again after fixing the issue!</p>`;
+  
+  setActiveTab('console');
+}
         
         // Tab switching
         document.querySelectorAll('.tab').forEach(tab => {
@@ -421,4 +597,175 @@ document.addEventListener('DOMContentLoaded', function() {
           this.style.display = 'none';
       }
   });
+});
+
+
+// Enhance the preview area
+function enhancePreviewArea() {
+  // Add fullscreen button
+  const previewTab = document.querySelector('.tab[data-tab="preview"]');
+  const previewContent = document.getElementById('preview-content');
+  
+  // Create fullscreen button
+  const fullscreenBtn = document.createElement('button');
+  fullscreenBtn.className = 'preview-fullscreen';
+  fullscreenBtn.innerHTML = '⛶'; // Expand icon
+  fullscreenBtn.title = 'Fullscreen preview';
+  fullscreenBtn.style.marginLeft = '8px';
+  fullscreenBtn.style.background = 'none';
+  fullscreenBtn.style.border = 'none';
+  fullscreenBtn.style.color = 'inherit';
+  fullscreenBtn.style.cursor = 'pointer';
+  fullscreenBtn.style.fontSize = '14px';
+  
+  // Add button next to preview tab
+  previewTab.appendChild(fullscreenBtn);
+  
+  // Track fullscreen state
+  let isFullscreen = false;
+  
+  // Fullscreen functionality
+  fullscreenBtn.addEventListener('click', function(e) {
+    e.stopPropagation(); // Don't trigger tab switch
+    
+    if (!isFullscreen) {
+      // Save original positions
+      previewContent.dataset.originalWidth = previewContent.style.width || '';
+      previewContent.dataset.originalHeight = previewContent.style.height || '';
+      previewContent.dataset.originalPosition = previewContent.style.position || '';
+      
+      // Make fullscreen
+      previewContent.style.position = 'fixed';
+      previewContent.style.top = '0';
+      previewContent.style.left = '0';
+      previewContent.style.width = '100vw';
+      previewContent.style.height = '100vh';
+      previewContent.style.zIndex = '9999';
+      previewContent.style.background = '#fff';
+      
+      // Update button
+      fullscreenBtn.innerHTML = '⮌'; // Compress icon
+      fullscreenBtn.title = 'Exit fullscreen';
+      
+      // Create close button inside preview
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'preview-close-btn';
+      closeBtn.innerHTML = '✕';
+      closeBtn.style.position = 'absolute';
+      closeBtn.style.top = '10px';
+      closeBtn.style.right = '10px';
+      closeBtn.style.background = 'var(--retro-purple)';
+      closeBtn.style.color = 'var(--retro-cream)';
+      closeBtn.style.border = '2px solid var(--retro-highlight)';
+      closeBtn.style.borderRadius = '4px';
+      closeBtn.style.padding = '5px 10px';
+      closeBtn.style.cursor = 'pointer';
+      closeBtn.style.zIndex = '10000';
+      
+      closeBtn.addEventListener('click', function() {
+        exitFullscreen();
+      });
+      
+      previewContent.appendChild(closeBtn);
+    } else {
+      exitFullscreen();
+    }
+    
+    isFullscreen = !isFullscreen;
+  });
+  
+  function exitFullscreen() {
+    // Restore original state
+    previewContent.style.position = previewContent.dataset.originalPosition;
+    previewContent.style.width = previewContent.dataset.originalWidth;
+    previewContent.style.height = previewContent.dataset.originalHeight;
+    previewContent.style.top = 'auto';
+    previewContent.style.left = 'auto';
+    previewContent.style.zIndex = 'auto';
+    
+    // Update button
+    fullscreenBtn.innerHTML = '⛶';
+    fullscreenBtn.title = 'Fullscreen preview';
+    
+    // Remove close button
+    const closeBtn = previewContent.querySelector('.preview-close-btn');
+    if (closeBtn) {
+      previewContent.removeChild(closeBtn);
+    }
+  }
+  
+  // Add escape key handler for fullscreen
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && isFullscreen) {
+      exitFullscreen();
+      isFullscreen = false;
+    }
+  });
+  
+  // Add resize handle for preview pane
+  const resizeHandle = document.createElement('div');
+  resizeHandle.className = 'preview-resize-handle';
+  resizeHandle.style.position = 'absolute';
+  resizeHandle.style.left = '0';
+  resizeHandle.style.top = '0';
+  resizeHandle.style.width = '5px';
+  resizeHandle.style.height = '100%';
+  resizeHandle.style.cursor = 'col-resize';
+  
+  previewContent.style.position = 'relative';
+  previewContent.appendChild(resizeHandle);
+  
+  // Resize functionality
+  let isResizing = false;
+  let startX, startWidth;
+  
+  resizeHandle.addEventListener('mousedown', function(e) {
+    isResizing = true;
+    startX = e.clientX;
+    
+    // Get the output container's current width
+    const outputContainer = document.querySelector('.output-container');
+    startWidth = outputContainer.offsetWidth;
+    
+    // Prevent text selection during resize
+    document.body.style.userSelect = 'none';
+    
+    e.preventDefault();
+  });
+  
+  document.addEventListener('mousemove', function(e) {
+    if (!isResizing) return;
+    
+    // Calculate the distance moved
+    const diffX = e.clientX - startX;
+    
+    // Get the editor and output containers
+    const retroContent = document.querySelector('.retro-content');
+    const outputContainer = document.querySelector('.output-container');
+    
+    // Calculate the new grid template
+    let newOutputWidth = Math.max(300, startWidth - diffX);
+    
+    // Maximum width (don't let it take more than 60% of the screen)
+    const maxWidth = retroContent.offsetWidth * 0.6;
+    newOutputWidth = Math.min(newOutputWidth, maxWidth);
+    
+    // Update the grid template columns
+    const sidebarWidth = document.querySelector('.sidebar').offsetWidth;
+    const editorWidth = retroContent.offsetWidth - sidebarWidth - newOutputWidth;
+    
+    retroContent.style.gridTemplateColumns = `${sidebarWidth}px ${editorWidth}px ${newOutputWidth}px`;
+  });
+  
+  document.addEventListener('mouseup', function() {
+    if (isResizing) {
+      isResizing = false;
+      document.body.style.userSelect = '';
+    }
+  });
+}
+
+// Add preview enhancements when document is ready
+document.addEventListener('DOMContentLoaded', function() {
+  enhancePreviewArea();
 });

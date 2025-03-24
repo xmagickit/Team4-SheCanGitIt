@@ -38,5 +38,18 @@
       "created_by": "Roberta Williams",
       "featured": true
     }
+  },
+  {
+    "model": "retro_editor.codesample",
+    "pk": 4,
+    "fields": {
+      "title": "COBOL-Inspired Business Logic",
+      "description": "Inspired by Grace Hopper's pioneering work on COBOL (1959), which made programming more accessible with English-like syntax rather than machine code.",
+      "language": "js",
+      "code_content": "/* COBOL-Inspired Business Logic by Grace Hopper (1959)\n * This JavaScript reimagines a simple COBOL program that would\n * process employee data and calculate payroll.\n */\n\n// Employee data structure\nconst employees = [\n  { id: '001', name: 'SMITH, JOHN', department: 'ENGINEERING', hoursWorked: 40, hourlyRate: 25.50 },\n  { id: '002', name: 'JOHNSON, MARY', department: 'RESEARCH', hoursWorked: 45, hourlyRate: 30.00 },\n  { id: '003', name: 'WILLIAMS, ROBERT', department: 'ACCOUNTING', hoursWorked: 38, hourlyRate: 28.75 }\n];\n\n// Constants for business rules\nconst REGULAR_HOURS = 40;\nconst OVERTIME_RATE = 1.5;\n\n// Function to calculate payroll\nfunction calculatePayroll(employeeRecords) {\n  console.log('PAYROLL CALCULATION STARTED');\n  console.log('============================');\n  \n  let totalPayroll = 0;\n  \n  // Process each employee record\n  employeeRecords.forEach(employee => {\n    // Calculate regular pay\n    const regularHours = Math.min(employee.hoursWorked, REGULAR_HOURS);\n    const regularPay = regularHours * employee.hourlyRate;\n    \n    // Calculate overtime pay if applicable\n    const overtimeHours = Math.max(0, employee.hoursWorked - REGULAR_HOURS);\n    const overtimePay = overtimeHours * employee.hourlyRate * OVERTIME_RATE;\n    \n    // Total pay for this employee\n    const totalPay = regularPay + overtimePay;\n    totalPayroll += totalPay;\n    \n    // Display results\n    console.log(`EMPLOYEE ID: ${employee.id}`);\n    console.log(`NAME: ${employee.name}`);\n    console.log(`DEPARTMENT: ${employee.department}`);\n    console.log(`REGULAR HOURS: ${regularHours} at $${employee.hourlyRate.toFixed(2)} = $${regularPay.toFixed(2)}`);\n    \n    if (overtimeHours > 0) {\n      console.log(`OVERTIME HOURS: ${overtimeHours} at $${(employee.hourlyRate * OVERTIME_RATE).toFixed(2)} = $${overtimePay.toFixed(2)}`);\n    }\n    \n    console.log(`TOTAL PAY: $${totalPay.toFixed(2)}`);\n    console.log('----------------------------');\n  });\n  \n  console.log(`TOTAL COMPANY PAYROLL: $${totalPayroll.toFixed(2)}`);\n  console.log('PAYROLL CALCULATION COMPLETED');\n}\n\n// Run the payroll process\ncalculatePayroll(employees);\n\n// This COBOL-inspired code demonstrates the revolutionary concept Grace Hopper\n// championed: using English-like syntax for business applications, making\n// programming more accessible to those without engineering backgrounds.",
+      "difficulty": "beginner",
+      "created_by": "Grace Hopper",
+      "featured": true
+    }
   }
 ]
