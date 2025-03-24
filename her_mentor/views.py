@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Mentor, MentorshipRequest
-from django.http import HttpResponseForbidden
+from .models import Mentor, MentorshipRequest, Notification
+from django.views.decorators.http import require_POST
+from django.http import HttpResponseForbidden, JsonResponse
 from django.core.mail import send_mail
 from django.contrib import messages
 from .utils import match_mentors, send_notification
@@ -138,3 +139,9 @@ def hermentor_redirect(request):
     else:
         return redirect("mentor_list")
 
+
+@require_POST
+@login_required
+def mark_all_notifications_read(request):
+    Notification.objects.filter(user=request.user, is_read=False).update(is_read=True)
+    return JsonResponse({'success': True})
