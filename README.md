@@ -93,15 +93,16 @@ Al
 ### Wireframes
 Initial layout of website:
 
-- Mobile view:<br>
-  <img src="">
-  <img src="">
-  
-- Tablet view:<br>
-  <img src=""> <img src="">
-  
-- Desktop/Laptop view:<br>
-  <img src=""> <img src="">
+<details>
+<img src="readme\wireframe-homepage.png"><br>
+<img src="readme\wireframe-herstory.png"><br>
+<img src="readme\wireframe-herbuddies.png"><br>
+<img src="readme\wireframe-chat.png"><br>
+<img src="readme\wireframe-affirmation.png"><br>
+<img src="readme\wireframe-about.png"><br>
+<img src="readme\wireframe-profile.png"><br>
+<img src="readme\wireframe-signin.png"><br>
+</details>
 
 [Back to top](#top)
 
@@ -151,9 +152,30 @@ https://fontsgeek.com/fonts/Courier-Regular
 
 ## Website Features
 ### Homepage
-  <img src="">
+  <img src="readme\homepage.png">
 
-Th
+### Her Mentor
+  <img src="readme\hermentor.png">
+
+### Her Story
+  <img src="readme\herstory.png">
+
+### Her Buddies
+  <img src="readme\herbuddies.png">
+
+### Chat
+  <img src="readme\chat.png">
+
+### Affirmation
+  <img src="readme\affirmation.png">
+
+### About
+  <img src="readme\about.png">
+
+### Profile
+  <img src="readme\profile.png">
+
+
 
 [Back to top](#top)
 
