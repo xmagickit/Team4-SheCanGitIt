@@ -41,12 +41,12 @@
 
         {% if request.status == "accepted" %}
           {% if request.mentee == user %}
-            <a href="{% url 'chatroom' request.mentor.user.username %}"
+            <a href="{% url 'chat' %}"
               class="mt-2 inline-block win-button bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded shadow transition">
               💬 Open Chat
             </a>
           {% elif user.mentor and request.mentor.user == user %}
-            <a href="{% url 'chatroom' request.mentor.user.username %}"
+            <a href="{% url 'chat' %}"
               class="mt-2 inline-block win-button bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded shadow transition">
               💬 Open Chat
             </a>
