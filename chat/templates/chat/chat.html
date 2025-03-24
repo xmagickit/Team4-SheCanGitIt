@@ -1,13 +1,21 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Let's talk! {% endblock %}
+
+{% block window_title %}Chat with your mentor{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/chat/style.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container-fluid py-4">
-    <div class="row text-center py-2">
+<div class="retro-container py-4">
+    <div class="retro-row text-center py-2">
         {% if user.is_authenticated %}
-        <div class="col-md-10 col-lg-8 mx-auto">
-            <h1 class="text-center">With which of your mentors would you like to have an instant chat?</h1>
-            <select id="room-name-input" name="room_name" class="py-2 w-100 rounded shadow">
+        <div class="retro-col mx-auto">
+            <h1 class="retro-header text-center">With which of your mentors would you like to have an instant chat?</h1>
+            <select id="room-name-input" name="room_name" class="retro-dropdown">
                 <option value="" disabled selected>-- Select a chat room --</option>
                 {% if is_mentor %}
                     <option value="{{ request.user.username }}" style="font-weight: bold;">{{ request.user.first_name }} {{ request.user.last_name }}</option>
@@ -16,7 +24,7 @@
                     {% if mentor.available %}
                         <option value="{{ mentor.user.username }}">{{ mentor.user.first_name }} {{ mentor.user.last_name }}</option>
                     {% else %}
-                        <option value="{{ mentor.user.username }}" disabled style="color: gray;">{{ mentor.user.first_name }} {{ mentor.user.last_name }} (unavailable at the moment)</option>
+                        <option value="{{ mentor.user.username }}" disabled class="retro-option-disabled">{{ mentor.user.first_name }} {{ mentor.user.last_name }} (unavailable at the moment)</option>
                     {% endif %}
                 {% empty %}
                     <option disabled>No mentors assigned!</option>
@@ -24,13 +32,10 @@
             </select>
         </div>
         {% else %}
-        <div id="not_allowed" class="col-md-10 col-sm-12 col-xl-10 mx-auto">
-            <h1 class="text-center pt-2">Oops! Page Not Found.</h1>
-            <p class="text-center px-3">You must be logged in to access the chat service!</p>
-            <a href="{% url 'home' %}" class="btn btn-pink rounded mt-3 p-2"
-                aria-label="Brings you back to Home Page">Back to Home
-                page
-            </a>
+        <div id="not_allowed" class="retro-not-allowed mx-auto">
+            <h1 class="retro-header pt-2">Oops! Page Not Found.</h1>
+            <p class="retro-message">You must be logged in to access the chat service!</p>
+            <a href="{% url 'home' %}" class="retro-btn" aria-label="Brings you back to Home Page">Back to Home page</a>
         </div>
         {% endif %}
     </div>
@@ -47,7 +52,7 @@
     };
 
     document.addEventListener("DOMContentLoaded", function () {
-        const chatRoomDropdown = document.getElementById("room-name-input"); // Adjust the ID to match your dropdown's ID
+        const chatRoomDropdown = document.getElementById("room"); // Adjust the ID to match your dropdown's ID
         if (chatRoomDropdown) {
             chatRoomDropdown.selectedIndex = 0; // Resets to the first option
         }
