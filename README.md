@@ -1,6 +1,5 @@
 # Team 4 - "SheCanGitIt" <a id="top"/>
 Team 4 - CI March 2025 Hackathon "CodeHer"
-![logo]()
 Live site: [SheCanGitIt](https://she-gits-it-8555f0353cc7.herokuapp.com/)
 
 ## Introduction
@@ -45,8 +44,37 @@ Project evolved with the idea for a chat between users and mentors.<br>
 Different members picked up different tasks to do, from creating apps and styling the frontend, to working in the backend with databases.
 
 ### Users
-In 
-- Persona 1: 
+For thirs project, we had these 3 personas as examples of users for the site with the help of Copilot.<br>
+
+Persona 1: Ada the Trailblazer <br>
+Background: Inspired by Ada Lovelace, the world's first computer programmer, Ada embodies curiosity, innovation, and leadership. She's passionate about uncovering untold stories of women's influence in tech and coding history.<br>
+
+Role on the Website:<br>
+Shares fascinating stories about pioneering women in tech and their contributions.<br>
+Encourages users to step into leadership roles and aspire to break barriers.<br>
+Provides resources and curated content about coding subjects and tech trends.<br>
+
+Personality: Empowering, inspiring, and visionary. Always challenges users to think big and embrace bold ambitions.<br>
+
+Persona 2: Grace the Mentor<br>
+Background: Based on Grace Hopper, the celebrated computer scientist and Navy rear admiral, Grace is the friendly, knowledgeable guide who helps users improve their skills.<br>
+
+Role on the Website:<br>
+Matches users with mentors from different coding fields who can support their growth.<br>
+Provides practical advice, coding tutorials, and skill-building tips.<br>
+Promotes the value of collaboration and mutual learning through discussion forums.<br>
+
+Personality: Warm, approachable, and hands-on. Grace is dedicated to making tech accessible and enjoyable for everyone.<br>
+
+Persona 3: Code Muse<br>
+Background: Code Muse represents the creative and motivational spirit of women in tech. She's the cheerleader who uplifts users with daily affirmations and bursts of encouragement.<br>
+
+Role on the Website:<br>
+Shares motivational quotes and affirmations that resonate with women in tech.<br>
+Creates interactive spaces where users can brainstorm, share ideas, and discuss coding challenges.<br>
+Inspires meaningful conversations about inclusivity, diversity, and empowerment in the tech world.<br>
+
+Personality: Optimistic, supportive, and enthusiastic. Code Muse keeps the energy high and positivity flowing.<br>
 
 ## Project Plan
 For the project plan, the team used GitHub Project, created on the first day of the hackathon.<br>
@@ -87,7 +115,9 @@ The following colours were used on the website:
 - retro-dark: #2D243F;
 - retro-highlight: #E0B1CB;
 
-<img src="">
+<img src="readme\colorkit (1).png">
+
+Colour palette donwnloaded from [Colorkit](https://colorkit.co/)
 
 ### Typography
 For this project, we used the following family fonts:
@@ -120,8 +150,9 @@ Th
 [Back to top](#top)
 
 ## Responsive Design
-Most
-![amiresponsive]()
+Below, we can see the responsiveness of the site in differernt devices after using [amiresponsive](https://amiresponsive.netlify.app/).
+
+<img src="readme\amiresponsive.png">
 
 ## Future Features
 - T
@@ -220,19 +251,36 @@ It automatically writes a Config Variable to Heroku, telling the app where to lo
 V
 
 ### HTML Validation
-- Use
+- Used [W3C Markup Validation Service](https://validator.w3.org/#validate_by_uri) to check the HTML code of the project:
+
+<img src="readme\HTML-validator-herbuddies.png"><br>
+<img src="readme\HTML-validator-hermentor.png"><br>
+<img src="readme\HTML-validator-herstory.png"><br>
+<img src="readme\HTML-validator-homepage.png"><br>
+<img src="readme\HTML-validator-login.png"><br>
+<img src="readme\HTML-validator-signup.png"><br>
+<img src="readme\HTML-validator-user-profile.png"><br>
 
 ### CSS Validation
+- Used [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/#validate_by_input) to check the CSS code of the project:
 
-- Use
+<img src="readme\css-validator-1.png"><br>
 
+All CSS files came with no errors.
 
 ### Lighthouse Audit
-- Us
+- Used Google Chrome Dev Tools to assess the performance of the main pages of the project:
 
+<img src="readme\Lighthouse-about.png"><br>
+<img src="readme\Lighthouse-affirmation.png"><br>
+<img src="readme\Lighthouse-Her-buddies.png"><br>
+<img src="readme\Lighthouse-Her-mentor.png"><br>
+<img src="readme\Lighthouse-Her-story.png"><br>
+<img src="readme\Lighthouse-homepage.png"><br>
+<img src="readme\Lighthouse-user-profile.png"><br>
 
 ### Bugs yet to be Fixed
-- 
+- Some pages came with errors on the HTML validation that can be due to code formatting and to be checked in the future.
 
 [Back to top](#top)
 
