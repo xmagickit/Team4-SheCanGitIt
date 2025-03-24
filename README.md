@@ -1,6 +1,6 @@
 # Team 4 - "SheCanGitIt" <a id="top"/>
 Team 4 - CI March 2025 Hackathon "CodeHer"
-Live site: [SheCanGitIt](https://she-gits-it-8555f0353cc7.herokuapp.com/)
+Live site: [SheGitsIt](https://she-gits-it-8555f0353cc7.herokuapp.com/)
 
 ## Introduction
 The present website was build as part of Code Intitute Hackathon - CodeHER, in March 2025, to showcase the contributions of women for coding and technology throughout history.<br>
@@ -26,7 +26,6 @@ Another idea was to show positive inspirational quotes - "Affirmations", for use
 - [Deployment](#deployment)
 - [Testing](#testing)
 - [Credits](#credits)
-    - [Code References](code-references)
     - [Use of AI](use-of-ai)
     - [Content References](content-references)
     - [Media References](media-references)
@@ -164,7 +163,10 @@ Below, we can see the responsiveness of the site in differernt devices after usi
 <img src="readme\amiresponsive.png">
 
 ## Future Features
-- T
+- Add socials for the website.
+- Improve chat feature with database to recall messages sent and not clear them when user gets out of chat page.
+- Add links to other sites that showcase women in coding and tech.
+- Add a page for different social events to improve the user skills.
 
 ## Technologies Used
 ### Languages and Technologies
@@ -298,9 +300,6 @@ All CSS files came with no errors.
 [Back to top](#top)
 
 ## Credits
-### Code References
-Ma
-
 ### Use of AI
 #### Code Generation
 The team used Copilot, ChatGPT and Claude to help with create new code during the project building.<br>
@@ -310,20 +309,22 @@ Wehn using AI we had to check the suggestions and adapt the prompts as AI can pr
 Different AI where used to debug the code created and check errors, or directly asking for what could be wrong in their website for solutions. <br>
 
 #### Code Optimisation
-Whe
+Using different AI sources as described above as helped to create code in different languages in a more efficient way.
+With the need for a quick test, but allowing work most of the times to be quicker.
 
 #### Impact on Workflow
-On
+Using AI with the correct prompts can make work more efficient by reducing the time needed to finish some of the website features.<br>
+The developers in this project have used AI to help with code creaction but also to get tutorials to create them or to help with an error, which sometimes can be faster than trying to search for individual pages online.<br>
 
 ### Content References
-
-
-### Media References
 Different sites were used to seach and use information about different women that influenced directly or indirectly the history of coding and tech.
 
 - https://www.womenintech.co.uk/10-famous-women-technology-changed-world/
 - https://mashable.com/article/unsung-women-in-tech
 - https://www.techtarget.com/whatis/feature/Top-9-most-influential-women-in-technology
+
+### Media References
+As per content references information, also here, members of the group searched for different sites online to get content for the project, and the above sites are an example of the sources used.
 
 ### Acknowledgements
 The team was composed by 7 elements, with 4 working more on the frontend, and 2 on the backend and databases. One element to help as needed and work on the admin part.
