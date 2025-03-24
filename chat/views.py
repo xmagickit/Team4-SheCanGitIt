@@ -20,8 +20,6 @@ def chatroom(request, room_name):
 
     is_mentor = Mentor.objects.filter(user=user).exists()
 
-    print(f"DEBUG -- is_mentor: ", is_mentor)
-
     assigned_mentors = Mentor.objects.filter(
         mentor_requests__mentee=user,
         mentor_requests__status="accepted"
@@ -31,10 +29,6 @@ def chatroom(request, room_name):
         assigned_mentors = list(assigned_mentors) + [Mentor(user=user)] 
 
     mentor_usernames = [mentor.user.username for mentor in assigned_mentors]
-
-    print(f"DEBUG -- room_name: {room_name}")
-    print(f"DEBUG -- mentor_usernames: {mentor_usernames}")
-    print(f"DEBUG -- room_name in mentor_usernames: {room_name in mentor_usernames}")
 
     if room_name not in mentor_usernames:
         return render(request, "chat/chatroom_not_found.html", {"room_name": room_name})
