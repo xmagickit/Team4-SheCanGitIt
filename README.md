@@ -119,6 +119,15 @@ The following colours were used on the website:
 
 Colour palette donwnloaded from [Colorkit](https://colorkit.co/)
 
+Contrast check was done using [Contrast Checker](https://webaim.org/resources/contrastchecker/)
+<details>
+<img src="readme\contrast-check-1.png"><br>
+<img src="readme\contrast-check-2.png"><br>
+<img src="readme\contrast-check-3.png"><br>
+<img src="readme\contrast-check-4.png"><br>
+<img src="readme\contrast-check-5.png"><br>
+</details>
+
 ### Typography
 For this project, we used the following family fonts:
 
@@ -252,7 +261,7 @@ V
 
 ### HTML Validation
 - Used [W3C Markup Validation Service](https://validator.w3.org/#validate_by_uri) to check the HTML code of the project:
-
+<details>
 <img src="readme\HTML-validator-herbuddies.png"><br>
 <img src="readme\HTML-validator-hermentor.png"><br>
 <img src="readme\HTML-validator-herstory.png"><br>
@@ -260,6 +269,7 @@ V
 <img src="readme\HTML-validator-login.png"><br>
 <img src="readme\HTML-validator-signup.png"><br>
 <img src="readme\HTML-validator-user-profile.png"><br>
+</details>
 
 ### CSS Validation
 - Used [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/#validate_by_input) to check the CSS code of the project:
@@ -270,7 +280,7 @@ All CSS files came with no errors.
 
 ### Lighthouse Audit
 - Used Google Chrome Dev Tools to assess the performance of the main pages of the project:
-
+<details>
 <img src="readme\Lighthouse-about.png"><br>
 <img src="readme\Lighthouse-affirmation.png"><br>
 <img src="readme\Lighthouse-Her-buddies.png"><br>
@@ -278,9 +288,12 @@ All CSS files came with no errors.
 <img src="readme\Lighthouse-Her-story.png"><br>
 <img src="readme\Lighthouse-homepage.png"><br>
 <img src="readme\Lighthouse-user-profile.png"><br>
+</details>
 
 ### Bugs yet to be Fixed
 - Some pages came with errors on the HTML validation that can be due to code formatting and to be checked in the future.
+- Bell not updating when clicking and see notifications, possibly JavaScript neding review.
+- Link for zoom calls show error message "This site can’t be reached" due to the links not working at the moment.
 
 [Back to top](#top)
 
