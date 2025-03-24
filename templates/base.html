@@ -44,7 +44,7 @@
 
     <!-- Mobile Toggle (right, only shown on small screens) -->
     <div class="md:hidden">
-      <button id="menu-toggle" class="md:hidden win-button px-2 py-1 text-xs" onclick="document.getElementById('mobile-menu').classList.toggle('hidden');">
+      <button id="menu-toggle" class="md:hidden win-button px-2 py-1 text-xs">
         ☰
       </button>
     </div>
@@ -130,7 +130,7 @@
       <a href="{% url 'retro_computer' %}" class="win-button text-xs px-2 py-1">HerStory</a>
       <a href="{% url 'hermentor_redirect' %}" class="win-button text-xs px-2 py-1">HerMentor</a>
       <a href="{% url 'tech_list' %}" class="win-button text-xs px-2 py-1">HerBuddies</a>
-      <a href="#" class="win-button text-xs px-2 py-1">Chat</a>
+      <a href="{% url 'chat' %}" class="win-button text-xs px-2 py-1">Chat</a>
       <a href="{% url 'affirmation' %}" class="win-button text-xs px-2 py-1">Affirmations</a>
       <a href="{% url 'retro_editor:editor_home' %}" class="win-button text-xs px-2 py-1">Retro Editor</a>
       <a href="{% url 'about' %}" class="win-button px-2 py-1">About</a>
@@ -178,78 +178,11 @@
     </div>
   </footer>
 
+  <script src="{% static 'js/navbar.js' %}"></script>
+  <script src="{% static 'js/notifications.js' %}"></script>
+
   {% block extra_js %}
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const menuToggle = document.getElementById("menu-toggle");
-      
-      if (menuToggle) {
-        menuToggle.addEventListener("click", function() {
-          console.log("Menu button clicked");
-          const menu = document.getElementById("mobile-menu");
-          menu.classList.toggle("hidden");
-        });
-      } else {
-        console.error("Menu toggle button not found");
-      }
-    });
-    
-    // Notification bell dropdown toggle (if added)
-    document.addEventListener("DOMContentLoaded", function () {
-      const toggleBtn = document.getElementById("notif-toggle");
-      const panel = document.getElementById("notif-panel");
 
-      if (toggleBtn && panel) {
-        toggleBtn.addEventListener("click", function (e) {
-          panel.classList.toggle("hidden");
-
-          // Send AJAX to mark all as read
-          fetch("/mentor/notifications/mark-all-read/", {
-            method: "POST",
-            headers: {
-              "X-CSRFToken": getCookie("csrftoken"),
-              "Content-Type": "application/json"
-            }
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.success) {
-              // Hide badge
-              const badge = document.querySelector("#notif-toggle span");
-              if (badge) badge.remove();
-
-              // Grey out notifications
-              document.querySelectorAll(".unread-note").forEach(btn => {
-                btn.classList.add("text-gray-400", "line-through");
-                btn.classList.remove("unread-note");
-              });
-            }
-          });
-        });
-
-        document.addEventListener("click", function (event) {
-          if (!toggleBtn.contains(event.target) && !panel.contains(event.target)) {
-            panel.classList.add("hidden");
-          }
-        });
-      }
-
-      function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== "") {
-          const cookies = document.cookie.split(";");
-          for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-            }
-          }
-        }
-        return cookieValue;
-      }
-    });
-  </script>
   {% endblock %}
 
 </body>
