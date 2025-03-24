@@ -10,7 +10,7 @@ urlpatterns = [
     path('accept_request/<int:request_id>/', accept_request, name="accept_request"),
     path('decline_request/<int:request_id>/', decline_request, name="decline_request"),
     path('feedback/<int:request_id>/', give_feedback, name="give_feedback"),
-    path('edit_profile/', edit_profile, name="edit_profile"),
+    path('edit_mentor_profile/', edit_profile, name="edit_mentor_profile"),
     path('hermentor/', hermentor_redirect, name="hermentor_redirect"),
     path('notifications/mark-all-read/', mark_all_notifications_read, name='mark_all_notifications_read'),
 ]
